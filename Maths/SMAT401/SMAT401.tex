@@ -1,0 +1,337 @@
+%This template consists of the minimum of a single book.
+%Please do not think this template is mandatory and the format must be followed strictly.
+%We expect the author adds what he needs.
+\documentclass[oneside,11pt,pdftex]{book}%Remove draft when book editing is completed.
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage{fontawesome5}
+\usepackage{booktabs}
+\usepackage{amssymb}	
+\usepackage{longtable}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage[toc,page]{appendix}
+\usepackage[nottoc]{tocbibind}
+\numberwithin{equation}{section}
+\graphicspath{ {./Images/} }
+%\usepackage[raggedright]{titlesec}
+\usepackage{placeins}
+\usepackage{mathtools}
+
+
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+%Be careful when you use commands which align formulas.
+%If aligned formulas range to two pages, the formulas should be divided into two environments.
+%\makeatletter
+%\AtBeginDocument{\let\mathaccentV\AMS@mathaccentV}
+%\makeatother
+%This is a patch for double bar.
+%Activate it if \bar{\bar{a}} doesn't work.
+
+\newskip\thskip
+\thskip=0.5\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip
+
+\newdimen\dtest%Remove this when book editing is completed.
+\settowidth{\dtest}{letters and symbols here}
+\typeout{<<<\the\dtest>>>}
+
+\newtheorem{theorem}{Theorem}[chapter]%Modify these declarations for your need.
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+
+\newtheorem{xca}[theorem]{Exercise}
+
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+
+\makeindex
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\F}{\mathbb{F}}
+
+\begin{document}
+
+
+\frontmatter
+
+\thispagestyle{empty}
+\begin{flushright}
+{\LARGE \textbf{Bhoris Dhanjal}}%Input your name here.
+\end{flushright}
+\vfill
+\begin{center}
+{\fontsize{29.86truept}{0truept}\selectfont \textbf{Calculus IV}}%Input the book title here.
+%Below is for a book with a subtitle.
+%{\fontsize{29.86truept}{0truept}\selectfont \textbf{The Book Title}} \\
+%\vspace{6.5truept}
+%{\Large, \LARGE, etc. \textbf{The Subtitle}}
+\end{center}
+\vfill
+\begin{flushleft}
+{\LARGE \textbf{Lecture Notes}} \\
+\hspace{-1.75truept}
+{\large \textbf{for SMAT401}}
+\end{flushleft}
+\newpage
+
+\tableofcontents
+
+
+\mainmatter
+
+\chapter{Functions of several variables}
+\section{Examples of functions of several variables}
+\begin{align*}
+	f(x,y)&=x+y \log x && f:\R^2 \rightarrow \R && \text{Scalar valued function}\\
+	f(x,y)&=(x^2y, \cos x, e^x-9) && f:\R^2 \rightarrow \R^3 && \text{Vector valued function}
+\end{align*}
+Clearly, $ f: \R \rightarrow \R $ is a particular case of scalar valued function.\\
+
+\section{Non-existence of limit by 2 path test}
+For a function $ f: \R \rightarrow \R $ the limit exists if limit value is the same along all possible paths, i.e. left hand and right hand limit are equivalent.\par
+For a multivariate function the 2 path test can be used to show non existence of a limit.
+\begin{example}
+	Show that $ \lim_{(x,y)\rightarrow (0,0)}\frac{2xy^2}{x^2+y^2} $ doesn't exist.
+\end{example}
+\begin{proof}
+	Consider $ x=my^2 $ and let $ y\rightarrow 0 $, then \[ \lim_{y\rightarrow0} f(my^2,y)=\lim_{y \rightarrow 0} \frac{2my^4}{(m^2+1)y^2}=\frac{2m}{1+m^2} \]. \par 
+	Therefore, the limit value varies for different values of $ m $.
+\end{proof}
+
+\begin{example}
+	Show that $ \lim_{(x,y)\rightarrow (0,0)} \frac{x+y}{x-y}$ doesn't exist.
+\end{example}
+\begin{proof}
+	Consider first along $x$ axis (i.e. $y=0$)
+	\begin{align*}
+		\lim_{x\rightarrow 0} \frac{x}{x}=1
+	\end{align*}
+	Consider now along $y$ axis (i.e. $x=0$)
+	\begin{align*}
+		\lim_{y \rightarrow 0} \frac{y}{-y}=-1
+	\end{align*}
+	Since the limit is not path independent we can say the limit does not exist.
+\end{proof}
+
+\begin{example}
+	Show that $ \lim_{(x,y) \rightarrow (0,0)} \frac{x^2y}{x^4+y^2}$ doesn't exist.
+\end{example}
+\begin{proof}
+	Along $ x  $ and $ y $ axis the limits are both zero.
+	Consider instead the path $ y=x^2 $
+	\begin{align*}
+		\lim_{x\rightarrow 0} \frac{x^4}{2x^4}=\frac{1}{2}
+	\end{align*}
+	Since the limit is not path independent it does not exist.
+\end{proof}
+
+\begin{example}
+	Show that the $ \lim_{(x,y)\rightarrow (0,0)} \frac{x^2}{x^2+y^2-2x}$ doesn't exist.
+\end{example}
+
+\begin{proof}
+	Along $ x, y $ axis the limit is 0.	Consider the path $ y=\sqrt{2x}$
+	\begin{align*}
+		\lim_{x\rightarrow 0} \frac{x^2}{x^2}=1
+	\end{align*}
+	Since the limit is not path independent it does not exist.
+\end{proof}
+
+\section{Existence of limit with $\varepsilon, \delta$ definition}
+Recall the single variable definition of a limit,
+\begin{definition}[Limit of a single valued function]
+	For a function $ f:\R \rightarrow \R,$ $\lim_{x \rightarrow a}f(x)=L \iff \forall \varepsilon >0, \exists \delta $ such that $ 0<|x-a|<\delta \implies |f(x)-L|<\varepsilon $
+\end{definition}
+
+
+
+\begin{definition}[Limit of a multivariate function]
+		For a function $ f:\R^2 \rightarrow \R,$ $ \lim_{(x,y) \rightarrow (a,b)}f(x)=L \iff \forall \varepsilon >0, \exists \delta $ such that \[ 0<||(x,y)-(a,b)||_2<\delta \implies |f(x,y)-L|<\varepsilon \], alternatively $$ \sqrt{(x-a)^2+(x-b)^2}<\delta \implies |f(x,y)-L|<\varepsilon $$
+\end{definition}
+
+\begin{example}
+	Show that $ \lim_{(x,y)\rightarrow (0,0)}\frac{x-y}{1+x^2+y^2}=0 $
+\end{example}
+\begin{proof}
+	Let $ \varepsilon >0 $, consider
+	\begin{align*}
+		|f(x,y)-L|&=|f(x,y)|=\left| \frac{x-y}{1+x^2+y^2}\right|\\
+		&=\frac{|x-y|}{1+x^2+y^2}
+		\intertext{since $ 1+x^2+y^2\geq 1 $}
+		&\leq |x-y|\\
+		&\leq |x|+|y|\\
+		&\leq \sqrt{x^2+y^2}+\sqrt{x^2+y^2}=2\sqrt{x^2+y^2}
+	\end{align*}
+Therefore, if $  2\sqrt{x^2+y^2}<\varepsilon \implies |f(x,y) -L| < \varepsilon$ so take $ \delta=\varepsilon/2 $.
+\end{proof}
+
+\begin{example}[H.W]
+	Show that $ \lim_{(x,y)\rightarrow (0,0)} \frac{xy^2}{x^2+y^2}=0 $
+\end{example}
+\begin{proof}
+	Let $ \varepsilon>0, $consider
+	\begin{align*}
+		|f(x,y)-L|&=\left|\frac{xy^2}{x^2+y^2}-0\right|=\frac{|x|y^2}{x^2+y^2}\\
+		&=\frac{|x|}{\frac{x^2}{y^2}+1}\\
+		&\leq|x|\\
+		&\leq \sqrt{x^2+y^2}<\varepsilon\implies |f(x,y)-L|<\varepsilon
+	\end{align*}
+So we can just pick $ \delta=\varepsilon $.
+\end{proof}
+
+\section{Continuity}
+\begin{definition}[Continuity]
+	A function $ f: \R^2 \rightarrow \R  $ is said to be continuous at a point $ (a,b) $ if $ \forall \varepsilon>0, \exists \delta>0  $ such that,
+	\[ 0<||(x,y)-(a,b)||_2 < \delta \implies |f(x,y) -f(a,b) |<\varepsilon\]
+	provided $ f(a,b) $ exists.
+	Alternatively,
+	\[ \lim_{(x,y)\rightarrow (a,b)}f(x,y)=f(a,b) \]
+\end{definition}
+Note that, we can show the function is discontinuous if 
+\begin{enumerate}
+	\item $ f(a,b) $ doesn't exist.
+	\item $ \lim_{(x,y)\rightarrow(a,b)}f(x,y) $ doesn't exist.
+	\item Both exist but are not equal to each other.
+\end{enumerate}
+
+\begin{example}
+	Show that the given function is continous at $ (0,0) $ where,
+	\[
+	f(x,y)=
+	\begin{cases}
+		xy\left(\frac{x^2-y^2}{x^2+y^2}\right)& (x,y)\neq (0,0)\\
+		0 & (x,y) = (0,0)\\
+	\end{cases}
+	\]
+\end{example}
+\begin{proof}
+	Here, $ f(0,0) =0$. Clearly we have that $ |x^2-y^2|\leq |x^2+y^2| $.\\
+	Let $ \varepsilon >0 $, 
+	\begin{align*}
+		|f(x,y)-L|&=\left|xy\frac{x^2-y^2}{x^2+y^2}-0\right|\\
+		&=|x| |y|\left|\frac{x^2-y^2}{x^2+y^2}\right|\\
+		&\leq |x||y|\\\\
+		&\leq \sqrt{x^2+y^2}\sqrt{x^2+y^2}=x^2+y^2
+	\end{align*}
+So when $ x^2+y^2<\varepsilon \implies |f(x,y) =f(0,0)|<\varepsilon$ 
+so we take $ \delta = \sqrt{\varepsilon} $.
+\end{proof}
+
+
+\begin{example}
+	Show that the given function is discontinuous at $ (0,0) $ where,
+	\[ f(x,y)=\begin{cases}
+		\frac{2xy}{x^2+y^2} & (x,y)\neq(0,0)\\
+		0 & (x,y)=(0,0)
+	\end{cases} \]
+\end{example}
+\begin{proof}
+	content...
+\end{proof}
+
+\section{Polar Coordinates}
+The polar coordinates $ r $(the radial coordinate) and $ \theta  $(the angular coordinate), are defined in terms of cartesian coordinates as below.
+\begin{align*}
+	x= r \cos \theta, y = r \sin \theta\\
+	r= \sqrt{x^2+y^2}, \theta = \arctan \left( \frac{y}{x}\right)
+\end{align*}
+
+\subsection{Limits in Polar coordinates}
+Use polar coordinates when you are over (0,0)
+
+\begin{example}
+	Show that $ \lim_{(x,y)\rightarrow (0,0)} \frac{2xy}{x^2+y^2} $
+\end{example}
+\begin{proof}
+	Put $ x=r\cos \theta  $ and $ y= r \sin \theta  $
+	\begin{align*}
+		f(x,y)&=\frac{2xy}{x^2+y^2} \iff f(r,\theta )= \frac{2r^2 \cos \theta \sin \theta }{r^2 }=2 \cos \theta \sin \theta \\
+		\lim_{r \rightarrow 0 }f(r,\theta )&=\lim_{r \rightarrow 0}2 \cos \theta \sin \theta = 2 \cos \theta \sin \theta 
+	\end{align*}
+Which depends on $ \theta  $.
+\end{proof}
+
+\subsection{Epsilon-delta with polar coordinates}
+\begin{definition}
+	$ \forall \varepsilon>0 \exists \delta >0 $s.t.
+	
+\end{definition}
+
+\begin{example}
+	Show that $ \lim_{(x,y)\rightarrow (0,0)} \frac{x^3}{x^2+y^2}$
+\end{example}
+\begin{proof}
+	\begin{align}
+		f(r,\theta )&= \frac{r^3 \cos^3 \theta }{r^2}=r(\cos \theta )^3
+	\end{align}
+	Let $ \varepsilon>0 $, consider $ |f(r,\theta)-L|=|r||\cos \theta|^3 \leq |r| $.
+	So we can set $ \delta = \varepsilon $
+\end{proof}
+
+
+
+\begin{example}
+	Find the domain and range of $ g(x,y) = \sqrt{9-x^2-y^2}$
+\end{example}
+\begin{proof}
+	The sqrt interior must be positive so take $ x^2+y^2\leq 9 $, so its a circle of radius 3 centered at 0. So the domain is the circle.
+	The range is $ \{z \mid 0 \leq z \leq 3\} = [0,3] $
+\end{proof}
+
+\section{Algebra of limits}
+
+\section{General multivariate limit}
+\begin{theorem}[Limit of a function $ f: \R^n \rightarrow \R $]
+	For a function $ f:\R^n \rightarrow \R  $, $ \lim_{x\rightarrow a}f(x)=L $ if and only if $ \forall \varepsilon >0 $ there exists $ \delta>0 $ such that
+	\[ 0<||x-a||_n<\delta \implies |f(x)-L|<\varepsilon \]
+\end{theorem}
+
+\begin{definition}[$ \varepsilon $- neighbourhood]
+	$ B(a,\varepsilon) $ open ball of radius $ \varepsilon $ around $ \alpha $.
+	\[ 0 \leq ||x-a||_n < \varepsilon \]
+\end{definition}
+\begin{definition}[Deleted $ \varepsilon $ neighbourhood]
+	$ B(a,\varepsilon)-\{a\} $
+\end{definition}
+
+\begin{definition}[Alternate definition of a limit]
+	For a function $ f:\R^n \rightarrow \R,$ $ \lim_{x\rightarrow a }f(x)=L$ if and only if $ \forall \varepsilon>0 $ there exists $ \delta>0 $ such that \[ x \in B*(a,\delta)\implies |f(x)-L|<\varepsilon \]
+\end{definition}
+
+\begin{definition}[Bounded function]
+	Let $ E $ be a non-empty subset of $ \R^n $. The function $ f:E\rightarrow \R  $ is said to be bounded in some $ \delta  $-neighbourhood of point $ p\in \R^n $ if there exists $ M>0 $ in $ \R  $ such that ........
+\end{definition}
+
+\begin{definition}[Relation between bounded function and limit of a function in $ \R^n $]\label{bounded}
+	Let $ f:\R^n \rightarrow \R $ and $ p \in \R^n $. Let $ f(p) $ be defined. $ If \lim_{x\rightarrow p}f(x)  $ exists then $ f $ is bounded in some neighbourhood of point $ p $.
+\end{definition}
+
+The converse of \ref{bounded} isn't true.
+
+\begin{theorem}[Uniqueness of limit in $ \R^n $]
+	Let $ f: \R^n \rightarrow \R $ and $ p \in \R^n $. If $ \lim_{x\rightarrow p }f(x) $ exists then it is unique.
+\end{theorem}
+
+\chapter{Differentiation}
+
+
+\chapter{Applications}
+\backmatter
+
+
+\thispagestyle{empty}%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
+{\ }
+\newpage
+
+\end{document}

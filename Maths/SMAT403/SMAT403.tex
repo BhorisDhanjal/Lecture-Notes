@@ -1,0 +1,1127 @@
+%This template consists of the minimum of a single book.
+%Please do not think this template is mandatory and the format must be followed strictly.
+%We expect the author adds what he needs.
+\documentclass[oneside,11pt,pdftex,final]{book}%Remove draft when book editing is completed.
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage{fontawesome5}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage[toc,page]{appendix}
+\usepackage[nottoc]{tocbibind}
+\numberwithin{equation}{section}
+\graphicspath{ {./Images/} }
+%\usepackage[raggedright]{titlesec}
+\usepackage{placeins}
+\usepackage{mathtools}
+
+\usepackage{epigraph}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+%Be careful when you use commands which align formulas.
+%If aligned formulas range to two pages, the formulas should be divided into two environments.
+%\makeatletter
+%\AtBeginDocument{\let\mathaccentV\AMS@mathaccentV}
+%\makeatother
+%This is a patch for double bar.
+%Activate it if \bar{\bar{a}} doesn't work.
+
+\newskip\thskip
+\thskip=0.5\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip
+
+\newdimen\dtest%Remove this when book editing is completed.
+\settowidth{\dtest}{letters and symbols here}
+\typeout{<<<\the\dtest>>>}
+
+
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+{\setlength{\@tempdima}{#1}%
+	\def\chapquote@author{#2}%
+	\parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+	\itshape}
+{\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+
+\newtheorem{theorem}{Theorem}[chapter]%Modify these declarations for your need.
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\makeindex
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\F}{\mathbb{F}}
+
+\begin{document}
+	
+	
+	\frontmatter
+
+\thispagestyle{empty}
+\begin{flushright}
+{\LARGE \textbf{Bhoris Dhanjal}}%Input your name here.
+\end{flushright}
+\vfill
+\begin{center}
+{\fontsize{29.86truept}{0truept}\selectfont \textbf{Differential equations}}%Input the book title here.
+%Below is for a book with a subtitle.
+%{\fontsize{29.86truept}{0truept}\selectfont \textbf{The Book Title}} \\
+%\vspace{6.5truept}
+%{\Large, \LARGE, etc. \textbf{The Subtitle}}
+\end{center}
+\vfill
+\begin{flushleft}
+{\LARGE \textbf{Lecture Notes}} \\
+\hspace{-1.75truept}
+{\large \textbf{for SMAT403}}
+\end{flushleft}
+\newpage
+
+\tableofcontents
+
+
+\mainmatter
+\chapter*{Introduction}
+\begin{chapquote}{Gian-Carlo Rota}
+	``This course is justly viewed as the
+	most unpleasant undergraduate course in mathematics, by both teachers and students. Some of
+	my colleagues have publicly announced that they would rather resign from MIT than lecture in
+	sophomore differential equations''
+\end{chapquote}
+These are lecture notes for the SMAT403 Differential Equations course. If you spot mistakes just message me and let me know. There probably might be some typos.
+\par Differential equations might well be the most boring topic in maths I think I will ever study. 
+\par Hopefully these notes make it more tolerable. If I remember to do it, there might be an appendix with common derivates and integrals at the end.
+\chapter{First order ordinary linear differential equations}
+\begin{chapquote}{Isaac Newton}
+	``Just use Mathematica bro.''
+\end{chapquote}
+\section{Homogenous equations}
+The differential equation
+\[ M(x,y)\, dx + N(x,y)\, dy=0\] is said to be homogenous if $ M $ and $ N $ are of the same degree.\par
+Substitute $ y=vx $ to solve a homogenous ODE.
+\begin{example}
+	Solve $ (x+y)\ dx - (x-y)\ dy =0$
+\end{example}
+\begin{proof}
+	\begin{align*}
+		\frac{dy}{dx}&=\frac{x+y}{x-y}
+		\intertext{Let $ y=vx $}
+		\frac{dy}{dx}&=v+x\frac{dv}{dx}\\
+		v+x\frac{dv}{dx}&=\frac{x+vx}{x-vx}\\
+		\frac{(1-v)}{1+v^2}\, dv&=\frac{1}{x}\, dx
+		\intertext{Integrate both sides}
+		\arctan v - \frac{1}{2}\log(1+v^2)&=\log(x)+c\\
+		\arctan\left(\frac{y}{x}\right)&=\log(\sqrt{x^2+y^2})+c
+	\end{align*}
+\end{proof}
+
+\section{Exact differential equation}
+	
+
+IF you have $ M\, dx + N\, dy=0 $ and if $ \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x} $ then the differential equation is exact.\par
+The solution is $ f(x,y) =c$ where $ \frac{\partial f}{\partial x} =M, \frac{\partial f}{\partial y}=N$
+\begin{example}
+	$ e^y\, dx+(xe^y+2y)\, dy=0$
+\end{example}
+\begin{proof}
+	Here we have, $ M=e^y, N=xe^y+2y $\\
+	\begin{align*}
+		\frac{\partial M}{\partial y}=\frac{\partial}{\partial y} (e^y)=e^y\\
+		\frac{\partial N}{\partial x}=\frac{\partial}{\partial x}(xe^y+2y)=e^y
+	\end{align*}
+	Therefore, it is exact.
+	\begin{align*}
+		\frac{\partial f}{\partial x}&=e^y\\
+		f(x,y)&=\int e^y\, dx= xe^y+g(y)\\
+		\frac{\partial f}{\partial y}&=xe^y+\frac{dg}{dy}=N=xe^y+2y\\
+		\frac{dg}{dy}&=2y
+	\end{align*}
+
+\end{proof}
+\chapter{Higher order ordinary linear differential equations}
+\begin{chapquote}{Euclid, \textit{When a time traveller showed him differential equations}}
+	``Damn this is boring.''
+\end{chapquote}
+\section{Second order linear differential equations}
+\subsection{Definition}
+One dependent variable $ y $ and one independent variable $ x $.\\
+The general second order linear differential equation is \[ \frac{d^2y}{dx^2} + P(x)\frac{dy}{dx}+Q(x)y=R(x)\]
+or 
+\begin{align} \label{def:secondorder}
+	y''+P(x) y'+Q(x)y=R(x)
+\end{align}
+
+\subsection{Existence and uniqueness theorem}
+\begin{theorem}
+Let $ P(x), Q(x), R(x)$ be continuous functions on a closed interval $ [a,b].$ If $ x_0 $ is any point in $ [a,b] $ and if $ y_0, y_0' $ are any numbers. Then eq. \ref{def:secondorder} has one and only one solution $ y(x) $ on the entire interval such that $ y(x_0) =y_0$ and $ y'(x_0) =y_0'$
+\end{theorem}
+\begin{proof}
+	Not covered in class. Just trust me bro.
+\end{proof}
+
+\begin{example}
+	Find the largest interval where $ (x^2-1)y''+3xy'+(\cos x)y =e^x, y(0)=4, y'(0)=5$ is guaranteed to have a unique solution.
+\end{example}
+
+\begin{proof}
+	We need to divide by $(x^2-1)$ but this automatically implies that from $ \R $ we cannot include $ -1,1 $. \\
+	$ P(x) =\frac{3x}{x^2-1}$, it is continuous over $ \R \setminus \{-1,1\} $,
+	$ Q(x)=\frac{\cos(x)}{x^2-1} $ same case,
+	$ R(x) =\frac{e^x}{x^2-1}$ same.\\
+	Therefore the interval is simply, $ (-\infty,-1)\bigcap (-1,1) \bigcap (1, \infty) $ we will choose just the middle interval since we need $ 0 $.\\
+	Therefore the largest interval in which the DE is guaranteed to have a unique solution is (-1,1).
+\end{proof}
+
+\begin{example}
+	$ (x+2)y''+xy'+(\cot x)y=x^2+1, y(2) =11, y'(2)=-2$
+\end{example}
+\begin{proof}
+	Divide by $ (x+2) $ so $ x=-2 $ cannot be included. Also $ \cot x $ isnt defined for $ x=n\pi  $.\\
+	So the required largest interval would be $ (0,\pi) $
+\end{proof}
+
+\begin{example}
+	Find the largest interval where $ (x^2-4x) y''+3xy' +4y=2, y(3)=0, y'(3)=-1$
+\end{example}
+\begin{proof}
+	We need to divide by $ (x^2-4x) $ so we cannot include the points $ 0, 4 $ so the interval is $ (0,4) $.
+\end{proof}
+
+\begin{example}
+	$(x-3)y''+xy'+\log|x| y=0, y(1)=0,y'(1)=1$
+\end{example}
+\begin{proof}
+	We need to divide by $(x-3)$ so $ x\neq 3 $. Also $ \log x $ is not defined for $ x=0 $. So the required interval is just $ (0,3) $
+\end{proof}
+
+\subsection{Homogenous equation}
+\begin{definition}\label{def:2ndhomo}
+	The equation \begin{align*}
+		y''+P(x) y'+Q(x)=0
+	\end{align*}  is called a homogenous equation.
+\end{definition}
+
+\begin{theorem}
+	If $ y_p(x) $ is a fixed particular solution of eq \ref{def:secondorder} and $ y(x) $ is any general solution of eq. \ref{def:secondorder}, then $ y(x) -y_p(x)$ is a solution of \ref{def:2ndhomo}
+\end{theorem}
+\begin{proof}
+	Let $ y_1 $ be some solution to \ref{def:secondorder} and $ y_2 $ be some other solution to \ref{def:secondorder}. Then $ y_1-y_2 $ will be a solution to \ref{def:2ndhomo}.??? (\emph{Check this later it makes no sense})
+\end{proof}
+
+\begin{theorem}
+	If $ y_1(x) $ and $ y_2(x) $ are any two solutions of eq. \ref{def:2ndhomo}, then $ c_1y_1(x) +c_2 y_2 (x)$ is also a solution for any constants $ c_1 $ and $ c_2 $.
+\end{theorem}
+\begin{proof}
+	The proof is trivial and is left as an exercise to the next person who reads this.\\
+\end{proof}
+
+\begin{example}
+	Verify that $ y=c_1 \cos x + c_2 \sin x $ is a solution of $ y''+y=0 $ Find the solution which satisfies (A)(?wtf is A) and
+	\begin{itemize}
+		\item $ y(0) =0, y'(0)=1$
+		\item $ y(0)=1, y'(0)=0 $
+	\end{itemize}
+\end{example}
+
+\begin{proof}
+	Consider case $ i $,
+	\begin{align*}
+		y(0)&=c_1 \cos (0)+ c_2 \sin (0)\\
+		&=c_1
+	\end{align*}
+	Therefore, $ c_1=0 $ but $ c_2 $ is undecided.... \emph{finish this later}
+\end{proof}
+
+\begin{example}
+	Solve $ y''+y'=0 $
+\end{example}
+\begin{proof}
+	\begin{align*}
+	y''+y'&=0 \\ 
+	y'=t(x) \ \to y''&=t'(x) 
+	\\ t'+tz&=0 \\ 
+	\frac{dt}{t}+dx&=0 \\
+	 \ln |t|+x&=C \\ 
+	 \ln|t| + \ln e^x &= \ln e^{C} \\ 
+	 t \cdot  e^x&=C_1 \\ 
+	 y' \cdot e^x &=C_1 \\ 
+	 dy=&C_1\frac{dx}{e^x} \\ 
+	 \int dy=&C_1 \int \frac{dx}{e^x} \\ ...
+	\end{align*}
+General solution is $ y=c_1e^{-x}+c_2 $	
+\end{proof}
+
+\begin{example}
+	Solve $ x^2y''+2xy'-2y=0 $
+\end{example}
+
+\begin{proof}
+	Let $ y=x^m $ so $ y'=mx^{m-1} $ and $ y''=m(m-1)x^{m-2} $
+	\begin{align*}
+		x^2m(m-1)x^{m-2}+2x(mx^{m-1})-2x^m&=0\\
+		x^m(m^2-m+2m-2)&=0
+		\intertext{$m=1$ or $m=-2$}
+		\therefore y_1(x)=x'=x \text{ and } y_2(x)&=x^{-2}\\
+		\text{General solution } y(x)&=c_1x+c_2x^{-2}
+		\end{align*}
+	
+\end{proof}
+
+\begin{example}
+	Verify that $ y_1=1, y_2=x^2 $ are solutions of $ xy''-y'=0 $ and write down the general solution.
+\end{example}
+\begin{proof}
+	We will not insult the intelligence of the reader by verifying the solution.\\
+	For the general solution consider that $ 1, x^2 $ are Linearly independent, so the general solution is $ y(x)=c_1(1)+c_2(x^2) $
+\end{proof}
+
+\section{General solution of the homogenous system}
+
+\begin{definition}\label{def:lindep}
+	If two functions $ f(x) ,g(x)$ are defined on an interval $ I $ and have the property that one is a constant multiple of the other, then they are said to be linearly dependent on $ I $. Otherwise they are called linearly independent.
+\end{definition}
+Note that, if $ f(x) \equiv 0$ and $ g(x) $ are linearly dependent for every function $ g(x) $.
+
+
+\begin{definition}\label{def:wronskian}
+	Let $ y_1(x) ,y_2(x)$ be linearly independent solutions of the homogenous equations $ y''+P(x) y'+Q(x)y=0$. Then the function $ W(y_1,y_2)=y_1y_2'-y_1'y_2 $ is called the Wronskian of $ y_1,y_2 $.\\
+	\[ W(y_1,y_2)= \begin{vmatrix}
+		y_1 & y_2 \\ 
+		y_1' & y_2' 
+	\end{vmatrix}\]
+\end{definition}
+If two functions are dependent then their Wronskian is identically zero.
+
+\begin{lemma}
+	If $ y_1(x) , y_2(x)$ are any two solutions to eq. \ref{def:2ndhomo} on interval $ I $ then their Wronskian is either identically zero or never zero on $ I $.
+ \end{lemma}
+\begin{proof}
+	I trust my professor.
+\end{proof}
+\begin{example}
+	By eliminating $ c_1 $ and $ c_2 $, find the differential equation for the family of the curves $ y=c_1e^x+c_2e^{-3x} $. Then use Abel's formula to find the Wronskian.
+\end{example}
+\begin{proof}
+	\begin{align}
+		y'&=c_1e^x-3c_2e^{-3x}\\
+		y''&=c_1e^{x}+9c_2e^{-3x}
+		\intertext{Now do $ y-y' $}
+		y-y''&=4c_2e^{3x} \implies c_2=\frac{y-y'}{4e^{-3x}}
+		\intertext{Now do $ y''-y' $}
+		y''-y'&=12c_2e^{-3x}\implies c_2=\frac{y''-y'}{12e^{-3x}}
+		\intertext{But now we have the following equality}
+		y''-y'&=3(y-y')
+		\intertext{Expanding this gives us the differential equation required as,}
+		y''+2y'-3y&=0
+	\end{align}
+
+\end{proof}
+
+\begin{lemma}\label{lem:ldwronskian}
+	If $ y_1(x) $ and $ y_2(x) $ are two solutions of eq. \ref{def:2ndhomo} on $ I $, then they are linearly dependent on this interval $ \iff $ their Wronskian is identically 0.
+\end{lemma}
+\begin{proof}
+	\textbf{Case 1: }If the function is linearly dependent then its Wronskian is equal to 0. \begin{align*}
+		W(y_1,y_2)&=0\\
+		y_1y_2'-y_1'y_2&=0\\
+		y_1y_2'-y_1'y_2&=0\\
+		(cy_2)y_2'-(cy_2')y_2&=0
+	\end{align*}
+		\textbf{Case 2:} If the Wronskian is identically equal to 0 then we have to prove the function is linearly dependent.\\
+		\textbf{Case 2a:} If $ y_1 \equiv 0 \rightarrow y_1 $ is the zero function then $ y_1, y_2 $ are L.D.\\
+		\textbf{Case 2b:} If $ y_1 \not \equiv 0 \implies y_1(x_0)\neq 0, $ for some $ x_0 \in I $. This implies $ \exists [c,d] \subseteq I $ s.t. $ y_1(x_0)\neq0 \forall x_0 \in [c,d]$.\\
+		Also $ W=0$ on $ [c,d]  \implies y_1 y_2'-y_1'y_2=0 \implies \frac{y_1y_2'-y_2 y_1'}{y_1^2} =0 \implies \left( \frac{y_2}{y_1}\right)'$. And we get $ y_2(x)=ky_1(x) $ for some $ [c,d] \in I$. We need to extend this to all $ I $. $ y_2(x_0)=ky_1(x_0)=y_0 \forall x_0 \in [c,d] $ $ y_2'(x_0)=ky_1'(x_0)=y_0' \forall x_0 \in [c,d] $, then use existence and uniqueness theorem.
+\end{proof}
+
+\begin{lemma}
+	If $ y_1(x) $ and $ y_2(x) $ are two solutions of eq. \ref{def:2ndhomo} on $ I $, then they are linearly independent on this interval iff their Wronskian is never zero on $ I $.
+\end{lemma}
+\begin{proof}
+	This proof is very boring and is left as an exercise to the reader. Use lemma \ref{lem:ldwronskian}.\\
+	Assume that $ y_1, y_2 $ are L.I. then we have to show $ W \neq 0 $. Assume $ W=0 $ then use lemma \ref{lem:ldwronskian}.\\
+	If $ W $ is never zero then show that $ y_1, y_2 $ are L.I.
+\end{proof}
+
+\begin{theorem}
+	Let $ y_1(x) $ and $ y_2(x) $ be linearly indepedent solutions of the homogenous equation \ref{def:2ndhomo} on $ I $. Then $ c_1 y_1(x) + c_2 y_2 (x)$ is the general soltuion of equation \ref{def:2ndhomo} on $ I $.
+\end{theorem}
+\begin{proof}
+	Show $ c_1 y_1+c_2y_2 $ be a solution of eq \ref{def:2ndhomo}. Next, let $ y(x) $ be any other solution of \ref{def:2ndhomo} then show that there exists $ c_1, c_2 \in \R $ such taht $ y(x)=c_1y_1+c_2y_2 $. That is, to show that for some $ x_0 \in I $ we can find $ c_1, c_2 $ s.t. $ c_1 y_1(x_0) +c_2'y_2(x_0)=y(x_0)$ and $ c_1y_1'(x_0)+c_2y_2'(x_0) $.
+	That is we have to show,
+	\[ \begin{bmatrix}
+	y_1(x_0)	& y_2(x_0)\\ 
+	y_1'(x_0)	& y_2'(x_0) 
+	\end{bmatrix} \begin{bmatrix}
+	c_1 \\ c_2
+\end{bmatrix}=\begin{bmatrix}
+y(x_0)\\ y'(x_0)
+\end{bmatrix} \]
+Complete this later its fucking boring
+\end{proof}
+
+\begin{example}
+	Show that $ y=c_1 \sin x + c_2 \cos x $ is the general solution of $ y''+y=0 $ on any interval, and find the particular solution for which $ y(0)=2 $ and $ y'(0)=3$.
+\end{example}
+\begin{proof}
+	\begin{align*}
+		y_1&=\sin x, y_2= \cos x
+	\end{align*}
+It is easy to see that it a solution. Now we just have to show that it is linearly independent and them by the previous theorem we can say its linear combination is a general solution. Using the initial conditions we then solve and find the values for $ c_1 $ and $ c_2 $
+\end{proof}
+
+
+\begin{example}[H.W]
+	Show that the space of solutions for the homogenous equation $ y''+P(x)y'+Q(x)y=0 $ is a vector space over $ \R$.
+\end{example}
+
+\begin{example}[Review]
+	Show that $ e^x $ and $ e^{-x} $ are linearly independent solutions of $ y''-y=0 $ in any interval.
+\end{example}
+\begin{proof}
+	Verify that it is a solution. Consider then its Wronskian.
+\end{proof}
+\subsection{Using a known solution to find another}
+\begin{theorem}[Use of a known solution to find another]\footnote{Just memorize this garbage.}
+	Consider $ y''+P(x)y'+Q(x)y=0 \to (1)$. Assume $ y_1(x) $ is a known non-zero solution of (1). Assume $ y_2=v y_1 $ is another solution to (1), where $ v=v(x) $. Then $ y_2''+P(x)y_2'+Q(x)y_2 =0\implies [vy_1]''+P(x)[vy_1]'+Q(x)[vy_1]=0$.\[ v=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx\]
+\end{theorem}
+
+\begin{example}
+	Show that $ y_1=x $ is a solution of $ x^2y''+xy'-y=0 $. Find the general solution.
+\end{example}
+\begin{proof}
+	$ y_1'=1,y_1''=0 $, therefore we have
+	\begin{align*}
+		x^2y''+xy'-y&=0\\
+		x^2(0)+x(1)-x&=0
+	\end{align*}
+Therefore, it is a solution.
+Now we need to find $ y_2 $ another solution. Here in the standard form $ P(x)=\frac{1}{x}, x\neq=0$.\\
+Now compute $ v $
+\begin{align*}
+	v&=\int \frac{1}{y_1^2}e^{-\int P\, dx}\, dx\\
+	&= \int \frac{1}{x^2} \frac{1}{x}\, dx\\
+	&= \int \frac{1}{x^3}\, dx\\
+	&= - \frac{1}{2x^2}
+\end{align*}
+So now we can say $ y_2=vy_1=\frac{-1}{2x^2}x=\frac{-1}{2x} $.\\
+Therefore, the general solution for the given differential solution is $ y(x) = c_1 y_1 + c_2 y_2=c_1 x + c_2 \frac{-1}{2x}$ in any interval not containing $ 0 $.
+\end{proof}
+
+\begin{example}
+	Use the method of this section to find $ y_2 $ and the general solution of each of the following equations from the given solution $ y_1 $
+	\begin{enumerate}
+		\item $ y''+y=0, y_1=\sin x $
+		\item $ y''-y=0, y_1=e^x $
+		\item $ x^2y''+xy'-4y=0, y_1=x^2 $
+	\end{enumerate}
+\end{example}
+
+\begin{proof}
+	Consider 1) first, we have $ P(x)=0$. We will now find $ v $,
+	\begin{align*}
+		v&=\int \frac{1}{y_1^2} e^{- \int P\, dx}\, dx\\
+		&= \int \frac{1}{\sin x^2} 1\, dx\\
+		&= -\cot x
+	\end{align*}
+So now we can say $ y_2=v y_1= - \cos x  $. And the general solution is given by $ y(x) =c_1 \sin x + c_2 \cos x $\\
+Consider 2) now, we have again $ P(x) =0$.
+We will now find $ v $,
+\begin{align*}
+	v&=\int \frac{1}{e^{2x}}\, dx\\
+	&=\frac{-e^{-2x}}{2}
+\end{align*}
+\textbf{Complete this up} $ \cdots $\\
+Now consider 3), we have $ P(x)=\frac{1}{x} $. We will now find $ v $,
+\begin{align*}
+	v&=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx\\
+	&= \int \frac{1}{x^4} \frac{1}{x}\, dx\\
+	&= \int \frac{1}{x^5}\, dx\\
+	&= \frac{-1}{4x^4}
+\end{align*}
+Now we can get $ y_2=vy_1=\frac{-1}{4x^2} $. And get the general solution.
+\end{proof}
+
+\begin{example}
+	Show that $ y_1=x $ is a solution to $ (1-x^2)y''+2xy'+2y=0 $. Find the general solution.
+\end{example}
+\begin{proof}
+	First make the DE into standard form by dividing by $ 1-x^2 $. So we have $ P=\frac{-2x}{1-x^2} $. We will now compute $ v $,
+	\begin{align*}
+		v&=\int \frac{1}{x^2} e^{- \int \frac{-2x}{1-x^2}\, dx }\, dx\\
+		&= \int \frac{1}{x^2} \frac{1}{x^2-1}\, dx\\
+		&= \int \frac{1}{x^4-x^2}\, dx\\
+		&= \frac{1}{x}+\frac{1}{2}\log(1-x)-\frac{1}{2} \log(x+1)
+	\end{align*}
+	Now we compute $ y_2=v y_1=1+\frac{1}{2} \log (1-x)-\frac{1}{2} x \log(1+x)$
+\end{proof}
+
+
+\subsection{Homogenous equation with constants}
+\begin{theorem}
+	If we have $ y''+P(x) y'+Q(x)y=0$ and $ P(x) ,Q(x)$ are constants. Consider the Auxiliary equation $ m^2+pm+q=0 $ and let the roots of the auxiliary equation be $ m_1, m_2 $.
+	\begin{enumerate}
+		\item If the roots are real and distinct ($ m_1\neq m_2 $), $ y=c_1e^{m_1x}+c_2e^{m_2x} $
+		\item If the roots are real and repeated ($ m=m_1=m_2 $), $ y=c_1e^{mx}+c_2xe^{mx} $
+		\item If the roots are complex ($ m=\alpha\pm \beta i $), $ y=e^{\alpha x}[c_1 \cos (\beta x)+c_2 \sin (\beta x)] $
+	\end{enumerate}
+\end{theorem}
+
+\begin{example}
+	$ y''+3y'-y=0 $
+\end{example}
+\begin{proof}
+	Assume $ e^{mx} $ is a solution to the following differential equation, then we have the following,
+	\begin{align*}
+		y''+3y'-y&=0\\
+		m^2 e^{mx}+ 3m e^{mx}-e^{mx}&=0
+	\end{align*}
+We can know solve for $ m $
+	\begin{align*}
+		m&= \frac{-3}{2}\pm\frac{\sqrt{13}}{2}
+	\end{align*}
+\textbf{Complete this $\dots$}
+\end{proof}
+
+
+\begin{example}
+	Find the general solution for each of the following equations:
+	\begin{enumerate}
+		\item $ y''+y'-6y=0 $
+		\item $ y''+3y'+y=0$
+	\end{enumerate}
+\end{example}
+\begin{proof}
+	Consider 1) first,
+	use the auxiliary equation that appeared out of a hat then,
+	\begin{align*}
+		k^2+pk+q&=0\\
+		k^2+k-6&=0\\
+		k=-3, k&=2
+	\end{align*}
+	So now the general solution is $ y=c_1e^{-3x}+c_2e^{2x} $
+	
+\end{proof}
+
+\begin{example}
+	Solve $ 2y''+5y'-12y=0 $
+\end{example}
+\begin{proof}
+	Use the auxiliary equation,
+	\begin{align*}
+		2m^2+5m-12=0
+	\end{align*}
+We get the values of $ m=3/4, -4 $. These are real and distinct roots. So the general solution is \[ y=c_1 e^{4x}+c_2e^{3/2x} \].
+\end{proof}
+
+\section{Method of undetermined coefficients (UDC)}
+This is a method to solve non-homogenous linear DE of order 2.
+\begin{align}
+	y''+P(x)y'+Q(x)y&=R(x)\label{eq:nonhomo}\\
+		y''+P(x)y'+Q(x)y&=0 \label{eq:asshomo}
+\end{align}
+The second equation is just the associated homogenous equation of the first.\\
+Let $ y_g $ be the general solution of eq. \ref{eq:asshomo} be known as a complementary function (CF).\\
+Let $ y_p $ be a particular solution of eq. \ref{eq:nonhomo} then it is known as something fuck knows she scrolled down.
+\\
+You begin by computing $ y_g $ then compute $ y_p $ depending on one of the three stupid cases and their subcases \footnote{Just have to memorize it unfortunately. You want a intuitive reason for doing it? Cry more lmao.}. Once you have the $ y_p $ you just add that (\textbf{without} a constant) to the $ y_g $ and you have the general solution for \ref{eq:nonhomo}
+\subsection{Assumptions of UDC}
+\begin{enumerate}
+	\item $ P(x),Q(x) $ are constants
+	\item $ R(x) $ is either exponential, sine or cosine or polynomial.
+\end{enumerate}
+
+\subsection{Case 1: Exponential}
+\begin{theorem}\label{th:udcexp}
+
+
+\begin{align}
+	y''+py'+qy=e^{ax} \label{eq:udcexp}
+\end{align}
+\begin{enumerate}
+	\item If $ a $ is not a root of AE, then $ y_p =Ae^{ax}$
+	\item If $ a $ is a simple root (i.e. multiplicity 1) of AE, then $ y_p=Ax e^{ax} $
+	\item If $ a $ is a double root of AE, then $ y_p=A x^2 e^{ax} $
+\end{enumerate}
+\end{theorem}
+\begin{example}
+	$ y''-4y'+4y=e^{2x} $
+\end{example}
+\begin{proof}
+	Here $ a=2 $ and computing $ m $ we get a double root with $ m=2,2 $.
+\end{proof}
+
+\subsubsection{Subcase i) a is not a root of AE}
+If $ a $ is not a root of the $ AE $ then you take $ y_p=Ae^{ax}$. So you have the following,
+\begin{align*}
+	y_p&=Ae^{ax}\\
+	y_p'&=Aae^{ax}\\
+	y_p''&=Aa^2e^{ax}
+\end{align*}
+Plug this into the original DE then just append the $ y_p $ to $ y_g $ without constants for your general solution.\\
+
+Also there's some random thing like this in the notes idk it doesn't work, \[ A=\frac{1}{a^2+pa+q} \]
+
+
+\begin{example}
+	$ y''-5y'+6y=e^{4x} $
+\end{example}
+\begin{proof}
+	We get $ a=4 $ and this is not a root to the auxiliary equation ($ m=2,3 $).\\
+	So now,
+	\begin{align*}
+		 y_p&=Ae^{4x}\\
+		 y_p'&=4Ae^{4x}\\
+		 y_p''&=16Ae^{4x}
+	\end{align*}
+Now plug this into the DE
+\begin{align*}
+	y''-5y'+6y&=e^{4x}\\
+	16Ae^{4x}-5(4Ae^{4x})+6(Ae^{4x})&=e^{4x}
+\end{align*}
+So we get $ A=1/2 $.
+\end{proof}
+
+\subsubsection{Subcase ii) a is a simple root of AE}
+If $ a $ is a simple root of the $ AE $ then you take $ y_p=Axe^{ax} $. So you have the following,
+\begin{align*}
+	y_p&=Axe^{ax}=Ae^{ax}(x)\\
+	y_p'&=Ae^{ax}(ax+1)\\
+	y_p''&=Ae^{ax}(a^2x+2a)
+\end{align*}
+Now just plug these values into the original differential equation. You will get $ y_p $ just append that to $ y_g $ and you have your solution.\\
+
+Obligatory thing in the notes which I have no idea what it means, \[ A=\frac{1}{2a+p} \]
+
+\begin{example}
+	Solve $ y''- 5y'+6y=3e^{2x}$
+\end{example}
+\begin{proof}
+	The AHE is $ y''-5y'+6y=0 $, we get the auxiliary equation as $ m^2-5m+6=0 $ we get $ m=2,3$. This is a simple root.
+	 \begin{align*}
+		y_p&=Axe^{2x}\\
+		y_p'&=Ae^{2x}+2Axe^{2x}\\
+		y_p''&=4Ae^{2x}+4Axe^{2x}
+	\end{align*}
+Now plug this into the DE,
+\begin{align*}
+	y''- 5y'+6y&=3e^{2x}\\
+	4Ae^{2x}+4Axe^{2x}-5(Ae^{2x}+2Axe^{2x})+6(Axe^{2x})&=3e^{2x}
+\end{align*}
+We get $ A=-3 $.
+\end{proof}
+
+\begin{example}[Review]
+	Find the general solution of $ y''+3y'-10y=6e^{4x} $
+\end{example}
+\begin{proof}
+	Consider the auxiliary equation,
+	\begin{align*}
+		m^2+3m-10&=0
+	\end{align*}
+We have $ m=-5,2 $ real and distinct roots but $ a $ is not a root of $ AE $. The solution to the AE is $ y=c_1e^{2x}+c_2e^{-5x} $
+So assume the general solution is given as,
+\begin{align*}
+	y_p&= Ae^{4x}\\
+	y_p'&=4Ae^{4x}\\
+	y_p''&=16Ae^{4x}
+\end{align*}
+Substitute this into the original equation to get $ A=\frac{1}{3} $.
+So the general solution is given as $ y=c_1e^{2x}+c_2e^{-5x}+\frac{1}{3}e^{4x} $
+
+\end{proof}
+
+\subsection{Case 2: Trigonometric}
+If $ y''+py'+qy=\sin kx $ or $ \cos kx $
+\subsubsection{Subcase 1: If it is not a solution of AHE}
+If we have $ \sin kx  $  or $ \cos kx  $ not being a solution to the AHE we take $ y_p=A \sin kx + B \cos kx $. Using this we get the following,
+\begin{align*}
+	y_p&=A \sin kx + B \cos kx\\
+	y_p'&=k(A \cos kx - B \cos kx)\\
+	y_p''&=-k^2(A \sin (kx)+B \cos kx)
+\end{align*}
+Plug this ugly mess into the original differential equation and you will get $ y_p $ append that without a constant to $ y_g $ for the general solution.
+
+\subsubsection{Subcase 2: If it is a solution of AHE}
+If we have $ \sin kx  $ or $ \cos kx  $ is a solution of the AHE then we take $ y_p=x(A \sin kx + B \cos kx) $. Using this we get the following,
+\begin{align*}
+	y_p&=x(A \sin kx + B \cos kx)\\
+	y_p'&=A(\sin kx + kx \cos kx)+B(\cos kx - kx \sin kx)\\
+	y_p''&=A(2k \cos kx - k^2 x \sin kx)+B(-x k^2 \cos kx - 2k \sin kx)
+\end{align*}
+\begin{example}
+	Solve $ y''+y=\sin x $
+\end{example}
+\begin{proof}
+	AHE is given $ y''+y=0 $ and AE $ m^2+1=0 $ so $ m=\pm i $.
+	\begin{align*}
+		y_g=c_1\cos x + c_2 \sin  x
+	\end{align*}
+Since $ \sin x $ is a solution of $ y_p $ let 
+\begin{align*}
+	 y_p&=x(A \sin x + B \cos x) \\
+	 y_p'&=A \sin x + B \cos x + x (A \cos x - B \sin x)\\
+	 y_p''&= A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x)
+\end{align*}
+Plug this into the diff eq.
+\begin{align*}
+	y''+y&=\sin x
+\end{align*}
+\begin{align*}
+	A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x) + x(A \sin x + B \cos x)&= \sin x
+\end{align*}
+$ 2A=0, B=\frac{-1}{2} $ so we have $ y_p=-1/2 x \cos x $ and then $ y(x)=y_g+y_p=c_1\cos x + c_2 \sin x - 1/2 x \cos x  $
+\end{proof}
+
+
+
+\subsection{Case 3: Polynomial}
+For $ y''+py'+qy=a_0+a_1x+\cdots+a_nx^n $
+\subsubsection{Subcase 1: If $ \mathbf{q\neq0} $}
+Take $ y_p $ as follows
+\begin{align*}
+	y_p&=A_0+A_1x+\cdots A_nx^n\\
+	y_p'&=A_1+\cdots+n A_nx^{n-1}\\
+	y_p''&=2A_2+\cdots+n(n-1)A_n^{n-2}
+\end{align*}
+\subsubsection{Subcase 2: If $ \mathbf{q=0, p \neq 0} $}
+Take $ y_p $ as follows, the derivates are obvious,
+$$y_p=x(A_0+A_1x+\cdots A_nx^n) $$
+\subsubsection{Subcase 3: If $ \mathbf{q=0,p=0} $}
+Take $ y_p $ as follows,
+$$ y_p=x^2(A_0+A_x+\cdots + A_n x^n) $$
+
+
+\begin{example}
+	Find the general solution of $ y''-y'-2y=4x^2 $
+\end{example}
+\begin{proof}
+	AHE $ y''-y'-2y=0 $ and AE $ m^2-m-2=0 $ so $ m=2,-1 $ so $ y_g=c_1e^{2x}+c_2e^{-x} $.\\
+	Let 
+	\begin{align*}
+		y_p&=A_0+A_1x+A_2x^2 \\
+		y_p'&=A_1+2A_2x\\
+		y_p''&=2A_2
+	\end{align*}
+Substitute this into the original DE
+\begin{align*}
+	2A_2-A_1-2A_2x-2(A_0+A_1x+A_2x^2)&=4x^2
+\end{align*}
+We get $ A_0=-3,A_1=2,A_2=-2 $.
+So the general solution is $ y(x)=c_1e^{2x}+c_2e^{-x}-3+2x-2x^2 $
+\end{proof}
+
+\begin{example}
+	Find general solution of $ y''-2y'+5y=25x^2+12 $
+\end{example}
+\begin{proof}
+	AHE $ y''-2y'+5y=0 $ and AE $ m^2-2m+5=0 $ we get $ m=1\pm2i $.So we have $ \alpha=1, \beta=2 $.\\
+	So we get $ y_g=e^{x}(c_1 \cos 2x + c_2 \sin 2x) $.\\
+	Let
+	\begin{align*}
+		y_p&=A_0+A_1x+A_2x^2\\
+		y_p'&=A_1+2A_2x\\
+		y_p''&=2A_2
+	\end{align*}
+Substitute this into the original DE
+\begin{align*}
+	2A_2-2(A_1+2A_2x)+5(A_0+A_1x+A_2x^2)&=25x^2+12
+\end{align*}
+Upon solving we get $ A_0=2, A_1=4, A_2=5 $. So now we have $ y(x)=y_g+y_p=e^{x}(c_1 \cos 2x + c_2 \sin 2x)+2+4x+5x^2 $
+\end{proof}
+
+\begin{example}[Review]
+	Solve $y''-2y'=12x-10$
+\end{example}
+\begin{proof}
+	Begin with AHE $ y''-2y'=0 $ then see HE $ m^2-2m=0 $ so we got $ m= 0, 2$ so me and my homies say $ y_g=1+e^{2x} $.\\
+	Now since $ q=0 $ we say that
+	\begin{align*}
+		  y_p&=A_1x^2+A_0x\\
+		  y_p'&=2A_1x+A_0\\
+		  y_p''&=2A_1
+	\end{align*}
+Now plug this back into the original differential equation.
+\begin{align*}
+	2A_1-2(2A_1x+A_0)=12x-10
+\end{align*}
+Upon solving, a smart dog or a slow student would see that $ A_0=2, A_1=-3 $. This gives us $ y_p=-3x^2+2x $. And as such our final solution is indubitably,
+\begin{align*}
+	y(x)&=y_g+y_p\\
+	&=c_1+c_2(e^{2x})+(-3x^2+2x)
+\end{align*} 
+\end{proof}
+
+\section{Variation of Parameters (VOP) method}
+Consider the non-homogenous equation
+\[ y''+P(x)y'+Q(x)y=R(x) \]
+Consider its AHE. Say it has two solutions $ y_1, y_2$. So that $ y_g= c_1y_1+c_2y_2$.\\
+We will say that the required particular solution $ y_p $ is a combination of $ y_g $ as follows,\[ y_p=v_1 y_1+v_2y_2 \]
+Now our job is just to get $ v_1,v_2 $ such that
+\[ y_p(x)=v_1y_1+v_2y_2 \]
+Now begin differentiating this by repeated use of the product rule \footnote{See why this is so boring yet?}.
+\begin{align*}
+	y_p'&=v_1y_1'+v_1'y_1+v_2y_2'+v_2'y_2\\
+	y_p''&=v_1y_1''+2v_1'y_1'+v_1''y_1+v_2y_2''+2v_2'y_2'+v_2''y_2
+\end{align*}
+We also now choose $ v_1'y_1+v_2'y_2=0 $ to simplify the derivatives \footnote{\label{lmao}lmao},
+Now with those terms we can restate the original differential equation as follows, 
+\begin{align*}
+	y_p'&=v_1y_1'+v_2y_2'\\
+	y_p''&=v_1y_1''+v_1'y_1'+v_2y_2''+v_2'y_2'
+\end{align*}
+Substitute these into the original differential equation and you get,
+\[ v_1(y_1''+Py_1'+Qy_1)+v_2(y_2''+Py_2'+Qy_2)+v_1'y_1'+v_2'y_2'=R(x) \]
+Since $ y_1, y_2 $ are solutions to the AHE the terms in the parentheses vanish and we are left with
+\[ v_1'y_1'+v_2'y_2'=R(x) \]
+Recall from footnote \ref{lmao} that we now have a system of equations as follows,
+\begin{align*}
+	v_1'+v_2'y_2&=0\\
+	v_1'y_1'+v_2'y_2'&=R(x)
+\end{align*}
+Now upon solving we get 
+\begin{align*}
+	v_1' &= \frac{-y_2R(x)}{W(y_1,y_2)} && &\text{and} && v_2' &= \frac{y_1R(x)}{W(y_1,y_2)}\\
+	v_1 &= -\int \frac{-y_2R(x)}{W(y_1,y_2)}\, dx && &\text{and} && v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx
+\end{align*}
+
+
+
+\begin{example}
+	Find a particular solution of $ y''+y=\csc x $
+\end{example}
+\begin{proof}
+	Find the AHE $ y''+y=0 $ the solution for this is $$ y_p=c_1 \cos x + c_2 \sin x $$.
+	We have $ R(x)=\csc x $ and we also know that $ W(y_1,y_2)= 1$\\
+	So we got 
+	\begin{align*}
+		v_1=\int \frac{- \sin x (\csc x)}{1}\, dx = =x\\
+		v_2= \int \frac{\cos x \sec x}{1}\, dx = \log (|\sin x|)
+	\end{align*}
+\end{proof}
+
+\begin{example}
+	Find a particular solution to $ y''-2y'+y=2x $
+\end{example}
+\begin{proof}
+	Take the AHE $ y''-2y'+y=0 $
+	and the HE $ m^2-2m+1=0 $ so we get $ y_p=c_1 e^{x}+c_2 x e^{x} $.\\
+	The Wronskian is equal to $ W(y_1,y_2)= e^{2x}$.\\
+	Now do some magic and get $$ v_2= \int \frac{2x e^{x}}{e^{2x}}\, dx = -2e^{-x}(x+1) $$
+	and \[ v_1= \int \frac{-2x^2e^{x} }{e^{2x}}\, dx = 2e^{-x}(x^2+2x+2)\]
+	So the final solution is given as follows
+	\begin{align*}
+		y&=v_1y_1+v_2y_2\\
+		&=2e^{-x}(x^2+2x+2)(e^{x})+(-2e^{-x}(x+1))(xe^{x})\\
+		&=2x+4
+	\end{align*}
+\end{proof}
+
+\begin{example}
+	Find a particular solution of $ y''-y'-6y=e^{x} $ with UDC then with VOP
+\end{example}
+\begin{proof}
+	First do with UDC find the AHE and HE $ m^2-m-6=0 $ so we get $ m=-2, m=3 $ and the $ y_g = c_1e^{-2x}+c_2e^{3x}$. A is not a root so we go
+	\begin{align*}
+		y_p&=Ae^{x}\\
+		y_p'&=Ae^{x}\\
+		y_p''&=Ae^{x}
+	\end{align*}
+Plug thing into the original differential equation
+\begin{align*}
+	Ae^x-Ae^{x}-6Ae^x=e^x
+\end{align*}
+we got $ A=-1/6 $. So the general solution is $ y=e^{-2x}+e^{3x}-1/6e^{x} $.
+\\
+Now do VOP, from AHE and HE we get $ y_g=c_1e^{-2x}+c_2e^{3x} $.
+We also now got the Wronskian as $ 5e^x $.
+\textbf{Complete this later...}
+\begin{align*}
+	content...
+\end{align*}
+\end{proof}
+
+\begin{example}
+	Find a particular solution for each of the following equations
+	\begin{enumerate}
+		\item $ y''+4y=\tan 2x $
+		\item $y''+2y'+y=e^{-x}\log x$
+	\end{enumerate}
+\end{example}
+
+
+\chapter{Linear systems of ordinary differential equations}
+\begin{chapquote}{Someone I don't like}
+	``I love differential equations. It is so fun. It has so many real life applications.''
+\end{chapquote}
+
+\section{Linear system of DE}
+We are mainly concerned with first order linear system of ODEs.\\
+
+Observe that the single $ n^{th} $ order equation \[ y^{(n)}=f(x,y,y') \]
+Is in fact equivalent to the system 
+\begin{align*}
+	y_1&=y_2\\
+	y_2'&=y_3\\
+	\vdots &\\
+	y_n'&=f(x,y_1,y_2,\dots,y_n)
+\end{align*}
+We will only see systems of two first order equations in two unknown functions of the following form,
+
+\begin{align*}
+	\dfrac{dx}{dt}&=F(t,x,y)\\
+	\dfrac{dy}{dt}&=G(t,x,y)
+\end{align*}
+
+
+More specifically we have \textbf{linear} systems of the form,
+
+\begin{definition}[Linear system of two ODE]\label{def:syslinear}
+	\begin{align*}
+		\dfrac{dx}{dt}&=a_1(t)+b_1(t)+f_1(t)\\
+		\dfrac{dy}{dt}&=a_2(t)+b_2(t)+f_2(t)
+	\end{align*} 
+\end{definition}
+
+
+\begin{definition}[Homogenous linear system of two ODE]\label{def:homosyslinear}
+	\begin{align*}
+		\dfrac{dx}{dt}&=a_1(t)+b_1(t)\\
+		\dfrac{dy}{dt}&=a_2(t)+b_2(t)
+	\end{align*} 
+\end{definition}
+
+
+We assume that $ a_i(t),b_i(t),f_i(t) $ for $ i=1,2 $ are continuous on some closed interval $ [a,b] $ on the $ t$-axis.\\
+If $ f_i(t) $ are both identically zero, then the system is called homogenous else.
+\\
+A solution of \ref{def:syslinear} is of the following form,
+\begin{align*}
+	x&=x(t)\\
+	y&=y(t)
+\end{align*}
+
+
+
+\section{Existence and uniqueness theorems}
+\begin{theorem}
+	If $ t_0 $ is any point of the interval $ [a,b] $ and if $ x_0 $ and $ y_0 $ are any numbers then def. \ref{def:syslinear} has one and only one solution 
+	\begin{align*}
+		x&=x(t)\\
+		y&=y(t)
+	\end{align*}
+valid throughout $ [a,b] $, such that $ x(t_0)=x_0, y(t_0)=y_0 $.
+\end{theorem}
+
+
+\section{Homogenous linear system of ODE in two variables}
+Now consider the system of linear homogenous equations (def \ref{def:homosyslinear}).
+
+\begin{theorem}\label{th:linearsolution}
+	If the homogenous system (def. \ref{def:homosyslinear}) has two solutions on the interval $ [a,b] $
+	\[ \begin{cases}
+		x=x_1(t)\\
+		y=y_1(t)
+	\end{cases} \text{and } \begin{cases}
+		x=x_2(t)\\
+		y=y_2(t)
+	\end{cases}\]
+	then we also have another solution of the form 
+	\[ \begin{cases}
+		x=c_1x_1(t)+c_2x_2(t)\\
+		y=c_1y_1(t)+c_2y_2(t)
+	\end{cases} \]
+	for any constants $ c_1, c_2 $.
+\end{theorem}
+
+
+\section{Wronskian of homogenous linear system of ODE}
+\begin{theorem}
+	If $ W(t) $ is the Wronskian of two solutions of the homogenous system then $ W(t) $ is either identically zero or nowhere zero on $ [a,b] $.
+\end{theorem}
+
+
+\section{Linearly independent solutions}
+god nose what fits here
+
+\section{General solution of Homogenous linear system of ODE in two variables}
+
+\begin{theorem}
+	If the two solutions for the homogenous system \ref{def:homosyslinear} have a Wronskian that does not vanish on $ [a,b] $ then its linear combination of the solutions as described in theorem \ref{th:linearsolution} is the general solution of the homogenous system \ref{def:homosyslinear} on that interval.
+\end{theorem}
+
+
+\begin{theorem}
+	If the two solutions of the homogeneous system are linearly independent then the linear combination \ref{th:linearsolution} is its general solution.
+\end{theorem}
+
+
+\section{Non-homogenous linear system in two variables}
+\begin{theorem}
+	If the two solutions for the homogenous system (Th. \ref{th:linearsolution}) are linearly independent on $ [a,b] $ and if 
+	\[ \begin{cases}
+		x&=x_p(t)\\
+		y&=y_p(t)
+	\end{cases} \]
+	is any particular solution of the non-homogenous linear system of ODEs (def: \ref{def:syslinear}) then 
+	\[ \begin{cases}
+		x&=c_1x_1(t)+c_2x_2(t)+x_p(t)\\
+		y&=c_1y_1(t)+c_2y_2(t)+y_p(t)
+	\end{cases} \]
+is the general solution of the non homogenous system \ref{def:syslinear}.
+\end{theorem}
+
+\section{Homogenous linear systems with constant coefficients}
+Technically this section doesn't seem to be in her syllabus but I'm pretty sure its gonna be covered so I've done it anyway.\\
+In this section we will examine the following system of linear ODEs,
+\begin{align}\label{def:constanthomo}
+	\begin{cases}
+		\frac{dx}{dt}&=a_1x+b_1y\\
+		\frac{dy}{dt}&=a_2x+b_2y
+	\end{cases}
+\end{align}
+where $ a_i,b_i $ are constants.\\
+We are concerned with the following auxiliary equation that is related to this system,
+\begin{align}\label{def:sysaux}
+	m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)=0
+\end{align}
+
+
+\subsection{Distinct real roots}
+If eq. \ref{def:sysaux} has distinct real roots $ m_1, m_2 $ then the general solution of eq. \ref{def:constanthomo} is given as,
+\begin{align*}
+	\begin{cases}
+		x=c_1A_1e^{m_1t}+c_2A_2e^{m_2t}\\
+		y=c_1B_1e^{m_1t}+c_2B_2e^{m_2t}
+	\end{cases}
+\end{align*}
+
+\subsection{Equal real root}
+If eq. \ref{def:sysaux} has equal real roots $m= m_1=m_2 $ then the general solution of eq. \ref{def:constanthomo} is given as,
+\begin{align*}
+	\begin{cases}
+		x&=c_1Ae^{mt}+c_2(A_1+A_2t)e^{mt}\\
+		y&=c_1Be^{mt}+c_2(B_1+B_2t)e^{mt}
+	\end{cases}
+\end{align*}
+
+\subsection{Distinct complex roots}
+If eq. \ref{def:sysaux} has distinct complex roots $a\pm ib $ then the general solution of eq. \ref{def:constanthomo} is given as,
+\begin{align*}
+	\begin{cases}
+		x&=e^{at}[c_1(A_1 \cos bt - A_2 \sin bt)+c_2(A_1 \sin bt + A_2 \cos bt)]\\
+		y&=e^{at}[c_1(B_1 \cos bt- B_2 \sin bt)+c_2(B_1 \sin bt + B_2 \cos bt)]
+	\end{cases}
+\end{align*}
+
+\chapter{Partial differential equations}
+
+\begin{chapquote}{Gauss}
+	``Stop studying differential equations.''
+\end{chapquote}
+
+
+\begin{definition}[Partial derivatives]
+	Partial derivates are defined as derivatives of a function of multiple variables when all but the variable of interest are held fixed during the differentiation.\\
+	For a function $ f $ in $ n $ variables $ x_1,x_2,\dots, x_n $ we can define the $ m^{th} $ partial derivative as,
+	\[ f_{x_m}=\frac{\partial f}{\partial x_m} = \lim_{h \rightarrow 0}\frac{f(x_1,\dots, x_m+h,\dots,x_n)-f(x_1,\dots,x_m, \dots,x_n)}{h}\]
+	Partial derivatives can be taken with respect to multiple variables and are denoted as follows,
+	\begin{align*}
+		\frac{\partial^2 f}{\partial x^2}&=f_{xx}\\
+		\frac{\partial^2 f}{\partial x \partial y}&=f_{xy}\\
+		\frac{\partial^3 f}{\partial x^2 \partial y}&=f_{xxy}
+	\end{align*}
+\end{definition}
+Differential equations that use partial derivates are called PDEs.
+
+
+\section{Classification of Second order PDE}
+Second order PDE are usually divided into three types.
+\begin{definition}[General form of a second order PDE]
+	\[ A u_{xx}+2B u_{xy}+C u_{yy}+Du_x+E u_y +F=0 \]
+\end{definition}
+Linear second order PDEs are classified according to the properties of the following $ 2\times 2 $ matrix,
+\begin{align}\label{def:matrix}
+	Z=\begin{bmatrix}
+		A & B\\
+		C & D
+	\end{bmatrix}
+\end{align}
+
+\subsection{Elliptic PDE}
+If $ Z $ (eq. \ref{def:matrix}) has determinant strictly greater than $ 0 $, it is called an elliptic PDE, i.e. $ \det Z > 0 $.
+
+\subsection{Hyperbolic PDE}
+If $ Z $ (eq. \ref{def:matrix}) has determinant strictly lesser than $ 0 $, it is called an hyperbolic PDE, i.e. $ \det Z < 0 $.
+
+\subsection{Parabolic PDE}
+If $ Z $ (eq. \ref{def:matrix}) has determinant equal to $ 0 $, it is called an parabolic PDE, i.e. $ \det Z =f 0 $.
+
+\section{One dimensional wave equation}
+\begin{definition}[One dimension wave equation]
+	The one dimensional wave equation is given by,\[ a^2 \frac{\partial^2y}{\partial x^2}=\frac{\partial^2y}{\partial t^2} \]
+	where $ a $ is a positive constant.
+\end{definition}
+
+\subsection{Vibration of an infinite string}
+\subsection{Vibration of an semi-infinite string}
+\subsection{Vibrating of a finite string}
+
+
+
+\section{Laplace equation}
+\begin{definition}[Laplacian]
+	The Laplacian of a three dimensional function $ \phi $ is given as follows,
+	\[ \Delta f= \frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2}+\frac{\partial^2 f}{\partial z^2} \]
+	This is generalized for higher dimensions in the expected way.
+\end{definition}
+
+\begin{definition}[Laplace's equation]
+	Laplace's equation is the following PDE
+	\[ \Delta f = 0 \]
+\end{definition}
+\subsection{Green's function}
+\begin{definition}[Green's function]
+	content...
+\end{definition}
+
+\section{Heat conduction principle}
+\begin{definition}[General heat equation]
+	The temperature function $ w $ satisfies the following heat equation
+	\[a^2 \Delta w = \frac{\partial w}{\partial t}\]
+\end{definition}
+\subsection{Infinite rod case}
+\subsection{Finite rod case}
+
+
+\backmatter
+
+\chapter*{Appendix}
+If you are seeing this, I forgot to do it.
+
+
+\addcontentsline{toc}{Chapter}{Appendix}
+
+
+\thispagestyle{empty}%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
+{\ }
+\newpage
+
+\end{document}

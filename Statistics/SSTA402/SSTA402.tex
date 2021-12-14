@@ -1,0 +1,555 @@
+\documentclass[oneside,11pt,pdftex]{book}%Remove draft when book editing is completed.
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage{fontawesome5}
+\usepackage{booktabs}
+\usepackage{amssymb}	
+\usepackage{longtable}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage[toc,page]{appendix}
+\usepackage[nottoc]{tocbibind}
+\numberwithin{equation}{section}
+\graphicspath{ {./Images/} }
+%\usepackage[raggedright]{titlesec}
+\usepackage{placeins}
+\usepackage{mathtools}
+
+
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+%Be careful when you use commands which align formulas.
+%If aligned formulas range to two pages, the formulas should be divided into two environments.
+%\makeatletter
+%\AtBeginDocument{\let\mathaccentV\AMS@mathaccentV}
+%\makeatother
+%This is a patch for double bar.
+%Activate it if \bar{\bar{a}} doesn't work.
+
+\newskip\thskip
+\thskip=0.5\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip
+
+\newdimen\dtest%Remove this when book editing is completed.
+\settowidth{\dtest}{letters and symbols here}
+\typeout{<<<\the\dtest>>>}
+
+\newtheorem{theorem}{Theorem}[chapter]%Modify these declarations for your need.
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+
+\newtheorem{xca}[theorem]{Exercise}
+
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+
+\makeindex
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\F}{\mathbb{F}}
+
+
+
+\begin{document}
+
+
+\frontmatter
+
+\thispagestyle{empty}
+\begin{flushright}
+{\LARGE \textbf{Bhoris Dhanjal}}%Input your name here.
+\end{flushright}
+\vfill
+\begin{center}
+{\fontsize{29.86truept}{0truept}\selectfont \textbf{Analysis of Variance \& Design of Experiments}}%Input the book title here.
+%Below is for a book with a subtitle.
+%{\fontsize{29.86truept}{0truept}\selectfont \textbf{The Book Title}} \\
+%\vspace{6.5truept}
+%{\Large, \LARGE, etc. \textbf{The Subtitle}}
+\end{center}
+\vfill
+\begin{flushleft}
+{\LARGE \textbf{Lecture Notes}} \\
+\hspace{-1.75truept}
+{\large \textbf{for SSTA402}}
+\end{flushleft}
+\newpage
+
+\tableofcontents
+
+
+\mainmatter
+
+\chapter{Analysis of Variance\\ (Fixed effect models)}
+\section{Chi-squared distribution}
+\begin{definition}\label{def:chisquaredist}
+	Consider the standard normal distribution \[ Z=\frac{x-\mu}{\sigma} \sim \text{SN}(0,1)\]
+The square of the standard normal distribution gives us chi-squared with degree of freedom 1.
+
+\par In general for iid SN variates $ Z_i $ we can say
+\[ \sum_{i=1}^n Z_i^2 \sim \chi^2_{(n)} \]
+\end{definition}
+
+\subsection{Tests to use depending on type of data}
+\begin{itemize}
+	\item For one categorical feature (is there a difference in the proportion) we will use \textbf{one sample proportion test.} 
+	\item When two categorical features we will use \textbf{chi-squared test.}
+	\item When one numeric data (is there is difference in the mean) we will use \textbf{t-test.}
+	\item when two numeric data we will use the \textbf{t-test for two samples.}
+\end{itemize}
+
+\section{Analysis of variance}
+Analysis of variance is a powerful statistical tool for test of significance. 
+\begin{definition}[Statistical significance]\label{def:significance}
+	We have evidence that the result $ v_c $ in the sample also exists in population
+\end{definition}
+
+\textbf{Very large sample: }Most results will be statistically significant.\par
+\textbf{Very small sample: }Most results will not be statistically significant.
+
+\begin{definition}[p-value]
+	Probability value, it indicates, how likely it is that the result occurred by chance alone.
+\end{definition}
+
+The test of significance based on t-distribution is adequate only for testing the significance h difference between two sample means.
+\par
+When we have 3 or more samples (and we need to test if they all come from the same population) we need an alternative procedure.
+\par
+\begin{example}
+	5 fertilizers are applies to four plots of wheat and yield of wheat on each of the plot is given. We may be interested is to find out whether the effect of these fertilizers on the yields is significantly different or not.
+\end{example}
+
+The basic purpose of ANOVA is to test the homogeneity of several means.\par
+Variation is inherent in nature, the total variation in any set of numerical data is due to a number of causes which may be classified as 
+\begin{enumerate}
+	\item Assignable causes
+	\item Chance causes
+\end{enumerate}
+
+The variation due ot assignable causes can be detected and measured, whereas the variation due to chance causes is beyond the control of human hand and cannot be traced separately. 
+
+\begin{definition}[Analysis of variance]
+	According to R.A Fischer, ANOVA is the ``separation of variance ascribable to one group of causes from the variance ascribable to other group''.
+\end{definition}
+
+\textbf{Assumptions for ANOVA:} ANOVA test is based on the test statistics F (or variance ratio). For the validity of the F-test in ANOVA, the following assumptions are made
+\begin{enumerate}
+	\item The observations are independent.
+	\item Parent population from which observations are taken is normal
+	\item Various treatment and environment effects are additive in nature.;
+\end{enumerate}
+
+\begin{theorem}[Cochran's theorem]
+	Let $ x_1, x_2, \dots, x_n $ denote a random sample from normal population $ N(0, \sigma^2) $. Let the sum of the squares of theese values be written in in the form \[ \sum_{i=1}^n x_i^2 = Q_1+Q_2+\cdots+Q_k \]
+	Where $ Q_j $ is a quadratic form in $ x_1, x_2, \dots, x_n$ with rank (degrees of freedom) $ r_j=1,2,\dots,k $ then the random variables $ Q_1, Q_2, \dots, Q_k $ are mutually independent and $ \frac{Q_i}{\sigma^2} $ is $ \chi^2_k $ variable with $ r_j $ degrees of freedom iff $ \sum_{j=1}^k r_j=n $
+\end{theorem}
+
+\section{One-way classification}
+Let us suppose that $ N $ observations $ y_{ij}, (i=1,2,\dots, k; j=1,2,\dots, n)$ of a random variable $ Y $ are grouped on some basis, into $ k $ classes of sizes $ n_1, n_2, \dots, n_k $ respectively, $ \left(N=\sum_{i=1}^{k} n_i \right) $ as exhibited in below table.
+\[
+\begin{bmatrix} 
+	\text{Class} & \text{Sample observations} & \text{Total} & \text{Mean} \\
+	1 & y_{11} \hfill y_{12} \hfill \dots \hfill y_{1n_1} & T_1 & \overline{y_{1.}}\\
+	2 & y_{21} \hfill y_{22} \hfill \dots \hfill y_{2n_1} & T_2 & \overline{y_{2.}}\\
+	\vdots & \vdots \hfill \vdots \hfill \ddots \hfill \vdots & \vdots & \vdots \\
+	k & y_{k1} \hfill y_{k2} \hfill \dots \hfill y_{kn_{k}} & T_k & \overline{y_{k.}}
+\end{bmatrix}
+\]
+
+The total variation in the observation $ y_{ij} $ can be split into the following two components: 
+\begin{enumerate}
+	\item The variation between the classes or the variation due to different bases of the classification, commonly known as treatments.
+	\item The variation within the classes, i.e. the inherent variation of the random variable within the observation of a class.
+\end{enumerate}
+The first type of variation is due to assingable cause which can be detected and controlled by human endeavour and second type of varation is due to chance causes, which are beyond control of human hand.
+\par 
+The main object of analysis of variance technique is to examine if there is significant difference ebtween the claass means in view of the inherent vairaiblity within the seperate classes.
+\par 
+\begin{example}
+	In particular, let us consider the effect of $ k $ different rations on the yield in milk of $ N $ cows (of the same breed and stock) divided into $ k $ classes of sizes $ n_1, n_2, \dots, n_k $ respectively, $ N=\sum_{i=1}^{k} n_i$.
+\end{example}
+
+The sources of variation is,
+\begin{enumerate}
+	\item Effect of treatments (i.e. classes).
+	\item Error ($ \varepsilon $) produced by numerical causes
+\end{enumerate}
+
+\subsection{Mathematical model}
+\begin{align*}
+	y_{ij}&=\mu_i + \varepsilon_{ij} && \\
+	&= \mu + \alpha_i + \varepsilon_{ij}&&\\
+	&= \mu + (\mu_u - \mu) + \varepsilon_{ij} && i=1,\dots,k; j=1,\dots,n_i
+\end{align*}
+Where, $ \alpha_i=\mu_i-\mu $, effect due to $ i^{th} $ treatment.
+ \[  y_{ij}=\mu + \alpha_i +\varepsilon_{ij}\]
+$ y_{ij} $ $ j^{th} $ observation receiving $i^{th}$ treatment, $ \mu $ is general mean effect, $ \mu=\sum_{i=1}^{k}\frac{\mu_i n_i}{N} $, $ \alpha_i =$ effect due to $ i^{th} $ level of factor $ i=1,\dots,k $, 
+ 
+ 
+ \begin{align*}
+  \sum_{i=1}^k n_i k_i = \sum_{i} n_i (\mu_i-\mu) &= \sum n_i\mu_i - \sum n_i\mu = 0
+ \end{align*}
+ $ \varepsilon_{ij}$ is random error or eror component (assume $ \varepsilon_{ij} \sim N(0, \sigma^2) $)
+
+\subsection{Layout of one way ANOVA}
+\[
+\begin{bmatrix} 
+	\text{Factor level} & \text{Observations} & \text{Total} & \text{Mean} \\
+	1 & y_{11} \hfill y_{12} \hfill \dots \hfill y_{1n_1} & \sum_{j=1}^{n_1}y_{1j}=y_1. & \frac{y_1.}{n_1}=\overline{y_{1}.}\\
+	2 & y_{21} \hfill y_{22} \hfill \dots \hfill y_{2n_1} & \sum_{j=1}^{n_2}y_{2j}=y_2. & \frac{y_2.}{n_2}=\overline{y_{2}.}\\
+	\vdots & \vdots \hfill \vdots \hfill \ddots \hfill \vdots & \vdots & \vdots \\
+	k & y_{k1} \hfill y_{k2} \hfill \dots \hfill y_{kn_{k}} & \sum_j y_{kj}=y_k. & \frac{y_k .}{n_k}=\overline{y_{k}.}
+\end{bmatrix}
+\]
+$ y_{ij} $ is $ j^{th} $ observation due to $ i^{th} $ level of factor, $ i=1,2,\dots, k; j=1,2,\dots,n_i $
+
+\begin{align*}
+	\sum_{i=1}^k n_i&=n_1+n_2+\cdots n_k = N\\
+	y_i.&= \sum_{j=1}^{n_i} y_{ij}, \text{ when, } i=1,2,\dots,k \text{ total of $i^{th}$ row}\\
+	y..&= \sum_{i=1}^{k} y_i. = G = \text{Grand total}= \sum_{i=1}^k \left[ \sum_{j=1}^{n_i} y_{ij} \right]\\
+	x \overline{y_i.}&= \frac{y_i.}{n_i}=\sum_{j=1}^{n_i}\frac{y_{ij}}{n_i}= \text{Mean of obs of $i^{th}$ level of factor}, i=1,2, \dots, k\\
+	\overline{y..}&=\frac{1}{N}\sum_i \sum_j y_{ij}=\frac{1}{N} \sum_i n_i \overline{y_i.}=\text{Overall mean}
+\end{align*}
+
+\subsection{Assumptions in the model}
+\begin{enumerate}
+	\item All the observations are independent and $ y_{ij} \sim N(\mu_i, \sigma_e ^2) $
+	\item Different effects are additive in nature.
+	\item $ \varepsilon_{ij} $ are i.i.d $ N(0, \sigma_o^2) $ i.e. $ E[\varepsilon_{ij}] =0$ and $ V[\varepsilon_{ij}] =0\ \forall i, j$
+\end{enumerate}
+
+\subsection{Hypothesis to be tested}
+\subsubsection{Null hypothesis}
+We want to test the equality of the population means, i.e. the homogeneity of different treatment. Hence, the null hypothesis is given by 
+\[ H_0: \mu_1=\mu_2=\cdots=\mu_k=\mu \]
+which reduces to
+\[ H_0:\alpha_1=\alpha_2=\cdots=\alpha_k=0 \]
+
+\subsubsection{Alternate hypothesis}
+At least two of the means ($ \mu_1, \mu_2, \dots, \mu_k $) are different.
+
+\subsection{Estimating the parameters of the model}
+
+The model is \[ y_{ij} =\mu + \alpha_i + \varepsilon_{ij}, i=1,\dots,k; j=1,\dots, n\]
+To estimate the parameters we use least squares method
+\begin{theorem}
+	Estimating $ \mu $
+\end{theorem}
+\begin{proof}
+\begin{align*}
+	E &= \sum_{i=1}^{k} \sum_{j=1}^{n_i} \varepsilon_{ij}^2 = \sum_i \sum_j (y_{ij}-\mu - \alpha_i )^2
+	\intertext{Differentiate $ E $ w.r.t $ \mu $ and $ \alpha_i $}
+	\frac{\partial E}{\partial \mu}&= \frac{\partial}{\partial \mu } \left[ \sum_i \sum_j (y_{ij} -\mu -\alpha_i)^2 \right]\\
+	&=2 \sum_i \sum_j (y_{ij}-\mu- \alpha_i)(-1)
+	\intertext{Equating with $ 0 $}
+	\frac{\partial E}{\partial \mu }= 0 &\implies \sum_{i=1}^k \sum_{j=1}^{n_1}=0\\
+	&\implies \sum_i \sum_j y_{ij}-\sum_i \sum_j \mu - \sum_i \sum_j \alpha_i =0\\
+	&\implies \sum_i \sum_j y_{ij}- \mu \sum_i \sum_j 1 - \sum_i \sum_j \alpha_i=0\\
+	&\implies \sum_i \sum_j y_{ij}- \mu N - 0 =0\\
+	&\implies \sum_i \sum_j y_{ij} - N \hat{\mu}=0\\
+	&\implies \hat{\mu}=\frac{\sum_i \sum_j y_{ij}}{N}=\overline{y..}=G
+\end{align*}
+
+\end{proof}
+
+\begin{theorem}
+	Estimating $ \alpha_i $
+\end{theorem}
+\begin{proof}
+	Begin similarly but now different w.r.t $ \alpha_i  $
+	\begin{align*}
+		\frac{\partial E}{\partial \alpha_i} &= \frac{\partial }{\partial \alpha_i } \left[ \sum_i \sum_j (y_{ij}-\mu - \alpha_i)^2\right]\\
+		&= 2 \sum_j (y_{ij}-\mu - \alpha_i)(-1)\\
+		&\implies \sum_j (y_{ij} - \mu - \alpha_i )=0\\
+		&\implies \sum_j y_{ij} - \sum_j \mu - \sum_j \alpha_i =0\\
+		&\implies y_i. - n_i \mu - n_i \hat{\alpha_i}=0\\
+		&\implies \hat{\alpha_i}=\frac{y_i.}{n_i}-\hat{\mu}=\overline{y_i.}-\overline{y..}\\
+		&\implies \hat{\alpha_i.}= \overline{y_i.}-\overline{y..}
+	\end{align*}
+
+Substituting these in the equation 
+\begin{align*}
+	y_{ij}&= \hat{\mu}+\hat{\alpha_i}+\varepsilon_{ij}\\
+	y_{ij}&=\overline{y..}+(\overline{y_i.}+\overline{y..})+(y_{ij}-\overline{y_i.})
+\end{align*}
+Observation = Grand mean + deviation due to $ i^{th} $ treatment + residual or error.\\
+Subtracting $ x \overline{y..} $ from both sides, squaring and summing over $ i, j$.
+\begin{align*}
+	\sum_i \sum_j (y_{ij}-\overline{y..})^2&= \sum_i \sum_j ((\overline{y_i.}-\overline{y..})+( y_{ij}-\overline{y_i.}))^2\\
+	&= \sum_i \sum_j (\overline{y_i.}-\overline{y..})^2+\sum_i \sum_j (y_{ij}-\overline{y_i.})^2\\
+	&+2 \sum_i \sum_j (\overline{y_1.}+\overline{y..})(y_{ij}-\overline{y_i.})\\
+	\intertext{But second term is zero as it is sum of deviations from their mean}
+	\sum_i \sum_j (y_{ij}-\overline{y..})^2&=\sum_i n_i (\overline{y_i.}-\overline{y..})^2+\sum_i \sum_j (y_{ij}-\overline{y_i.})^2
+	\intertext{Sum of squares of total variation = variation due to level of factors + variation due to error}
+	\intertext{Total sum of squares = sum of squares due to factor + sum of squares due to error}
+	\intertext{Total s.s = between s.s. + within s.s.}
+\end{align*}
+\end{proof}
+
+\subsection{Degrees of freedom}
+The total no. of observations is equal to $ N $. The total no of s.s. is computed from $ N $ observations which are subjected to one restriction.
+\\
+Therefore, total degrees of freedom (d.f.)=$ N-1 $.\\
+Degree of freedom due to factors is $ k-1 $. So now we can say degree of freedom for ss due to error is $ n-k=x $
+
+\subsection{Expectation of various sum of squares}
+The model is,
+\begin{align*}
+	y_{ij}&= \mu + \alpha_i + \varepsilon_{ij}\\
+	\overline{y_i.}&= \sum_{j=1}^{n_i}\frac{y_{ij}}{n_i}\\
+	&= \sum_j \frac{\mu+\alpha_i + \varepsilon_{ij}}{n_i}\\
+	&= \frac{n_i \mu + n_i \alpha_i +\varepsilon_{i}.}{n_i}=\mu + \alpha_i +\frac{\varepsilon_{i}.}{n_i}\\
+	\overline{y..}&=\sum_i \sum_j \frac{y_{ij}}{N}\\
+	&=\frac{N \mu }{N}+\frac{\sum_i n_i \alpha_i}{N}+\frac{\varepsilon..}{N}\\
+	\overline{y..}&=\mu+\overline{\varepsilon..}
+\end{align*}
+Assume $ \varepsilon_{ij}\sim N(0,\sigma^2) $
+\begin{align*}
+	\overline{\varepsilon_i.}&=\sum_j  \frac{\varepsilon_{ij}}{n_i}\\
+	E[\overline{\varepsilon_i.}]&=0\\
+	V[\overline{\varepsilon_i.}]&=\frac{\sigma^2}{n_i}
+\end{align*}
+
+\subsubsection{Expectation of s.s. due to factor}
+\begin{align*}
+	E[s.s. due to facor]&=E\left[\sum_i n_i (\overline{y_i}-\overline{y..})^2 \right]\\
+	&=E\left[\sum_i n_i \left((\mu+\alpha_i+\overline{\varepsilon_{i}.})-(\mu+\overline{\varepsilon..})\right)^2\right]
+	\intertext{Expand this out...}
+	&=\sum_i n_i \alpha_i^2 +E\left[\sum_i n_i (\overline{\varepsilon_{i}.}-\overline{\varepsilon..})^2\right]+0\\
+	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})^2\right]&=\sum_i n_i [E[\overline{e_i.}^2]+E[\overline{e..}^2]-2E[\overline{e_i.}-\overline{e..}]]\\
+	&=\sum_i n_i \left[\frac{\sigma^2}{n_i}+\frac{\sigma^2}{N}-2E[\overline{e_i.}-\overline{e..}]\right]\\
+	&=k\sigma^2+\sigma^2-2\sum_i n_i (\overline{e_i.}-\overline{e..})\\
+	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2+\sigma ^2-2\sum_i n_i (\overline{e_i.}-\overline{e..})\\
+	\sum_i n_i (\overline{e_i.}-\overline{e..})&=E\left[ \overline{e_i.}\sum_i n_i (e../n_i) \right]\\
+	&=E[\overline{e..}N\overline{e..}]\\
+	&=N E[\overline{e..}^2]=\frac{N \sigma^2 }{N}=\sigma^2\\
+	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2-\sigma ^2\\
+	&=\sum_i n_i \alpha_i^2 +(k-1)\sigma^2
+\end{align*}
+We can now also say,
+\[ \text{Mean s.s}=\frac{\text{s.s. due to factor}}{\text{degrees of freedom}} \]
+\begin{align*}
+	E\left[ \frac{\text{s.s. due to factors}}{k-1} \right]&=\frac{1}{k-1}\sum_i n_i \alpha_i^2 + \sigma^2
+\end{align*}
+If $ H_0 $ is true $ \forall i $ then, $ E[\text{m.s.s. due to factor}] =\sigma^2$
+
+\subsubsection{Expectation of error s.s.}
+
+\begin{align*}
+	E[\text{Error s.s.}]&=E\left[\sum_i \sum_j (y_{ij}-\overline{y_i.})^2\right]\\
+	&=E \left[\sum_i \sum_j (y_{ij}-(\mu + \alpha_i + \overline{e_{i}.}))^2\right]
+	\intertext{magic}
+	&=E[\sum_i \sum_j (e_{ij}-\overline{e_i.})^2]\\
+	&=E\left[\sum_i \sum_j (e_{ij}^2)+\sum_i \sum_j (\overline{e_i.}^2)-2 \sum_i \sum_j (e_{ij}-\overline{e_i.})\right]\\
+	&= N \sigma^2 + k \sigma^2 -2 \sum_i \sum_j E[e_{ij}-\overline{e_i.}]
+	\intertext{Consider now,}
+	\sum \sum E[e_{ij}-\overline{e_i.}]&=\sum_i n_i E[\overline{e_i.}^2]=\sum_i \frac{n_i \sigma^2}{n_i}=k\sigma\\
+	E[\text{error s.s.}]&=N\sigma^2+k\sigma^2-2k\sigma^2\\
+	&=(N-k)\sigma^2
+\end{align*}
+Now we can say,
+\[ E[\text{m.s.s. for error}]=\sigma^2 \]
+
+From these two subsections we can say $E[\text{m.s.s for factor}]\geq E[\text{m.s.s
+ for error}]$. Equality holds when $ H_0 $ is true.
+
+\subsection{Test statistics}
+Using Cochran's theorem.\\
+We have $ \frac{s.s due to factor}{\sigma^2}, \frac{ss due to error}{sigma^2} $ follows chi squared with $(k-1)$ and $(N-k)$ degrees of freedom respectively.\\
+Therefore, the test statistics are defined as follows
+\begin{align*}
+	f&=\frac{\chi_1^2/d.f.}{\chi_2^2/d.f.}=\frac{\text{s.s. due to factors}/\sigma^2/(k-1)}{\text{s.s. due ot error}/\sigma^2/(N-k)}\\
+	&\frac{\text{M.s.s for factor}}{\text{m.s.s. for error}}
+\end{align*}
+We will reject $ H_0: \alpha_i=0 \forall i $ if $ F_{cal}>F_{tab} $ as two independent $ \chi^2 $ variates with $ (k-1) , (N-k)$ d.f. respectively.
+
+\subsection{Computations forms of s.s.}
+
+\subsubsection{Computational form of total s.s.}
+\begin{align*}
+	\text{Total s.s.}&= \sum_i \sum_j (y_{ij}-\overline{y..})^2\\
+	&=\sum \sum (y_{ij}^2+\overline{y..}^2-2y_{ij}\overline{y..})\\
+	&= \sum \sum y_{ij}^2 + N \overline{y..}^2- 2\overline{y..}\sum \sum y_{ij}\\
+	&=\sum \sum y_{ij}^2 - \frac{N y^2..}{N^2}\\
+	\text{Total s.s.}&= \sum_i \sum_j y_{ij}^2 -\frac{y^2..}{N}=\sum_i \sum_j y_{ij}^2 -\frac{G^2}{N}\\
+	\text{Total s.s.}&= \text{Raw s.s.}-G.F
+\end{align*}
+
+\subsubsection{Computational form of s.s. due to factors}
+\begin{align*}
+	\text{s.s. due to factor}&= \sum_i n_i (\overline{y_i}-\overline{y..})^2
+	\intertext{Magic...}
+	\text{s.s. due to factor}&= \sum_i \frac{T_i}{n_i}-\frac{G^2}{N}
+\end{align*}
+
+\subsection{One way ANOVA Table}
+Replace R with T below here,
+
+ \[ \begin{bmatrix}
+ 	\text{Source of variance} & d.f. & s.s. & m.s.s & F\\
+ 	\text{Between factor (treatment)} & k-1 & \sum_i \frac{R_i^2}{n_i}-\frac{G^2}{N}=S_R^2 & s^2_R=\frac{S_R^2}{k-1} & F=\frac{s_R^2}{s^2_E}\\
+ 	\text{Within factor (eror)} & N-k & + = S_E^2 & s_E^2=\frac{s_E^2}{N-k} & -\\
+ 	\text{Total} & N-1 & \sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
+ \end{bmatrix} \]
+
+\subsection{Example of One-way classification ANOVA}
+Type this out later 
+
+\section{Two-way classification}
+Suppose $ n $ observations are classification into $ k $ categories (or classes), say $ A_1, A_2, \dots, A_k $ according to some criterion $ A $; and into $ h $ categories, say $ B_1, B_2, \dots, B_h $ according to some criterion $ B$ having $ kh $ combinations ($ A_i,B_j $) $ i=1,2,\dots k; j=1,2,\dots, h $; often called cells.\par
+This scheme of classification according to two factors or criteria is called two-way classification and its analysis is called two way ANOVA. The number of observations in each cell may be equal or different, but we shall consider the case of one observation per cell so that $ n=kh $, i.e. the total no of cell is $ n=kh $.
+
+\begin{example}
+	If we have $ 4 $ different fertilizers say $ A,B,C,D $ and $ 5 $ different types of seeds then we will have $ 20 $ plots with each of oe having one of the four fertilizers and one of the five seeds. The yields from these plots will be analysed to check whether there is significant difference between fertilizers or between seeds there are two was in which we can compare the data the analysis is called two-way analysis.
+\end{example}
+
+\subsection{Layout of two-way classification}
+\[ \begin{matrix}
+	\text{Levels} & 1 & 2 & \dots & j & \dots & h & \text{Total} & \text{Mean}\\
+	1 & y_{11} & y_{12} & \dots & y_{1j} & \dots & y_{1h} & y_1. & \overline{y_1.}\\
+	2 & y_{21} & y_{22} & \dots & y_{2j} & \dots & y_{2h} & y_2. & \overline{y_2.}\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+	i & y_{i1} & y_{i2} & \dots & y_{ij} & \dots & y_{ih} & y_i. & \overline{y_i.}\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+	k & y_{k1} & y_{k2} & \dots & y_{kj} & \dots & y_{kh} & y_k. & \overline{y_k.}\\
+	\text{Total} & y._1 & y._2 & \dots & y._j & \dots & y._h &  & \\
+	\text{Mean} & \overline{y._1} & \overline{y._2} & \dots & \overline{y._j} & \dots & \overline{y._h} &  & \\
+\end{matrix} \]
+
+\subsection{Notation}
+\begin{align*}
+	N&=kh\\
+	y..&=\sum_i \sum_j y_{ij}=G\\
+	\overline{y..}&=\sum_i \sum_j \frac{y_{ij}}{N}=\frac{y..}{kh}\\
+\end{align*}
+$y_{ij}=\text{The observation receiving $ i^{th} $ level of factor A and $ j^{th} $ level of factor B}$
+\begin{align*}
+	R_i=y_i.&=\sum_{j=1}^{h}y_{ij}\\
+	\overline{y_i.}&=\frac{y_i.}{h}\\
+	C_j=y._j&=\sum_{i=1}^k y_{ij}\\
+	\overline{y._j}&=\frac{y._j}{k}
+\end{align*}
+
+\subsection{Assumptions of two-way classification}
+\begin{enumerate}
+	\item Observations are independent.
+	\item Different effects are additive in nature
+	\item $ e_{ij} $ are i.i.d $ N(0,\sigma^2) $
+\end{enumerate}
+
+\subsection{Model of two-way classification}
+\[ y_{ij} = \mu_{ij}+e_{ij}, i=1,\dots,k; j=1,\dots,h\]
+Here, $ e_{ij} $ is effect due to chance causes. $ E[y_{ij}] =\mu_{ij}=$fixed effect due to assingable causes where $ y_{ij} $ are indepdent $ N(\mu_{ij},\sigma^2) $. \\
+$ \mu_{ij} $ is further split into the followring parts 
+\begin{enumerate}
+	\item The general mean effect is given by \[ \mu=\sum_i \sum_j \frac{\mu_{ij}}{N} \]
+	\item $ \alpha_i  $ effect due to $ i^{th} $ level of factor $ A $, $ \alpha_i=\mu_i-\mu, i=1,2,\dots, k$ and $ \mu_i.=\sum_j \frac{\mu_{ij}}{h}, i=1,2,\dots, k $. Sum of $ \alpha_i  $ is zero.
+	\begin{proof}
+		\begin{align*}
+			\sum_{i=1}^k \alpha_i &= \sum_i (\mu_i.-\mu)\\
+			&=\sum_i  \mu_i.-\mu k\\
+			&=k\sum_i \sum_j \frac{\mu_{ij}}{hk}-\mu k =0
+		\end{align*}
+	\end{proof}
+	\item $ \beta_j $ effect due to $ j^{th} $ level of factor $ B $. $ \beta_j=\mu._j-\mu; j=1,\dots,h $ and same thing as above write it out.
+	\item The interaction effect $ \gamma_{ij} $ when the $ i^{th} $ level of first factor and $ j^{th} $ level of factor $ B $ occurs simultaneously and is given by 
+	\[ \gamma_{ij}= \mu_{ij}-\mu_i.-\mu._j-\mu\]
+	And its summation across j and i is zero.
+\end{enumerate}
+Thus, we have $ \mu_{ij} =\mu+(\mu_i.-\mu)+(\mu._j-\mu)+(\mu_{ij}-\mu_i.-\mu._j-\mu)$
+
+As there is only one observation per cell we cannot estimate interactive effect. Hence interaction effect is zero and the model reduces to.
+\[ y_{ij}=\mu+\alpha_i+\beta_j+e_{ij} \]
+for $ i=1,\dots,k;j=1,\dots,h $
+
+\subsection{Hypothesis}
+\subsubsection{Null hypothesis}
+$ H_{0_{\alpha}}: $ There is no significant difference of factor A,
+\begin{align*}
+	\mu_1.=\mu_2.=\cdots=\mu_k.=\mu\\
+	\alpha_1=\alpha_2=\cdots=\alpha_k=0
+\end{align*}
+$ H_{0_{\beta}}: $ There is no significant difference of factor B,
+\begin{align*}
+	\mu._1=\mu._2=\cdots=\mu._k=\mu\\
+	\beta_1=\beta_2=\cdots=\beta_h=0
+\end{align*}
+
+\subsubsection{Alternative hypothesis}
+\textbf{Complete this}
+
+\subsection{Least square estimators of parameters}
+To obtain $ \hat{\mu}, \hat{\alpha_i} , \hat{\beta_j}$
+\begin{align*}
+	E&=\sum_i \sum_j e_{ij}^2=\sum_i \sum_j (y_{ij}-\mu-\alpha_i -\beta_j)^2
+\end{align*}
+First derivate it with respect to $ \mu  $ and equate it to zero to get $ \hat{\mu } $
+\begin{align*}
+	\frac{\partial E}{\partial \mu }=0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
+	&\implies \sum_i \sum_j y_{ij} - \sum_i \sum_j \mu - \sum_i \sum_j \alpha_i - \sum_i \sum_j \beta_j=0\\
+	&\implies y..-\mu N - 0 - 0\\
+	&\implies \hat{\mu}=\frac{y..}{N}=\overline{y..}
+\end{align*}
+
+Derivative it with respect to $ \alpha_i $
+\begin{align*}
+	\frac{\partial E}{\partial \alpha_i }=0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
+	&\implies \sum \sum y_{ij} - \sum \sum \mu - \sum \sum \alpha_i - \sum \sum \beta_j=0\\
+	&\implies y..- \mu n_k - n_k \alpha_i - 0\\
+	&\implies \hat{\alpha_i}=\overline{y_i.}-\overline{y..}
+\end{align*}
+
+Differentiate it with respect to $ \beta_j $
+\begin{align*}
+		\frac{\partial E}{\partial \beta_j }=0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
+		&\implies \sum \sum y_{ij} - \sum \sum \mu - \sum \sum \alpha_i - \sum \sum \beta_j=0\\
+		&\implies y..- \mu k - 0 - k \beta_j\\
+		&\implies \hat{\beta_j}=\overline{y._j}-\overline{y..}
+\end{align*}
+
+Now we can find the value of $ e_{ij} $,
+\begin{align*}
+	y_{ij}&=\mu+\alpha_i+\beta_j+e_{ij}\\
+	&=\overline{y..}+\overline{y_i.}-\overline{y..}+\overline{y._j}-\overline{y..}+e_{ij}\\
+	&=\overline{y_i.}+\overline{y._j}-\overline{y..}+e_{ij}\\
+	\implies e_{ij}&=y_{ij}-\overline{y_i.}-\overline{y._j}+\overline{y..}
+\end{align*}
+
+The model is then,
+\begin{align*}
+	y_{ij}&=\overline{y..}+(\overline{y_i.}-\overline{y..})+(\overline{y._j}-\overline{y..})+(y_{ij}-\overline{y_i.}-\overline{y._j}-\overline{y..})
+	\intertext{Subtracting $ \overline{y..} $ from both the sides squaring both sides and summing over $ i $ and $ j $.}
+	\sum_i \sum_j (y_{ij}-\overline{y..})^2&=\sum_i \sum_j \left[(\overline{y_i.}-\overline{y..})+(\overline{y._j}-\overline{y..})+(y_{ij}-\overline{y_i.}-\overline{y._j}-\overline{y..}) \right]^2\\
+	&=\sum_i \sum_j (\overline{y_i}-\overline{y..})^2+\sum_i \sum_j (\overline{y._j}-\overline{y..})^2+\sum_i \sum_j (y_{ij}-\overline{y_i.}-\overline{y._j}-\overline{y..})^2
+	\intertext{All cross product terms vanish}
+	\text{Total s.s.}&=\text{Factor a.s.s+Factor b.s.s.+Error s.s.}
+\end{align*}
+
+\subsection{Degrees of freedom}
+\begin{itemize}
+	\item Total d.f. $ N-1 $.
+	\item Factor A d.f. $k-1$.
+	\item Factor B d.f. $h-1$
+	\item Error d.f. $N-k-h+1=(k-1)(h-1)$
+\end{itemize}
+
+\chapter{Design of Experiments}
+
+
+\chapter{Latin square design (LSD)}
+
+
+\backmatter
+\thispagestyle{empty}
+\newpage
+
+\end{document}
