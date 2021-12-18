@@ -542,6 +542,119 @@ The model is then,
 	\item Error d.f. $N-k-h+1=(k-1)(h-1)$
 \end{itemize}
 
+\subsection{Mean sum square}
+\begin{itemize}
+	\item $ MSS_A = \frac{SS_A}{k-1}$
+	\item $ MSS_B = \frac{SS_B}{h-1}$
+	\item $MSS_{err}=\frac{Err SS}{(k-1)(h-1)}$
+\end{itemize}
+
+\subsection{Expectation of various SS}
+The model is \[ y_{ij}=\mu+ \alpha_i+\beta_j+e_{ij} \]
+for $ i=1,\dots,k; j=1,\dots h $
+
+\begin{align*}
+	\overline{y_i.}&=\mu+\alpha_i+\overline{e_i.}
+\end{align*}
+Similarly
+\begin{align*}
+	\overline{y._j}&=\mu+\beta_j+\overline{e._j}
+\end{align*}
+\begin{align*}
+	\overline{y..}=\mu + \overline{e..}
+\end{align*}
+
+We assume the following,
+\begin{align*}
+	e_{ij}\sim N(0, \sigma^2)\\
+	\overline{e_i.}\sim N \left( 0, \frac{\sigma^2}{h} \right)\\
+	\overline{e._j}\sim N \left( 0, \frac{\sigma^2}{k} \right)\\
+	\overline{e..}\sim N\left(0, \frac{\sigma^2}{N}\right)
+\end{align*}
+We now find expectation of error ss.
+\begin{align*}
+	E[SS_{err}]&=E\left[\sum_i \sum_j (y_{ij}+\overline{y_i.}+\overline{y._j}+\overline{y..})^2\right]\\
+	&=E\left[\sum_i \sum_j \left( y_{ij}- (\mu + \alpha_i + \overline{e_i.})-(\mu + \beta_j - \overline{e.j})+(\mu +\overline{e..}) \right)^2\right]\\
+	&=E\left[\sum \sum \left(e_{ij}+\overline{e_i.}+\overline{e._j}+\overline{e..}\right)^2\right]
+	\intertext{All the product terms are zero,}
+	&=E[\sum_i \sum_j e{ij}^2-h \sum_i \overline{e_i.}^2-k\sum_j \overline{e._j}^2+N \overline{e..}^2]\\
+	&=N\sigma^2-hk\frac{\sigma^2}{k}-kh \frac{\sigma^2}{h}+N\frac{\sigma^2}{N}\\
+	&=(N-h-k+1)\sigma^2\\
+	&=(kh-h-k+1)\sigma^2\\
+	E[SS_{err}]&=(h-1)(k-1)\sigma^2
+\end{align*}
+So we also have then 
+\begin{align*}
+	E\left[\frac{SS_{err}}{(k-1)(h-1)}\right]&=\sigma^2\\
+	E[MSSE]&=\sigma^2
+\end{align*}
+Therefore MSSE is unbiased estimator of $ \sigma^2 $.\\
+Now we will find expectation of ss due to factor $ A $,
+\begin{align*}
+	E[SS_A]&=E\left[\sum_i h \left(\overline{y_i.}-\overline{y..}\right)^2\right]\\
+	&=E \left[\sum_i h \left( \mu + \alpha_i + \overline{e_i.} - \mu + \overline{e..} \right)^2\right]\\
+	&= E \left[\sum_i h \left( \alpha_i +\overline{e_i.}+\overline{e..} \right)^2\right]\\
+	&= E \left[\sum_i h \left(\alpha_i^2 + (\overline{e_i.}+\overline{e..})^2+2\alpha_i (\overline{e_i.}+\overline{e..})\right)\right]\\
+	&=E \left[\sum_i h \alpha_i^2 + h \sum_i (\overline{e_i.}-\overline{e..})^2 + 2 \sum_i \alpha_i (\overline{e_i.}-\overline{e..})\right]\\
+	&= \sum_i h \alpha_i^2 + E\left[h \sum_i (\overline{e_i.}-\overline{e..})^2\right]+2 \sum_i \alpha_i E[\overline{e_i.}-\overline{e..}]\\
+	&= h \sum_i \alpha_i^2 + E\left[h \left(\sum_i \overline{e_i}^2+\sum_i \overline{e..}^2- 2\sum_i \overline{e_i.}\overline{e..}\right)\right]\\
+	&= h \sum_i \alpha_i^2 + h \sum_i E[\overline{e_i.}^2]+hk E[\overline{e..}^2]-2kh E[\overline{e..}^2]\\
+	&= h \sum_i \alpha_i^2 + kh \frac{\sigma^2}{h}+hk \frac{\sigma^2}{N}-2N \frac{\sigma^2}{N}\\
+	&= h \sum_i \alpha_i^2 + (k-1)\sigma^2
+\end{align*}
+Therefore we have $ E[MSS_A]=\frac{h}{k-1}\sum_{i}\alpha_i^2+\sigma^2 $.\\
+So this will be a unbiased estimator of $ \sigma^2 $ when $ H_0 $ is true, i.e. $ \sum \alpha_i^2=0 $.
+
+Now we will find expectation of ss due to factor B in the exact same manner,
+\begin{align*}
+	E[SS_B]&=E\left[\sum_j k \left(\overline{y_i.}-\overline{y..}\right)^2\right]\\
+	&=E \left[\sum_j k \left( \mu + \beta_j + \overline{e_.j} - \mu + \overline{e..} \right)^2\right]\\
+	&= E \left[\sum_j k \left( \beta_j +\overline{e._j}+\overline{e..} \right)^2\right]\\
+	&= E \left[\sum_j k \left(\beta_j^2 + (\overline{e._j}+\overline{e..})^2+2\beta_j (\overline{e._j}+\overline{e..})\right)\right]\\
+	&=E \left[\sum_j k \beta_j^2 + k \sum_j (\overline{e._j}-\overline{e..})^2 + 2 \sum_j \beta_j (\overline{e._j}-\overline{e..})\right]
+	\intertext{I can't be bothered to type this out again its the exact same f thing just do it.}
+%	&= \sum_i h \alpha_i^2 + E\left[h \sum_i (\overline{e_i.}-\overline{e..})^2\right]+2 \sum_i \alpha_i E[\overline{e_i.}-\overline{e..}]\\
+%	&= h \sum_i \alpha_i^2 + E\left[h \left(\sum_i \overline{e_i}^2+\sum_i \overline{e..}^2- 2\sum_i \overline{e_i.}\overline{e..}\right)\right]\\
+%	&= h \sum_i \alpha_i^2 + h \sum_i E[\overline{e_i.}^2]+hk E[\overline{e..}^2]-2kh E[\overline{e..}^2]\\
+%	&= h \sum_i \alpha_i^2 + kh \frac{\sigma^2}{h}+hk \frac{\sigma^2}{N}-2N \frac{\sigma^2}{N}\\
+	&= k \sum_j \beta_j^2 + (k-1)\sigma^2
+\end{align*}
+So now we have $ E[MSS_B]=\frac{k}{h-1}\sum_j \beta_j^2+\sigma^2 $. So we have that $ MSS_B $ is an unbiased estimator of $ \sigma^2 $ when $ H_0 $ is true i.e. $ \sum_j \beta_j^2=0. $
+
+\subsection{Test statistics}
+
+Total s.s. = s.s. due to factor A + s.s. due to factor B + SSE
+$ N-1=(k-1)+(h-1)+(k-1)(h-1) $\\
+
+Therefore by Cochran's theorem,
+\begin{align*}
+	\chi_1^2&=\frac{SS_A}{\sigma^2}\sim \chi^2_{k-1}\\
+	\chi_2^2&=\frac{SS_B}{\sigma^2} \sim \chi^2_{h-1}\\
+	\chi_3^2&=\frac{SS_{err}}{\sigma^2} \sim \chi^2_{(k-1)(h-1)}
+\end{align*}
+And we have the test statistics as follows,
+\begin{align*}
+	F_1&=\frac{\chi_1^2/(k-1)}{\chi^2_3/(h-1)(k-1)}\\
+	F_2&=\frac{\chi_2^2/(h-1)}{\chi_3^2/(h-1)(k-1)}
+\end{align*}
+
+Also $ E[MSS_A]>E[MSSE] $ then $ H_{0_1} $ is rejected.\\
+$ E[MSS_B]>E[MSSE] $ then $ H_{0_2} $ is rejected.
+
+\subsection{Two way ANOVA Table}
+Replace R with T below here,
+
+\[ \begin{bmatrix}
+	\text{Source of variance} & d.f. & S.S. & S.S.S & F_{cal}\\
+	\text{Between factor A} & k-1 & RSS=\sum_i^k \frac{R_i^2}{n_i}-\frac{G^2}{N} & MRSS=\frac{RSS}{k-1} & F_1=\frac{MRSS}{MESS}\\
+	\text{Between factor B} & h-1 & CSS=\sum_j^h \frac{R_j^2}{n_j}-\frac{G^2}{N} & MCSS=\frac{CSS}{h-1} & F_2=\frac{MLSS}{MESS}\\
+	\text{Error)} & (k-1)(h-1) & ESS=+ & MESS=\frac{CSS}{(h-1)(k-1)} & -\\
+	\text{Total} & N-1 & T_{ss}=\sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
+\end{bmatrix} \]
+
+
+
+
 \chapter{Design of Experiments}
 
 

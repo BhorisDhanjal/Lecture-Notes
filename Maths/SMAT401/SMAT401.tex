@@ -1,5 +1,5 @@
 %This template consists of the minimum of a single book.
-%Please do not think this template is mandatory and the format must be followed strictly.
+%Please do not think thi	s template is mandatory and the format must be followed strictly.
 %We expect the author adds what he needs.
 \documentclass[oneside,11pt,pdftex]{book}%Remove draft when book editing is completed.
 \usepackage{graphicx}
@@ -322,6 +322,15 @@ The converse of \ref{bounded} isn't true.
 \begin{theorem}[Uniqueness of limit in $ \R^n $]
 	Let $ f: \R^n \rightarrow \R $ and $ p \in \R^n $. If $ \lim_{x\rightarrow p }f(x) $ exists then it is unique.
 \end{theorem}
+
+
+\section{Iterated (Repeated) limits}
+Let $ (a,b) \in E $ and $ f:E \rightarrow \R  $ be a function where $ E \subseteq \R^2 $,
+\begin{enumerate}
+	\item Suppose there exists $ \delta>0 $ such that $ \forall x $ with $ 0<|x-a|<\delta, $we have $ \lim_{y\rightarrow b}f(x,y) $ exists.\\
+	Define a new function $ g:\R \rightarrow \R  $ as $ g(x) = \lim_{y \rightarrow b} f(x,y)$. If $ \lim_{x \rightarrow a} g(x) $ exists then this limit is called \textbf{iterated limit} which is given by $ \lim_{x \rightarrow a} g(x)=\lim_{x \rightarrow a} \lim_{y \rightarrow b} f(x,y) $.
+	\item Suppose there exists $ \delta>0  $ such that $ \forall y $ with $ 0<|y-b|<\delta, $ we have $ \lim_{x \rightarrow a } f(x,y)$ exists
+\end{enumerate}
 
 \chapter{Differentiation}
 

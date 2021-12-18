@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage{longtable}
 \usepackage{amsthm}
+\usepackage{inputenc}
 \usepackage{multirow}
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 \usepackage[toc,page]{appendix}
@@ -18,7 +19,6 @@
 %\usepackage[raggedright]{titlesec}
 \usepackage{placeins}
 \usepackage{mathtools}
-
 \usepackage{epigraph}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
@@ -361,7 +361,7 @@ If two functions are dependent then their Wronskian is identically zero.
 \end{proof}
 
 \begin{theorem}
-	Let $ y_1(x) $ and $ y_2(x) $ be linearly indepedent solutions of the homogenous equation \ref{def:2ndhomo} on $ I $. Then $ c_1 y_1(x) + c_2 y_2 (x)$ is the general soltuion of equation \ref{def:2ndhomo} on $ I $.
+	Let $ y_1(x) $ and $ y_2(x) $ be linearly independent solutions of the homogenous equation \ref{def:2ndhomo} on $ I $. Then $ c_1 y_1(x) + c_2 y_2 (x)$ is the general soltuion of equation \ref{def:2ndhomo} on $ I $.
 \end{theorem}
 \begin{proof}
 	Show $ c_1 y_1+c_2y_2 $ be a solution of eq \ref{def:2ndhomo}. Next, let $ y(x) $ be any other solution of \ref{def:2ndhomo} then show that there exists $ c_1, c_2 \in \R $ such taht $ y(x)=c_1y_1+c_2y_2 $. That is, to show that for some $ x_0 \in I $ we can find $ c_1, c_2 $ s.t. $ c_1 y_1(x_0) +c_2'y_2(x_0)=y(x_0)$ and $ c_1y_1'(x_0)+c_2y_2'(x_0) $.
@@ -799,7 +799,7 @@ Recall from footnote \ref{lmao} that we now have a system of equations as follow
 Now upon solving we get 
 \begin{align*}
 	v_1' &= \frac{-y_2R(x)}{W(y_1,y_2)} && &\text{and} && v_2' &= \frac{y_1R(x)}{W(y_1,y_2)}\\
-	v_1 &= -\int \frac{-y_2R(x)}{W(y_1,y_2)}\, dx && &\text{and} && v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx
+	v_1 &= -\int \frac{y_2R(x)}{W(y_1,y_2)}\, dx && &\text{and} && v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx
 \end{align*}
 
 
@@ -865,6 +865,87 @@ We also now got the Wronskian as $ 5e^x $.
 		\item $y''+2y'+y=e^{-x}\log x$
 	\end{enumerate}
 \end{example}
+
+
+\begin{example}[Review]
+	Solve $ y''-2y'-3y=64xe^{-x} $ using
+	VOP and UDC.
+\end{example}
+\begin{proof}
+	Solving with VOP first. Consider its AHE and its HE $ m^2-2m-3=0 $ we get $ m=-1, 3$ so $ y_g=c_1e^{-1}+c_2e^{3}$.\\
+	The Wronskian is $ -4e^{2x} $.
+	We now find $ v_1, v_2 $ as follows,
+	\begin{align*}
+		v_1 &= -\int \frac{y_2R(x)}{W(y_1,y_2)}\, dx\\
+		&=-\int \frac{-e^{-x} 64 xe^{-x}}{-4e^{2x}}\, dx\\
+		&=e^{-4x}(4x+1)
+	\end{align*}
+\begin{align*}
+	 v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx\\
+	 &= \int \frac{e^{3x} 64xe^{-x}}{-4e^{2x}}\, dx\\
+	 &=-8x^2 
+\end{align*}
+So the particular solution is given by,
+\begin{align*}
+	y_p=v_1y_1+v_2y_2=-e^{-4x}(4x+1)e^{3x}-8x^2(e^{-x})
+\end{align*}
+Then use this for the general solution.
+\\
+Now do it with UDC.\\
+If we just had $ x $ we would use $ y_{p_1}=\alpha_0+\alpha_1x $. If we just had $ e^{-x} $ we would use $ y_{p_2}=\beta xe^{-x} $.
+\\
+We will use $ y_{p_1}y_{p_2}=(\alpha_0+\alpha_1x)(\beta x e^{-x})=\alpha_0 \beta x e^{-x}+ \alpha_1 \beta x^2 e^{-x}$ this simplifies to the following trial solution,
+\[ y_p=A_0xe^{-x}+A_1x^2e^{-x} \]
+Differentiate it and get the following,
+\begin{align*}
+	y_p&=A_0xe^{-x}+A_1x^2e^{-x}\\
+	y_p'&=e^{-x}[A_0(1-x)-A_1(x-2)x]\\
+	y_p''&=e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]
+\end{align*}
+Plug this behemoth into the original differential equation,
+\begin{align*}
+	e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]-2(e^{-x}[A_0(1-x)-A_1(x-2)x])-3(A_0xe^{-x}+A_1x^2e^{-x})=64xe^{-x}
+\end{align*}
+Simplify this 
+$ A_0=-4,A_1=-8 $
+
+so $ y_p=-4xe^{-x}-8x^2e^{-x} $
+\end{proof}
+
+\section{Higher order linear equations}
+\begin{definition}
+	content...
+\end{definition}
+
+\begin{example}
+	Solve $ y^{(4)}-5y''+4y=0 $.
+\end{example}
+\begin{proof}
+	The auxiliary equation is $ m^4-5m^2+4=0 $. Substitute $ m^2=p $ so we got $ p^2-5p+4=0 $ so $ p=4,1 $ and then $ m=\pm2,\pm1 $
+	General solution is then $ y=c_1e^{2x}+c_2e^{-2x}+c_3 e^{x}+c_4e^{-x} $
+\end{proof}
+
+\begin{example}
+	Solve $ y^{(4)}-8y''+16y=0 $
+\end{example}
+\begin{proof}
+	Auxiliary equation is $ m^2-8m+16=0 $ substitute $ p^2=m $  and solve we get $ m=\pm2, \pm 2 $  so general solution is $ y=(c_1e^{2x}+c_2xe^{2x})+(c_2e^{-2x}+c_4xe^{-2x}) $
+\end{proof}
+
+\begin{proof}
+	Solving $ y^{(4)}+2y'''+2y''-2y'+y=0 $
+\end{proof}
+\begin{proof}
+	Take the auxiliary equation $ m^4-2m^3+2m^2-2m+1=0 $. We got the thing as $ m=1,1,\pm i $. So the general solution is given by 
+	\[ y=(c_1e^{x}+c_2xe^{x})+(c_3 \cos x + c_4 \sin x)  \]
+\end{proof}
+
+\begin{example}
+	Solve $ y'''+2y''-y'=3x^2-2x+1 $
+\end{example}
+\begin{proof}
+	AHE and HE so auxiliary equation is $ m^3+2m^2-m=0 $ we get $ m=0,-1\pm \sqrt{2} $
+\end{proof}
 
 
 \chapter{Linear systems of ordinary differential equations}

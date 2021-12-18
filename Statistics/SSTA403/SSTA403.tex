@@ -836,15 +836,472 @@ Draw the network for above project and find $ EST, LST, EFT, LFT $ and the three
 	\end{tikzpicture}
 	
 	\end{center}
+$ T_E=54 $
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}cccccccc@{}}
+			\toprule
+			Events & $t^{ij}$ & $EST=T_E^i$ & $LFT=T_L^j$ & $EFT=T_E^i+t_{ij}$ & $LST=T_L^j-t^{ij}$ & $TF=LFT-EFT$ & $FF=TF-(T_L^j-T_E^j)$ \\ \midrule
+			10-20 & 15 & 0 & 15 & 15 & 0 & 0 & 0-(15-15)=0 \\
+			10-30 & 15 & 0 & 18 & 15 & 3 & 3 & 3-(0)=3 \\
+			20-30 & 3 & 15 & 18 & 18 & 15 & 0 & 0-(18-18)=0 \\
+			20-50 & 5 & 15 & 37 & 20 & 32 & 17 & 7 \\
+			30-40 & 6 & 18 & 26 & 24 & 20 & 0 & 0 \\
+			30-60 & 12 & 18 & 40 & 30 & 28 & 10 & 10 \\
+			40-50 & 1 & 26 & 37 & 27 & 36 & 10 & 0 \\
+			40-60 & 14 & 26 & 40 & 40 & 26 & 0 & 0 \\
+			50-60 & 3 & 27 & 40 & 30 & 37 & 10 & 10 \\
+			60-70 & 14 & 40 & 54 & 54 & 40 & 0 & 0 \\ \bottomrule
+		\end{tabular}%
+	}
+\end{table}
+\FloatBarrier
+Now we find total float and free float.\\
+Total float=$ LFT-EFT$. If total float is zero it implies its a critical activity.\\
+Free float = $ TF- $ Head slack\\
+Independent float = FF - Tail slack\\
+Head slack = $ T_L^j-T_E^j $\\
+Tail slack = $ T^i-T_E^i $
+\end{proof}
+
+
+\section{Project crashing}
+Two types
+
+\begin{definition}[Project crashing]
+	Process of shortening the critical path to achieve completion of the project earlier is called project crashing.
+\end{definition}
+There are two types of cost,
+\begin{enumerate}
+	\item \textbf{ Direct cost: } It includes cost of materials, machinery, man hours etc. When we estimate the duration of various activities in the project it is assumed that various activities in the project it is assumed that the normal amount of labour and machine required to complete these activities. But when we want to complete the project in the shorter period, than the critical path we will need to employ more resources. Hence direct cost will increase. \textbf{yeah this makes no sense dw}
+	\item\textbf{ Indirect cost: } It includes rent, overheads, administrative costs. Indirect costs vary with time. They are expressed on per day or per week basis
+\end{enumerate}
+
+Total cost = Direct cost + indirect cost
+
+\textbf{Normal time: }Under normal circumstances.
+\textbf{Crash time: }Minimum possible time in which activity can be completed.
+\textbf{Crash cost: }The direct cost associated with crash time. When the activity is crashed its direct cost will increase.
+
+Crash time < Normal time\\
+Crash cost > Normal cost
+
+\begin{definition}[Crash slope/Cost slope]
+	The increase in direct cost per day. It is Crash cost - normal cost divided by normal time - crash time
+	\[ \frac{\text{Crash cost}-\text{Normal cost}}{\text{Normal time}-\text{Crash time}} \]
+\end{definition}
+
+\subsection{Procedure of crashing}
+\begin{enumerate}
+	\item Find the normal critical path and identify the critical activities.
+	\item Calculate the cost slope for the critical activities.
+	\item Rank the critical activities in the ascending order of their cost slopes.
+	\item Crash critical activities as per the ranking (i.e. the activity with the least cost slope first) to its maximum possible extent. Calculate the revised cost by adding the cost of crashing and subtracting the indirect cost; both proportion to the number of days crashed.
+	\item As the critical path duration gets reduced in step 4, some other path may also become critical, i.e. there may be parallel critical paths. This implies that the project duration now has to be reduced simultaneously by crashing the activities on the parallel critical paths.
+	\item After crashing the activities in the above manner, a point is reached where further crashing is either not possible or it does not result in reduction of project duration or cost. For different project or durations, project cost should be calculated.
+\end{enumerate}
+
+\begin{example}
+\begin{table}[!htp]
+	\centering
+	
+		\begin{tabular}{@{}cccc@{}}
+			\toprule
+			Activity & $t^{ij}$ & Activity & $t^{ij}$ \\ \midrule
+			1-2 & 2 & 4-6 & 3 \\
+			1-3 & 2 & 5-8 & 1 \\
+			1-4 & 1 & 6-9 & 5 \\
+			2-5 & 4 & 7-8 & 4 \\
+			3-6 & 8 & 8-9 & 3 \\
+			3-7 & 5 &  &  \\ \bottomrule
+		\end{tabular}%
+	
+\end{table}
+Draw a network for this project. Find total float for each activity. Hence determine critical path for network.
+\end{example}
+\begin{proof}
+	$ T_E=T_L=15 $
 \end{proof}
 
 
 
 
+\begin{example}
+	Indirect cost is Rs. $ 70 $ per day.
+	\begin{table}[!htp]
+		\centering
+		\begin{tabular}{@{}ccccc@{}}
+			\toprule
+			Activity & Normal time & Crash time & Normal cost & Crash cost \\ \midrule
+			1-2 & 8 & 6 & 100 & 200 \\
+			1-3 & 4 & 2 & 150 & 350 \\
+			2-4 & 2 & 1 & 50 & 90 \\
+			2-5 & 10 & 5 & 100 & 400 \\
+			3-4 & 5 & 1 & 100 & 200 \\
+			4-5 & 3 & 1 & 80 & 100 \\ \bottomrule
+		\end{tabular}
+	\end{table}
+
+\end{example}
+\begin{proof}
+	Consider first the network diagram,
+	
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+	
+	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
+		
+		%Flowchart: Connector [id:dp5017991924606011] 
+		\draw   (0.8,150.4) .. controls (0.8,136.48) and (12.08,125.2) .. (26,125.2) .. controls (39.92,125.2) and (51.2,136.48) .. (51.2,150.4) .. controls (51.2,164.32) and (39.92,175.6) .. (26,175.6) .. controls (12.08,175.6) and (0.8,164.32) .. (0.8,150.4) -- cycle ;
+		%Straight Lines [id:da4365682232982502] 
+		\draw    (51.2,150.4) -- (118.43,83.17) ;
+		\draw [shift={(119.84,81.76)}, rotate = 135] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da9853527385509557] 
+		\draw    (51.2,150.4) -- (118.31,217.51) ;
+		\draw [shift={(119.72,218.92)}, rotate = 225] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp3934684464134668] 
+		\draw   (119.84,81.76) .. controls (119.84,67.84) and (131.12,56.56) .. (145.04,56.56) .. controls (158.96,56.56) and (170.24,67.84) .. (170.24,81.76) .. controls (170.24,95.68) and (158.96,106.96) .. (145.04,106.96) .. controls (131.12,106.96) and (119.84,95.68) .. (119.84,81.76) -- cycle ;
+		%Flowchart: Connector [id:dp1485057734469888] 
+		\draw   (119.72,218.92) .. controls (119.72,205) and (131,193.72) .. (144.92,193.72) .. controls (158.84,193.72) and (170.12,205) .. (170.12,218.92) .. controls (170.12,232.84) and (158.84,244.12) .. (144.92,244.12) .. controls (131,244.12) and (119.72,232.84) .. (119.72,218.92) -- cycle ;
+		%Straight Lines [id:da5287011576058043] 
+		\draw    (170.12,218.92) -- (233.72,218.92) ;
+		\draw [shift={(235.72,218.92)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp2323421555185401] 
+		\draw   (235.72,218.92) .. controls (235.72,205) and (247,193.72) .. (260.92,193.72) .. controls (274.84,193.72) and (286.12,205) .. (286.12,218.92) .. controls (286.12,232.84) and (274.84,244.12) .. (260.92,244.12) .. controls (247,244.12) and (235.72,232.84) .. (235.72,218.92) -- cycle ;
+		%Straight Lines [id:da9247941297234821] 
+		\draw    (170.24,81.76) -- (259.66,192.17) ;
+		\draw [shift={(260.92,193.72)}, rotate = 230.99] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da689465144796324] 
+		\draw    (170.24,81.76) -- (233.84,81.76) ;
+		\draw [shift={(235.84,81.76)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp6413729849919538] 
+		\draw   (235.84,81.76) .. controls (235.84,67.84) and (247.12,56.56) .. (261.04,56.56) .. controls (274.96,56.56) and (286.24,67.84) .. (286.24,81.76) .. controls (286.24,95.68) and (274.96,106.96) .. (261.04,106.96) .. controls (247.12,106.96) and (235.84,95.68) .. (235.84,81.76) -- cycle ;
+		%Straight Lines [id:da9781789544489394] 
+		\draw    (260.92,193.72) -- (261.04,108.96) ;
+		\draw [shift={(261.04,106.96)}, rotate = 90.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		
+		% Text Node
+		\draw (21,142.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+		% Text Node
+		\draw (83.52,112.68) node [anchor=south east] [inner sep=0.75pt]    {$A$};
+		% Text Node
+		\draw (139,74.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+		% Text Node
+		\draw (83.46,188.06) node [anchor=north east] [inner sep=0.75pt]    {$B$};
+		% Text Node
+		\draw (140,211.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+		% Text Node
+		\draw (256,211.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+		% Text Node
+		\draw (217.58,134.34) node [anchor=south west] [inner sep=0.75pt]    {$C$};
+		% Text Node
+		\draw (202.92,222.32) node [anchor=north] [inner sep=0.75pt]    {$E$};
+		% Text Node
+		\draw (203.04,78.36) node [anchor=south] [inner sep=0.75pt]    {$D$};
+		% Text Node
+		\draw (256,73.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+		% Text Node
+		\draw (262.98,150.34) node [anchor=west] [inner sep=0.75pt]    {$F$};
+		
+		
+	\end{tikzpicture}\\
+	Critical path is $ 1-2-5:A-D=18 $days.\\
+	Other paths are $ 1-3-4-5:B-E-F=12$days\\
+	$ 1-2-4-5:A-C-F=13 $days.\\
+	Total normal cost is $=DC+IDC$
+	\begin{align*}
+		&=DC+IDC\\
+		&=580+70*8
+		&=1140
+	\end{align*}
+Now see the cost slope
+\begin{align*}
+	\text{Cost slope}&=\frac{\Delta \text{time}}{\Delta \text{cost}}
+\end{align*}
+\begin{table}[!htp]
+	\centering
+	\begin{tabular}{cccc}
+		\hline
+		Activity & \begin{tabular}[c]{@{}c@{}}Maximum \\ crashable days\end{tabular} & Cost Slope / day & Rank \\ \hline
+		A(1-2) & 8-6=2 & 50 & 4 \\
+		B(1-3) & 4-2=2 & 100 & 6 \\
+		C(2-4) & 2-1=1 & 40 & 3 \\
+		D(2-5) & 10-5=5 & 60 & 5 \\
+		E(3-4) & 5-1=4 & 25 & 2 \\
+		F(4-5) & 3-1=2 & 10 & 1 \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{ccccccc}
+		\hline
+		\multirow{2}{*}{Crashing} & \multicolumn{3}{c}{Paths} & \multicolumn{3}{c}{Cost (Rs.)} \\ \cline{2-7} 
+		& A-D & A-C-F & B-E-F & D.C. & I.D.C & T.C. \\ \hline
+		Before Crashing & 18 & 13 & 12 & 580 & 1266 & 1840 \\
+		\begin{tabular}[c]{@{}c@{}}1st Crashing A\\ by 1\end{tabular} & \begin{tabular}[c]{@{}c@{}}18-1=\\ 17\end{tabular} & \begin{tabular}[c]{@{}c@{}}13-1=\\ 12\end{tabular} & 12 & \begin{tabular}[c]{@{}c@{}}580+(50*1)\\ =630\end{tabular} & \begin{tabular}[c]{@{}c@{}}17*70\\ =1190\end{tabular} & 1820 \\
+		\begin{tabular}[c]{@{}c@{}}2nd Crashing A\\ by 2\end{tabular} & \begin{tabular}[c]{@{}c@{}}17-1=\\ 16\end{tabular} & \begin{tabular}[c]{@{}c@{}}12-1=\\ 11\end{tabular} & 12 & \begin{tabular}[c]{@{}c@{}}630+(50)\\ =680\end{tabular} & \begin{tabular}[c]{@{}c@{}}16*70\\ =1120\end{tabular} & 1800 \\
+		\begin{tabular}[c]{@{}c@{}}3rd Crashing D\\ by 1\end{tabular} & \begin{tabular}[c]{@{}c@{}}16-1=\\ 15\end{tabular} & 11 & 12 & \begin{tabular}[c]{@{}c@{}}680+60\\ =740\end{tabular} & \begin{tabular}[c]{@{}c@{}}15*70\\ =1050\end{tabular} & 1790 \\
+		\begin{tabular}[c]{@{}c@{}}4th Crashing D\\ by 1\end{tabular} & \begin{tabular}[c]{@{}c@{}}15-1=\\ 14\end{tabular} & 11 & 12 & \begin{tabular}[c]{@{}c@{}}740+60\\ =800\end{tabular} & \begin{tabular}[c]{@{}c@{}}14*70\\ =980\end{tabular} & 1780 \\
+		\begin{tabular}[c]{@{}c@{}}5h Crashing D\\ by 1\end{tabular} & 13 & 11 & 12 & 860 & 910 & 1770 \\
+		\begin{tabular}[c]{@{}c@{}}6th Crashing D \\ by 1\end{tabular} & 12 & 11 & 12 & 920 & 840 & 1760 \\
+		\begin{tabular}[c]{@{}c@{}}7th Crashing D \\ by 1 and F by 1\end{tabular} & 11 & 10 & 11 & \begin{tabular}[c]{@{}c@{}}920+60+10\\ =990\end{tabular} & \begin{tabular}[c]{@{}c@{}}11*70\\ =770\end{tabular} & 1760 \\ \hline
+	\end{tabular}
+\end{table}
+Minimum total cost = optimum project cost = 1760
+
+\end{proof}
+
+\section{something}
+
+...which have occurred due to re planning or re scheduling of ...\\
+Updating can be done in two ways,
+\begin{enumerate}
+	\item Use the revised time estimates of incomplete activities and calculate from the completion of time of each event in the usual manner to know the project completion time. and represent all the activities already finished by elapsed time. Events in the revised network diagram are re numbered. And the completion of the completed activities (?????) are taken as the revised time.
+\end{enumerate}
+
+\begin{example}
+	After 15 days working the following progress is noted of an erection job.
+	\begin{enumerate}
+		\item Activity 1-2,1-3 and, 1-4 completed as per the original schedule.
+		\item Act 2-4, is in progress and will be completed in 3 more days
+		\item Act 3-6 is in progress and require 18 days more.
+		\item Act 6-7 appears to present some problem and its new estimated time is 12 days.
+		\item Act 6-8 can be completed in 5 days instead of 7 days.
+	\end{enumerate}
+\end{example}
+\begin{proof}
+	Consider the network diagram
+	\begin{center}
+		
+		
+		\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+		
+		\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+			%uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
+			
+			%Flowchart: Connector [id:dp5017991924606011] 
+			\draw   (0.8,150.4) .. controls (0.8,136.48) and (12.08,125.2) .. (26,125.2) .. controls (39.92,125.2) and (51.2,136.48) .. (51.2,150.4) .. controls (51.2,164.32) and (39.92,175.6) .. (26,175.6) .. controls (12.08,175.6) and (0.8,164.32) .. (0.8,150.4) -- cycle ;
+			%Straight Lines [id:da4365682232982502] 
+			\draw    (51.2,150.4) -- (118.43,83.17) ;
+			\draw [shift={(119.84,81.76)}, rotate = 135] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Straight Lines [id:da9853527385509557] 
+			\draw    (51.2,150.4) -- (118.31,217.51) ;
+			\draw [shift={(119.72,218.92)}, rotate = 225] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp3934684464134668] 
+			\draw   (119.84,81.76) .. controls (119.84,67.84) and (131.12,56.56) .. (145.04,56.56) .. controls (158.96,56.56) and (170.24,67.84) .. (170.24,81.76) .. controls (170.24,95.68) and (158.96,106.96) .. (145.04,106.96) .. controls (131.12,106.96) and (119.84,95.68) .. (119.84,81.76) -- cycle ;
+			%Flowchart: Connector [id:dp1485057734469888] 
+			\draw   (119.72,218.92) .. controls (119.72,205) and (131,193.72) .. (144.92,193.72) .. controls (158.84,193.72) and (170.12,205) .. (170.12,218.92) .. controls (170.12,232.84) and (158.84,244.12) .. (144.92,244.12) .. controls (131,244.12) and (119.72,232.84) .. (119.72,218.92) -- cycle ;
+			%Straight Lines [id:da5287011576058043] 
+			\draw    (170.12,218.92) -- (233.72,218.92) ;
+			\draw [shift={(235.72,218.92)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp2323421555185401] 
+			\draw   (235.72,218.92) .. controls (235.72,205) and (247,193.72) .. (260.92,193.72) .. controls (274.84,193.72) and (286.12,205) .. (286.12,218.92) .. controls (286.12,232.84) and (274.84,244.12) .. (260.92,244.12) .. controls (247,244.12) and (235.72,232.84) .. (235.72,218.92) -- cycle ;
+			%Straight Lines [id:da689465144796324] 
+			\draw    (170.24,81.76) -- (233.84,81.76) ;
+			\draw [shift={(235.84,81.76)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp6413729849919538] 
+			\draw   (235.84,81.76) .. controls (235.84,67.84) and (247.12,56.56) .. (261.04,56.56) .. controls (274.96,56.56) and (286.24,67.84) .. (286.24,81.76) .. controls (286.24,95.68) and (274.96,106.96) .. (261.04,106.96) .. controls (247.12,106.96) and (235.84,95.68) .. (235.84,81.76) -- cycle ;
+			%Straight Lines [id:da08380556654265248] 
+			\draw    (51.2,150.4) -- (114.8,150.4) ;
+			\draw [shift={(116.8,150.4)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp7446531983688254] 
+			\draw   (116.8,150.4) .. controls (116.8,136.48) and (128.08,125.2) .. (142,125.2) .. controls (155.92,125.2) and (167.2,136.48) .. (167.2,150.4) .. controls (167.2,164.32) and (155.92,175.6) .. (142,175.6) .. controls (128.08,175.6) and (116.8,164.32) .. (116.8,150.4) -- cycle ;
+			%Straight Lines [id:da1511415258983968] 
+			\draw    (167.2,150.4) -- (230.8,150.4) ;
+			\draw [shift={(232.8,150.4)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp8705506203881077] 
+			\draw   (232.8,150.4) .. controls (232.8,136.48) and (244.08,125.2) .. (258,125.2) .. controls (271.92,125.2) and (283.2,136.48) .. (283.2,150.4) .. controls (283.2,164.32) and (271.92,175.6) .. (258,175.6) .. controls (244.08,175.6) and (232.8,164.32) .. (232.8,150.4) -- cycle ;
+			%Straight Lines [id:da6335929354938967] 
+			\draw    (260.92,193.72) -- (258.32,177.57) ;
+			\draw [shift={(258,175.6)}, rotate = 80.85] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Straight Lines [id:da26211828707625884] 
+			\draw    (144.92,193.72) -- (142.32,177.57) ;
+			\draw [shift={(142,175.6)}, rotate = 80.85] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Straight Lines [id:da08975872326436352] 
+			\draw    (283.2,150.4) -- (350.31,217.51) ;
+			\draw [shift={(351.72,218.92)}, rotate = 225] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Flowchart: Connector [id:dp41780010498780573] 
+			\draw   (351.72,218.92) .. controls (351.72,205) and (363,193.72) .. (376.92,193.72) .. controls (390.84,193.72) and (402.12,205) .. (402.12,218.92) .. controls (402.12,232.84) and (390.84,244.12) .. (376.92,244.12) .. controls (363,244.12) and (351.72,232.84) .. (351.72,218.92) -- cycle ;
+			%Straight Lines [id:da9226665538697332] 
+			\draw    (286.12,218.92) -- (349.72,218.92) ;
+			\draw [shift={(351.72,218.92)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Straight Lines [id:da6832237097024039] 
+			\draw    (145.04,106.96) -- (142.33,123.23) ;
+			\draw [shift={(142,125.2)}, rotate = 279.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			%Straight Lines [id:da07015174051168338] 
+			\draw    (261.04,106.96) -- (258.33,123.23) ;
+			\draw [shift={(258,125.2)}, rotate = 279.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+			
+			% Text Node
+			\draw (21,142.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+			% Text Node
+			\draw (83.52,112.68) node [anchor=south east] [inner sep=0.75pt]    {$9$};
+			% Text Node
+			\draw (139,74.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+			% Text Node
+			\draw (83.46,188.06) node [anchor=north east] [inner sep=0.75pt]    {$10$};
+			% Text Node
+			\draw (140,211.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+			% Text Node
+			\draw (256,211.4) node [anchor=north west][inner sep=0.75pt]    {$6$};
+			% Text Node
+			\draw (202.92,222.32) node [anchor=north] [inner sep=0.75pt]    {$12$};
+			% Text Node
+			\draw (203.04,78.36) node [anchor=south] [inner sep=0.75pt]    {$18$};
+			% Text Node
+			\draw (256,73.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+			% Text Node
+			\draw (137,142.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+			% Text Node
+			\draw (94.52,146.68) node [anchor=south east] [inner sep=0.75pt]    {$6$};
+			% Text Node
+			\draw (252,140.4) node [anchor=north west][inner sep=0.75pt]    {$7$};
+			% Text Node
+			\draw (192,133.4) node [anchor=north west][inner sep=0.75pt]    {$\infty $};
+			% Text Node
+			\draw (160.92,175.32) node [anchor=north] [inner sep=0.75pt]    {$5$};
+			% Text Node
+			\draw (279.92,177.32) node [anchor=north] [inner sep=0.75pt]    {$7$};
+			% Text Node
+			\draw (318.92,222.32) node [anchor=north] [inner sep=0.75pt]    {$7$};
+			% Text Node
+			\draw (377.92,209.32) node [anchor=north] [inner sep=0.75pt]    {$8$};
+			% Text Node
+			\draw (158.92,110.32) node [anchor=north] [inner sep=0.75pt]    {$7$};
+			% Text Node
+			\draw (274.92,110.32) node [anchor=north] [inner sep=0.75pt]    {$8$};
+			% Text Node
+			\draw (317.92,160.32) node [anchor=north] [inner sep=0.75pt]    {$6$};
+			
+			
+		\end{tikzpicture}
+		
+	\end{center}
+$ T_E=42,T_L=42 $ new duration of $ 2-4 $ is $ 15+3-9=9 $
+\begin{enumerate}
+	\item Act 2-4 needs 15+3-9=9 days instead of 7.
+	\item Act 3-6 needs 15+18-10 = 23 days instead of 12.
+	\item Act 6-7=12 days instead of 7 days.
+	\item Act 6-8=5 days instead of 7
+	\item Act 2-5, 4-7, 5-7, 7-8, 3-4 remain as it is.
+	
+\end{enumerate}
+New network,
+\begin{center}
+	
+	
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+	
+	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
+		
+		%Flowchart: Connector [id:dp5017991924606011] 
+		\draw   (0.8,150.4) .. controls (0.8,136.48) and (12.08,125.2) .. (26,125.2) .. controls (39.92,125.2) and (51.2,136.48) .. (51.2,150.4) .. controls (51.2,164.32) and (39.92,175.6) .. (26,175.6) .. controls (12.08,175.6) and (0.8,164.32) .. (0.8,150.4) -- cycle ;
+		%Straight Lines [id:da4365682232982502] 
+		\draw    (51.2,150.4) -- (118.43,83.17) ;
+		\draw [shift={(119.84,81.76)}, rotate = 135] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da9853527385509557] 
+		\draw    (51.2,150.4) -- (118.31,217.51) ;
+		\draw [shift={(119.72,218.92)}, rotate = 225] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp3934684464134668] 
+		\draw   (119.84,81.76) .. controls (119.84,67.84) and (131.12,56.56) .. (145.04,56.56) .. controls (158.96,56.56) and (170.24,67.84) .. (170.24,81.76) .. controls (170.24,95.68) and (158.96,106.96) .. (145.04,106.96) .. controls (131.12,106.96) and (119.84,95.68) .. (119.84,81.76) -- cycle ;
+		%Flowchart: Connector [id:dp1485057734469888] 
+		\draw   (119.72,218.92) .. controls (119.72,205) and (131,193.72) .. (144.92,193.72) .. controls (158.84,193.72) and (170.12,205) .. (170.12,218.92) .. controls (170.12,232.84) and (158.84,244.12) .. (144.92,244.12) .. controls (131,244.12) and (119.72,232.84) .. (119.72,218.92) -- cycle ;
+		%Straight Lines [id:da5287011576058043] 
+		\draw    (170.12,218.92) -- (233.72,218.92) ;
+		\draw [shift={(235.72,218.92)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp2323421555185401] 
+		\draw   (235.72,218.92) .. controls (235.72,205) and (247,193.72) .. (260.92,193.72) .. controls (274.84,193.72) and (286.12,205) .. (286.12,218.92) .. controls (286.12,232.84) and (274.84,244.12) .. (260.92,244.12) .. controls (247,244.12) and (235.72,232.84) .. (235.72,218.92) -- cycle ;
+		%Straight Lines [id:da689465144796324] 
+		\draw    (170.24,81.76) -- (233.84,81.76) ;
+		\draw [shift={(235.84,81.76)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp6413729849919538] 
+		\draw   (235.84,81.76) .. controls (235.84,67.84) and (247.12,56.56) .. (261.04,56.56) .. controls (274.96,56.56) and (286.24,67.84) .. (286.24,81.76) .. controls (286.24,95.68) and (274.96,106.96) .. (261.04,106.96) .. controls (247.12,106.96) and (235.84,95.68) .. (235.84,81.76) -- cycle ;
+		%Straight Lines [id:da08380556654265248] 
+		\draw    (51.2,150.4) -- (114.8,150.4) ;
+		\draw [shift={(116.8,150.4)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp7446531983688254] 
+		\draw   (116.8,150.4) .. controls (116.8,136.48) and (128.08,125.2) .. (142,125.2) .. controls (155.92,125.2) and (167.2,136.48) .. (167.2,150.4) .. controls (167.2,164.32) and (155.92,175.6) .. (142,175.6) .. controls (128.08,175.6) and (116.8,164.32) .. (116.8,150.4) -- cycle ;
+		%Straight Lines [id:da1511415258983968] 
+		\draw    (167.2,150.4) -- (230.8,150.4) ;
+		\draw [shift={(232.8,150.4)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp8705506203881077] 
+		\draw   (232.8,150.4) .. controls (232.8,136.48) and (244.08,125.2) .. (258,125.2) .. controls (271.92,125.2) and (283.2,136.48) .. (283.2,150.4) .. controls (283.2,164.32) and (271.92,175.6) .. (258,175.6) .. controls (244.08,175.6) and (232.8,164.32) .. (232.8,150.4) -- cycle ;
+		%Straight Lines [id:da6335929354938967] 
+		\draw    (260.92,193.72) -- (258.32,177.57) ;
+		\draw [shift={(258,175.6)}, rotate = 80.85] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da26211828707625884] 
+		\draw    (144.92,193.72) -- (142.32,177.57) ;
+		\draw [shift={(142,175.6)}, rotate = 80.85] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da08975872326436352] 
+		\draw    (283.2,150.4) -- (350.31,217.51) ;
+		\draw [shift={(351.72,218.92)}, rotate = 225] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Flowchart: Connector [id:dp41780010498780573] 
+		\draw   (351.72,218.92) .. controls (351.72,205) and (363,193.72) .. (376.92,193.72) .. controls (390.84,193.72) and (402.12,205) .. (402.12,218.92) .. controls (402.12,232.84) and (390.84,244.12) .. (376.92,244.12) .. controls (363,244.12) and (351.72,232.84) .. (351.72,218.92) -- cycle ;
+		%Straight Lines [id:da9226665538697332] 
+		\draw    (286.12,218.92) -- (349.72,218.92) ;
+		\draw [shift={(351.72,218.92)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da6832237097024039] 
+		\draw    (145.04,106.96) -- (142.33,123.23) ;
+		\draw [shift={(142,125.2)}, rotate = 279.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da07015174051168338] 
+		\draw    (261.04,106.96) -- (258.33,123.23) ;
+		\draw [shift={(258,125.2)}, rotate = 279.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		
+		% Text Node
+		\draw (21,142.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+		% Text Node
+		\draw (83.52,112.68) node [anchor=south east] [inner sep=0.75pt]    {$9$};
+		% Text Node
+		\draw (139,74.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+		% Text Node
+		\draw (83.46,188.06) node [anchor=north east] [inner sep=0.75pt]    {$10$};
+		% Text Node
+		\draw (140,211.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+		% Text Node
+		\draw (256,211.4) node [anchor=north west][inner sep=0.75pt]    {$6$};
+		% Text Node
+		\draw (202.92,222.32) node [anchor=north] [inner sep=0.75pt]    {$23$};
+		% Text Node
+		\draw (203.04,78.36) node [anchor=south] [inner sep=0.75pt]    {$18$};
+		% Text Node
+		\draw (256,73.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+		% Text Node
+		\draw (137,142.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+		% Text Node
+		\draw (94.52,146.68) node [anchor=south east] [inner sep=0.75pt]    {$6$};
+		% Text Node
+		\draw (252,140.4) node [anchor=north west][inner sep=0.75pt]    {$7$};
+		% Text Node
+		\draw (192,133.4) node [anchor=north west][inner sep=0.75pt]    {$\infty $};
+		% Text Node
+		\draw (160.92,175.32) node [anchor=north] [inner sep=0.75pt]    {$5$};
+		% Text Node
+		\draw (279.92,177.32) node [anchor=north] [inner sep=0.75pt]    {$12$};
+		% Text Node
+		\draw (318.92,222.32) node [anchor=north] [inner sep=0.75pt]    {$5$};
+		% Text Node
+		\draw (377.92,209.32) node [anchor=north] [inner sep=0.75pt]    {$8$};
+		% Text Node
+		\draw (158.92,110.32) node [anchor=north] [inner sep=0.75pt]    {$9$};
+		% Text Node
+		\draw (274.92,110.32) node [anchor=north] [inner sep=0.75pt]    {$8$};
+		% Text Node
+		\draw (317.92,160.32) node [anchor=north] [inner sep=0.75pt]    {$6$};
+		
+		
+	\end{tikzpicture}
+	
+\end{center}
+New $ T_E,T_L=51 $ with critical path given as $ 1-3-6-7-8=51$.
 
 
-
-
+\end{proof}
 
 
 

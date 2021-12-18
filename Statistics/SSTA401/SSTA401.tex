@@ -668,6 +668,215 @@ Note the following,
 	\end{align*}
 \end{proof}
 
+\section{Transformation of variables}
+\subsection{One dimensional random variable}
+Let $ X $ be a continuous random variable with pdf $ f(x) $ and let $ Y=g(x) $ be a strictly monotonic function of $ X $ with unique inverse.\\
+Assume that $ g(x) $ is differentiable and is continuous for all $ x $, then the pdf of r.v. $ Y $ is given by 
+\[ h(y)=f(x) \cdot \det \left|\frac{dx}{dy}\right| = \left|\frac{dx}{dy}\right|\]
+where r.v. $ x $ is expressed in terms of $ y $.
+Steps to solve,
+\begin{enumerate}
+	\item Write pdf of r.v. $ X $.
+	\item Express old variable $ X $ in terms of new variable $ Y $.
+	\item Write the range of the new variable.
+	\item Obtain $ J $ where $ J=\left|\frac{dx}{dy}\right| $ and $ |J| $.
+	\item Obtain $ h(y) =f(x)\cdot |J|,$ where $ X $ is expressed in terms of $ Y. $
+\end{enumerate}
+\begin{remark}
+		For $ 2-1 $ correspondence, i.e. for ever 2 values of $ X $ is there is only one value of $ Y $, then multiple $ |J| $ with 2.
+\end{remark}
+\begin{remark}
+	\item For $ 1-2 $ correspondence i.e., for every 1 value of x if there are 2 values of $ Y $ then multiply $|J| $ with $ \frac{1}{2} $.
+\end{remark}
+
+\begin{example}
+	If a r.v. $ X \sim B_1(m,n) $ obtain the distribution of $ Y=1-X $.
+\end{example}
+\begin{proof}
+	First begin by stating the pdf of $ X $.
+	\begin{align*}
+		f(x)=\begin{cases}
+			\frac{1}{\beta(m,n)}x^{m-1}(1-x)^{n-1} & 0<x<1; m,n>0\\
+			0 & \text{otherwise}
+		\end{cases} 
+	\end{align*}
+	Now $ X=1-Y $ this ranges from $ 1-Y=0 $ to $ 1-Y=1 $. So $ 0<Y<1 $ again.\\
+	Now compute $ J $
+	\begin{align*}
+		\frac{dx}{dy}&=\frac{1}{dy} \left( 1-y \right)\\
+		J&=-1\\
+		|J|&=1
+	\end{align*}
+	We multiply this with $ f(x) $ to get $ h(y) $.
+	\begin{align*}
+		h(y)&=f(x)\cdot |J|\\
+		h(y)&= f(x)
+	\end{align*}
+	So $ h(y)\sim B(n,m) $. The order changes.
+\end{proof}
+
+\begin{example}
+	A r.v. $ X\sim B_2(m,n) $. Obtain the distribution of $ Y $ where $ Y=\frac{1}{1+X} $.
+\end{example}
+\begin{proof}
+	First state the pdf,
+	\begin{align*}
+		f(x)=\begin{cases}
+			\frac{1}{\beta(m,n)}\frac{x^{m-1}}{(1+x)^{m+n}} & 0<x<\infty; m,n>0\\
+			0 & \text{otherwise}
+		\end{cases}
+	\end{align*}
+	Now state $ X $ in terms of $ Y $, we have $ X=\frac{1}{Y}-1 $. \\
+	Compute the new ranges now we have $ \frac{1}{Y}-1=0 $ so $ Y=1 $ as one side then $  \frac{1}{Y}-1=\lim_{m \rightarrow \infty} m $ so to $ Y=0 $.\\
+	The new ranges are $ 0<Y<1 $.
+	Now compute $ |J| $,
+	\begin{align*}
+		J&=\frac{dx}{dy}= \frac{1}{dy}\left( \frac{1}{y}-1 \right)\\
+		&=-\frac{1}{y^2}\\
+		|J|&=\frac{1}{y^2}
+	\end{align*}
+	So now we can compute $ h(y) $ as follows,
+	\begin{align*}
+		h(y)&=f(x)|J|\\
+		&= \frac{1}{\beta(m,n)}\frac{\left( \frac{1}{y}-1\right)^{m-1}}{(1/y)^{m+n}}\frac{1}{y^2}\\
+		&=\frac{1}{\beta(m,n)}y^{n-1}(1-y)^{m-1}
+	\end{align*}
+	This is for the range we have and $ 0 $ otherwise. But I'm too lazy to typeset that out as a cases.\\
+	So we now have $ Y \sim B_1(n,m) $.
+\end{proof}
+
+\section{Two dimensional r.v.}
+Let $ X $ and $ Y $ be two continuous independent r.v. with joint pdf $ f(x,y) $. Say $ U=g(x,y) $ and $ V=h(x,y) $ are two other r.v. then the joint pdf of $ U $ and $ V $ is given by,
+\[ k(u,v)=f(x,y)\cdot |J| \]
+where $ X, Y$ are expressed in terms of $ U,V $.
+Here we have the Jacobian as follows,
+\begin{align*}
+	\begin{bmatrix}
+	\frac{\partial x }{\partial u} & \frac{\partial x}{\partial v}\\[1ex]
+	\frac{\partial u}{\partial u} & \frac{\partial y}{\partial v}
+\end{bmatrix}=	\begin{bmatrix}
+		\frac{\partial x }{\partial u} & \frac{\partial y}{\partial u}\\[1ex]
+		\frac{\partial x}{\partial v} & \frac{\partial y}{\partial u}
+	\end{bmatrix}
+\end{align*}
+\subsection{Steps to solve}
+\begin{enumerate}
+	\item Write the pdf of $ X $ and $ Y $, i.e. $ f(x,y) $.
+	\item Express old variable in terms of new variable.
+	\item Obtain range of the new variable.
+	\item Obtain $ J $ and $ |J| $.
+	\item Obtain $ k(u,v)=f(x,y)|J| $.
+\end{enumerate}
+
+\begin{example}
+	$ X $ and $ Y $ are two independent gamma variates with parameters $ a $ and $ b $ respectively.
+	\begin{enumerate}
+		\item Obtain the joint distribution of $ u $ and $ v $ where $ u=x+y, v= \frac{x}{x+y} $.
+		\item Show that $ u, v $ are independent and identify their distributions.
+	\end{enumerate}
+\end{example}
+\begin{proof}
+	Consider the pdf of gamma function as follows,
+	\begin{align*}
+		X\sim G(\lambda)&= \frac{e^{-x} x^{\lambda -1}}{\Gamma (\lambda )} && x>0, \lambda >0\\
+		&=0 && \text{otherwise}
+	\end{align*}
+	Where $ \Gamma (\lambda)=(\lambda-1)!=(\lambda-1)\Gamma (\lambda -1) $.\\
+	\begin{align*}
+		f_1(x)&=\frac{1}{\Gamma (a)}e^{-x}x^{a-1}\\
+		f_2(x)&=\frac{1}{\Gamma (b)}e^{-x}x^{b-1}
+	\end{align*}
+	Find $ f(x,y)=f_1(x)f_2(y) $
+		\begin{align*}
+			f(x,y)&=\frac{1}{\Gamma(a)\Gamma(b)}e^{-x-y}x^{a-1}x^{b-1} && x,y,a,b,>0\\
+			&= 0 && \text{otherwise}
+		\end{align*}		
+	We now have the new variables $ U,V $
+	$ U=X+Y, V=\frac{X}{X+Y} $. This implies that $ X=UV, Y=U(1-V)$.\\
+	We need to find the new ranges now. Since $ X,Y>0 $ we have $ U>0 $ and $ X<X+Y \implies \frac{x}{x+y}<1 \implies v<1 $. And $ 0<V<1 $.\\
+	
+	Find the Jacobian,
+	\begin{align*}
+		J&=\begin{bmatrix}
+			v & u\\
+			1-v & -u
+		\end{bmatrix}=-u\\
+	|J|&=u
+	\end{align*}
+	The joint distribution is then given as,
+	\begin{align*}
+			k(u,v)&=\frac{1}{\Gamma(a)\Gamma(b)}e^{-(uv+u-uv)}(uv)^{a-1}[u(1-v)]^{b-1} \cdot u\\
+			&=\frac{1}{\Gamma(a)\Gamma(b)}e^{-u}u^{a-1+b-1+1} v^{a-1} (1-v)^{b-1} \times \frac{\Gamma(a+b)}{\Gamma(a+b)}\\
+			&= \frac{1}{\Gamma(a+b)}e^{-u}u^{a+b-1} \times \frac{1}{\beta(a,b)}v^{a-1}(1-v)^{b-1}\\
+			&=k_1(u)k_2(v)
+	\end{align*}
+So $ u $ and $ v $ are independent r.v. and $ U \sim G(a+b), V \sim \beta_1(a,b) $
+\end{proof}
+
+\begin{example}
+	$ X $ and $ Y $ are two independent r.v. $ X \sim G(a) $ and $ Y\sim G(b) $. We have $ U=X+Y $ and $ W=\frac{X}{Y} $. Show that $ U, W $ are independent and identify the distribution.
+\end{example}
+\begin{proof}
+	We know the following,
+\begin{align*}
+	f_1(x)&= \frac{e^{-x} x^{a -1}}{\Gamma (a )} && x>0, a >0\\
+	&=0 && \text{otherwise}
+\end{align*}
+and,
+\begin{align*}
+	f_2(y)&= \frac{e^{-y} y^{b -1}}{\Gamma (b)} && x>0, b >0\\
+	&=0 && \text{otherwise}
+\end{align*}
+Now the joint distribution $ f(x,y) $ is given by its product since they are independent,
+\begin{align*}
+	f(x,y)&=\frac{e^{-x} x^{a -1}}{\Gamma (a )} \times \frac{e^{-y} y^{b -1}}{\Gamma (b)} && x>0,y>0; a,b >0\\
+	&=0 && \text{otherwise}
+\end{align*}
+Now we compute the new ranges $ X = \frac{UW}{W+1}$ and $ Y=\frac{U}{W+1} $.
+Now when $ X=0 $ we have $ U=0, W=0 $ when $ X\rightarrow \infty $ $ U \rightarrow \infty, V \rightarrow \infty $. So we have $ U>0 $ and $ W>0 $.\\
+Now compute the Jacobian as follows,
+\begin{align*}
+	J&= \begin{bmatrix}
+		\frac{w}{1+w} & \frac{-uw}{(1+w)^2}+\frac{u}{1+w}\\
+		\frac{1}{1+w} & \frac{-u}{(1+w)^2}
+	\end{bmatrix}\\
+	|J|&=\frac{u}{(1+w)^2}
+\end{align*}
+Since for 2 values of $ Y $ we get one value of $ X $ we will multiply the jacobian by 2. Now we compute $ k(u,w) $ as follows,
+\begin{align*}
+	k(u,w)&=f(x,y)|J|\\
+	&=\frac{e^{-\frac{uw}{w+1}} \frac{uw}{w+1}^{a -1}}{\Gamma (a )} \times \frac{e^{-\frac{u}{w+1}} \frac{u}{w+1}^{b -1}}{\Gamma (b)} \times \frac{u}{(1+w)^2}\\
+	&=\frac{1}{\Gamma(a+b)}e^{-u}u^{a+b-1} \times \frac{1}{\beta(a,b)}
+\end{align*}
+Complete this 
+\end{proof}
+
+\begin{example}
+	$ X \sim N(\mu, \sigma^2) $. Obtain the distribution of $ Y=\frac{1}{2} \left( \frac{x-\mu }{\sigma}\right)^2$
+\end{example}
+\begin{proof}
+	Begin by stating the pdf of r.v. $ X 
+	$,
+	\begin{align*}
+		f(x)&={\displaystyle {\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}} && -\infty<x<\infty, \sigma>0\\
+		&=0 && \text{otherwise}
+	\end{align*}
+	We now state $ X $ in terms of $ Y $ as follows, $ X= \mu \pm \sqrt{2} \sigma \sqrt{y}  $. Range of $ y $ is $ 0<y<\infty $. And since it is 2-1 correspondence we will multiply the Jacobian by $ 2 $.\\
+	Compute the value of Jacobian first,
+	\begin{align*}
+		|J|=\frac{\sigma }{\sqrt{2} \sqrt{y}}
+	\end{align*}
+	Now compute the new function,
+	\begin{align*}
+		h(y)&=f(x)|J|2\\
+		&={\displaystyle {\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}} \times \frac{\sigma }{\sqrt{2} \sqrt{y}} \times 2\\
+		&=\frac{1}{\sigma \sqrt{2\pi}}e^{-y} \frac{2 \sigma}{\sqrt{2}\sqrt{y}}\\
+		&= \frac{2}{\sqrt{2}\sqrt{y} \sqrt{2 \pi}}e^{-y}\\
+		&= \frac{e^{-y}}{\sqrt{\pi}\sqrt{y}}\\
+		&=\frac{1}{\Gamma(\frac{1}{2})}e^{-y}y^{1-\frac{1}{2}}
+	\end{align*}
+	So we have $ Y \sim G\left(\frac{1}{2} \right) $.
+\end{proof}
 
 
 \chapter{Chi-square distribution}
