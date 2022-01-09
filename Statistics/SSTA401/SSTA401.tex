@@ -306,13 +306,13 @@ Where $ \Gamma (\lambda)=(\lambda-1)!=(\lambda-1)\Gamma (\lambda -1) $.\\
 
 \subsection{Raw moments of Gamma distribution}
 \begin{theorem}
-	The $ r^{th} $ aw moment of the Gamma distribution is given by \[\mu_r'=\frac{\Gamma(\lambda+1)}{\Gamma(\lambda)\theta^r} \]
+	The $ r^{th} $ raw moment of the Gamma distribution is given by \[\mu_r'=\frac{\Gamma(\lambda+r)}{\Gamma(\lambda)\theta^r} \]
 \end{theorem}
 \begin{proof}
 	\begin{align*}
-		\mu_r'=E[x^r]&=\int_0^\infty \frac{x^r e^{-\theta x} x^{\lambda -1}}{\Gamma(\lambda)}\, dx\\
+		\mu_r'=E[x^r]&=\int_0^\infty \frac{x^r \theta^\lambda e^{-\theta x} x^{\lambda -1}}{\Gamma(\lambda)}\, dx\\
 		&=\int_0^{\infty} \dfrac{\theta^{\lambda} e^{-\theta x}x^{\lambda+r-1}  }{\Gamma(\lambda)}\, dx\\
-		&= \frac{\Gamma(\lambda+1)}{\Gamma(\lambda) \theta^r}
+		&= \frac{\Gamma(\lambda+r)}{\Gamma(\lambda) \theta^r}
 	\end{align*}
 \end{proof}
 
@@ -345,9 +345,9 @@ Using this we can get the mean and variance easily.
 	\end{align*}
 
 \subsection{Additive property of Gamma distribution}
-If $ X_i (i=1,\dots, k) $ are $ k $ independent Gamma distributions with parametrs $ \lambda_1, \lambda_2, \dots, \lambda_k  $ and $ \theta  $ respectively, then,
+If $ X_i (i=1,\dots, k) $ are $ k $ independent Gamma distributions with parameters $ \lambda_1, \lambda_2, \dots, \lambda_k  $ and $ \theta  $ respectively, then,
 \begin{align*}
-	\sum_{i=1}^{k}X_i &\sim G(\sum_{i=1}^{k} \lambda_i, \theta)\\
+	\sum_{i=1}^{k}X_i &\sim G \left( \sum_{i=1}^{k} \lambda_i, \theta \right)\\
 	M_{X_i}(t)&= \left(1 -\frac{t}{\theta} \right)^{-\lambda_i}
 	\intertext{Let $ Z=\sum X_i $}
 	M_Z(t)&= \prod_{i=1}^k \left(1- \frac{t}{\theta}\right)^{-\lambda_i}\\
@@ -370,7 +370,7 @@ Idk write something bruh
 \section{Exponential distribution}
 \subsection{PDF of Exponential Distribution}
 \begin{definition}[PDF of Exponential distribution]
-	A r.v. $ x $ os said to follow the exponential distribution with parameter $ \theta  $ if its pdf is given by 
+	A r.v. $ x $ is said to follow the exponential distribution with parameter $ \theta  $ if its pdf is given by 
 	\begin{align*}
 		f(x)&= \theta e^{-\theta x} && x\geq 0, \theta > 0\\
 		&= 0 && \text{otherwise}
@@ -876,6 +876,93 @@ Complete this
 		&=\frac{1}{\Gamma(\frac{1}{2})}e^{-y}y^{1-\frac{1}{2}}
 	\end{align*}
 	So we have $ Y \sim G\left(\frac{1}{2} \right) $.
+\end{proof}
+
+
+\begin{example}
+	\[ f(x,y)=\begin{cases}
+		4xye^{-(x^2+y^2)} & x,y>0\\
+		0 & \text{otherwise}
+	\end{cases} \]
+Prove that $ h(u)=2u^3e^{-u^2}, u>0$ where $ u=\sqrt{x^2+y^2} $ and $ v=x $.
+\end{example}
+\begin{proof}
+	The variables we are dealing with are,
+	\[ x=v, y=\sqrt{u^2-v^2}\]
+	The range for $ v, u$ is $ (0,\infty) $ but $ 0<v<u<\infty $.\\
+	Begin by computing the Jacobian,
+	\begin{align*}
+		|J|=\frac{u}{\sqrt{u^2-v^2}}
+	\end{align*}
+	Consider now the joint distribution with the change of variables,
+	\begin{align*}
+		g(u,v)&=f(x,y)|J|\\
+		&=4xye^{-(x^2+y^2)} |J|\\
+		&= 4(v)(\sqrt{u^2-v^2}) e^{-(v^2+u^2-v^2)}\frac{u}{\sqrt{u^2-v^2}}\\
+		&=4v\sqrt{u^2-v^2} e^{-u^2}\frac{u}{\sqrt{u^2-v^2}}\\
+		&=4vue^{-u^2}
+		\intertext{Integrate out v}
+		h(u)&=4ue^{-u^2}\int_0^u v  \, dv \\
+		&=4ue^{-u^2} \frac{u^2}{2}\\
+		&=2u^3e^{-u^2}
+	\end{align*}
+\end{proof}
+
+\begin{example}
+	\[ f(x,y)=\begin{cases}
+		\frac{e^{-(x+y)}x^3y^4}{\Gamma(4)\Gamma(5)} & x,y>0\\
+		0 & \text{otherwise}
+	\end{cases} \]
+Obtain pdf of $ u $ where $ u=\frac{x}{x+y} $ take $ v=x+y $ also obtain $ E[u],V[u] $.
+\end{example}
+\begin{proof}
+	Consider the new variables,
+	$ x=uv, y=v-uv $. The range for $v $ is $ (0,\infty) $ and for $ u $ is $ (0,1) $\\
+	Compute the Jacobian,
+	\begin{align*}
+		|J|=v
+	\end{align*}
+	Compute the joint pdf,
+	\begin{align*}
+		g(u,v)&=f(x,y)|J|\\
+		&=\frac{e^{-(x+y)}x^3y^4}{\Gamma(4)\Gamma(5)} |J|\\
+		&=\frac{e^{-(uv+v-uv)}(uv)^3(v-uv)^4}{\Gamma(4)\Gamma(5)} v\\
+		&= \frac{e^{-v}u^3(1-u)^{4}v^8}{\Gamma(4)\Gamma(5)}\\
+		\intertext{Integrate out v}\\
+		h(u)&=\frac{u^3(1-u)^{4}}{\Gamma(4)\Gamma(5)} \int_0^\infty e^{-v}v^8 \, dv\\
+		&=\frac{\Gamma(9)}{\Gamma(4)\Gamma(5)}u^3 (1-u)^4\\
+	\end{align*}
+So $ U \sim \beta_1(m=4,n=5)$. Compute the mean and variance as follows,
+\begin{align*}
+	E[U]&=\frac{m}{m+n}=\frac{4}{9}\\
+	V[U]&=\frac{mn}{(m+n)^2(m+n+1)}=\frac{20}{810}=\frac{2}{81}
+\end{align*}
+\end{proof}
+
+\begin{example}
+	$ X , Y$ are two independent gamma variates with parameters $ a,b $ respectively. Show that $ U+X+Y, V=\frac{X-Y}{X+Y} $ are independent.
+\end{example}
+\begin{proof}
+	Consider the original pdfs,
+	\begin{align*}
+		f_1(x)&=\frac{e^{-x} x^{a -1}}{\Gamma (a)}\\
+		f_2(y)&=\frac{e^{-y} x^{b -1}}{\Gamma (b)}
+		\intertext{Since they are independent}
+		f(x,y)&=\frac{e^{-(x+y)}x^{a-1}y^{b-1}}{\Gamma(a)\Gamma(b)}
+	\end{align*}
+	Consider the new variables,
+	$ x=\frac{1}{2} (uv+u), y= \frac{1}{2}(u-uv) $, the ranges for $ u $ is $ (0,\infty) $ but for $ v $ is $ (-1,1) $\\
+	Compute the Jacobian,
+	\begin{align*}
+		|J|=\frac{u}{2}
+	\end{align*}
+	Compute the joint pdf,
+	\begin{align*}
+		g(u,v)&=f(x,y)|J|\\
+		&=\frac{e^{-(x+y)}x^{a-1}y^{b-1}}{\Gamma(a)\Gamma(b)} |J|\\
+		&=-\frac{e^{-u} (v+1) 2^{-a-b+2} (u (v+1))^{a-2} (u-u v)^b}{(v-1) \Gamma (a) \Gamma (b)}
+	\end{align*}
+	Split this up I'm too lazy to type it.
 \end{proof}
 
 

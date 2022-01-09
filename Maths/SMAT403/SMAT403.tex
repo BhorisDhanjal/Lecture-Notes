@@ -107,7 +107,7 @@
 	sophomore differential equations''
 \end{chapquote}
 These are lecture notes for the SMAT403 Differential Equations course. If you spot mistakes just message me and let me know. There probably might be some typos.
-\par Differential equations might well be the most boring topic in maths I think I will ever study. 
+\par Differential equations might well be the most  topic in maths I think I will ever study. 
 \par Hopefully these notes make it more tolerable. If I remember to do it, there might be an appendix with common derivates and integrals at the end.
 \chapter{First order ordinary linear differential equations}
 \begin{chapquote}{Isaac Newton}
@@ -234,7 +234,7 @@ Let $ P(x), Q(x), R(x)$ be continuous functions on a closed interval $ [a,b].$ I
 \end{proof}
 
 \begin{example}
-	Verify that $ y=c_1 \cos x + c_2 \sin x $ is a solution of $ y''+y=0 $ Find the solution which satisfies (A)(?wtf is A) and
+	Verify that $ y=c_1 \cos x + c_2 \sin x $ is a solution of $ y''+y=0 $ Find the solution which satisfies (A)(???) and
 	\begin{itemize}
 		\item $ y(0) =0, y'(0)=1$
 		\item $ y(0)=1, y'(0)=0 $
@@ -374,7 +374,7 @@ If two functions are dependent then their Wronskian is identically zero.
 \end{bmatrix}=\begin{bmatrix}
 y(x_0)\\ y'(x_0)
 \end{bmatrix} \]
-Complete this later its fucking boring
+Complete this later its boring
 \end{proof}
 
 \begin{example}
@@ -539,7 +539,7 @@ This is a method to solve non-homogenous linear DE of order 2.
 \end{align}
 The second equation is just the associated homogenous equation of the first.\\
 Let $ y_g $ be the general solution of eq. \ref{eq:asshomo} be known as a complementary function (CF).\\
-Let $ y_p $ be a particular solution of eq. \ref{eq:nonhomo} then it is known as something fuck knows she scrolled down.
+Let $ y_p $ be a particular solution of eq. \ref{eq:nonhomo} then it is known as particular integral.
 \\
 You begin by computing $ y_g $ then compute $ y_p $ depending on one of the three stupid cases and their subcases \footnote{Just have to memorize it unfortunately. You want a intuitive reason for doing it? Cry more lmao.}. Once you have the $ y_p $ you just add that (\textbf{without} a constant) to the $ y_g $ and you have the general solution for \ref{eq:nonhomo}
 \subsection{Assumptions of UDC}
@@ -577,7 +577,7 @@ If $ a $ is not a root of the $ AE $ then you take $ y_p=Ae^{ax}$. So you have t
 \end{align*}
 Plug this into the original DE then just append the $ y_p $ to $ y_g $ without constants for your general solution.\\
 
-Also there's some random thing like this in the notes idk it doesn't work, \[ A=\frac{1}{a^2+pa+q} \]
+For subcase i, you can compute $ A $ directly as follows, \[ A=\frac{1}{a^2+pa+q} \]
 
 
 \begin{example}
@@ -608,7 +608,7 @@ If $ a $ is a simple root of the $ AE $ then you take $ y_p=Axe^{ax} $. So you h
 \end{align*}
 Now just plug these values into the original differential equation. You will get $ y_p $ just append that to $ y_g $ and you have your solution.\\
 
-Obligatory thing in the notes which I have no idea what it means, \[ A=\frac{1}{2a+p} \]
+For subcase ii, you can compute $ A $ directly as follows, \[ A=\frac{1}{2a+p} \]
 
 \begin{example}
 	Solve $ y''- 5y'+6y=3e^{2x}$
@@ -627,6 +627,14 @@ Now plug this into the DE,
 \end{align*}
 We get $ A=-3 $.
 \end{proof}
+\subsubsection{Subcase iii) a is a double root of AE}
+If $ a $ is a double root of the $ AE $ then you take $ y_p=Ax^2e^{ax} $. So you have the following,
+\begin{align*}
+	y_p&=Ax^2e^{ax}=Ae^{ax}(x^2)\\
+	y_p'&=Ae^{ax} (ax^2+2x)\\
+	y_p''&=Ae^{ax}(a^2x^2+4ax+2)
+\end{align*}
+
 
 \begin{example}[Review]
 	Find the general solution of $ y''+3y'-10y=6e^{4x} $
@@ -946,6 +954,174 @@ so $ y_p=-4xe^{-x}-8x^2e^{-x} $
 \begin{proof}
 	AHE and HE so auxiliary equation is $ m^3+2m^2-m=0 $ we get $ m=0,-1\pm \sqrt{2} $
 \end{proof}
+
+\begin{example}[Review-9]
+	Find the general solution of $ y''-3y''+2y'=0 $.
+\end{example}
+\begin{proof}
+	Consider the AHE and HE, $ m^3-3m^2+2m=0 $ we get the solutions as $ m=0,1,2 $. So the general solution is just given by
+	\[ y=c_1+c_2e^{x}+c_3e^{2x} \]
+\end{proof}
+
+\section{Operator method}
+\begin{itemize}
+	\item Consider the differential equation $ y^{(n)}+a_1y^{(n-1)}+\cdots+a_{n-1}y'+a_ny=R(x) $
+	\item Using the differential operator D, we can re write it as $ D^ny+a_1 D^{n-1}y+\cdots+a_{n-1}Dy+a_ny=R(x) $\\
+	\item $ \implies p(D)y=R(x)$ where $ p(m) $ is called the axuliary polynomial and $ p(m)=(m-m_1)(m-m_2)\cdot(m-m_n) $ where $ m_i $ are roots of the auxiliary equation.
+\end{itemize}
+
+\begin{example}
+	$ p(D)y=R(x) \implies y= \frac{1}{p(D)}R(x) $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		y&=\frac{1}{D}R(x)\\
+		&=\int R(x)\, dx
+	\end{align*}
+\end{proof}
+\begin{example}
+	$ (D-m)y=R(x) \implies y = \frac{1}{(D-m)}R(x)$
+\end{example}
+\begin{proof}
+	\begin{align}
+		y&=e^{mx} \int e^{-mx} R(x)\, dx\\
+		\frac{1}{D-m}R(x)&=e^{mx}\int e^{-mx} R(x)\, dx \label{eq:operator}
+	\end{align}
+\end{proof}
+
+\subsection{Successive integration}
+\begin{align*}
+	y&=\frac{1}{p(D)} R(x)=\frac{1}{[(D-m_1)(D-m_2)\cdots (D-m_n)]} R(x)\\
+\end{align*}
+Using \ref{eq:operator} successively we get the particular solution.
+
+\begin{example}
+	Find a particular solution of $ y''-3y'+2y=x e^{x} $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		(D^2-3D+2) y&=xe^{x}\\
+		(D-1)(D-2)y&=xe^{x}\\
+		y&=\frac{1}{D-1}\left[\frac{1}{D-2} xe^{x}\right]
+	\end{align*}
+Here $ R(x) = xe^{x},  m_1=2 $. So we do
+\begin{align*}
+	\frac{1}{D-2}x e^{x}=e^{2x}\int e^{-2x} x e^{x}\, dx= -(1+x)e^{x}
+\end{align*}
+Step 2,
+\begin{align*}
+	y&= \frac{1}{D-1}[-(1+x)e^x]\\
+	\frac{1}{D-1}[(1+x)e^x]&= e^x \int e^{-x} (1+x) e^x\, dx\\
+	&=e^x\left( .... \right)
+\end{align*}
+\end{proof}
+
+\subsection{Partial fraction decomposition}
+\begin{align*}
+	p(D)y=R(x)\implies y=\frac{1}{(D-m_1)(D-m_2)\cdots (D-m_n)}
+\end{align*}
+Use partial fractions... \textbf{complete this...}
+
+\begin{example}
+	Find a particular solution of $ y''-3y'+2y=xe^x $ using partial fraction decomposition.
+\end{example}
+\begin{proof}
+	\begin{align*}
+		(D^2-3D+2)y&=xe^x\\
+		\implies y &= \frac{1}{(D-1)(D-2)}xe^x\\
+		y&=\left(\frac{-1}{D-1}+\frac{1}{D-2}\right) xe^{x}
+	\end{align*}
+\textbf{i am not typing this out lmao}
+\end{proof}
+
+\begin{example}
+	\begin{align*}
+		\frac{1}{1-r}=1+r+r^2+r^3+\cdots, \text{ if} |r|<1\\
+		\frac{1}{1+r}=1-r+r^2-r^3+\cdots, \text{ if} |r|<1
+	\end{align*}
+\end{example}
+
+\begin{example}[Review-10]
+	Find a particular solution of $ y''-4y=e^{2x} $ by using methods 1 and 2.
+\end{example}
+\begin{proof}
+	Consider the eq as follows,
+	\begin{align*}
+		D^2y-4Dy=e^{2x}
+	\end{align*}
+\end{proof}
+
+
+\subsection{Series expansion}
+Used when $ R(x) $ is a polynomial.
+\[ y=\frac{1}{p(D)} R(x) = [1+b_1D+b_2D^2+\cdots]R(x)\] higher order derivates vanish
+
+\begin{example}
+	Find particular solution of $ y'''-2y''+y'=x^4+2x+5 $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		D^3-2D^2+Dy&=x^4+2x+5\\
+		\implies y&= \frac{1}{1-(2D^2-D^3)} R(x)
+		&=\left[1+(2D^2-D^3)+(2D^2-D^3)^2+(2D^2-D^3)^3+\cdots \right] R(x)\\
+		&=\left[1+2D^2-D^+4D^4\right]
+	\end{align*}
+	\textbf{complete later...}
+\end{proof}
+
+\subsection{Exponential shift rule}
+If $ R(x)=e^{kx}g(x) $
+\begin{align*}
+	y&= \frac{1}{p(D)}e^{kx}g(x)\\
+	y&=e^{kx}\left[\frac{1}{p(D+k)}g(x)\right]
+\end{align*}
+
+\begin{example}
+	Find a particular solution of $ y''-3y'+2y=xe^x $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		(D^2-3D+2)y&=e^{x}x\\
+		y&=\frac{1}{p(D)} e^x x\\
+		&= e^x \frac{1}{p(D)} x\\
+		&=e^x \frac{1}{p(D+1)}x
+		\intertext{magick}
+		&=-e^{x}\frac{1}{1-D}\frac{x^2}{2}\\
+		&=\frac{-e^x}{2}[1+D+D^2+\cdots]
+	\end{align*}
+\end{proof}
+
+\begin{example}
+	Find a particular solution of $ y''-y=x^2e^{2x} $ using methods 1,2,4 then find general solution.
+\end{example}
+\begin{proof}
+	\begin{align*}
+		(D^2-1)y&=x^2e^{2x}\\
+		y&=\frac{1}{D^2-1}x^{2}e^{2x}\\
+		&= \frac{1}{2}\left(\frac{1}{(D-1)}-\frac{1}{(D+1)}\right) x^2e^{2x}\\
+		&=\frac{1}{2}(-2-2D^2-2D^4+\cdots)x^2e^{2x}
+	\end{align*}
+\end{proof}
+
+\begin{example}
+	Find a particular solution of $ y''-y'+y=x^3-3x^2+1 $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		(D^2-D+1)y&=x^3-3x^2+1\\
+		y&=\frac{1}{D^2-D+1}x^3-3x^2+1\\
+		&=(1+D-D^3-D^4+\cdots)x^3-3x^2+1\\
+		&=(x^3-3x^2+1)+(3x^2-6x)-6\\
+		&=x^3-6x-5
+	\end{align*}
+\end{proof}
+
+
+
+
+
+
+
 
 
 \chapter{Linear systems of ordinary differential equations}

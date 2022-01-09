@@ -196,7 +196,7 @@ $ y_{ij} $ $ j^{th} $ observation receiving $i^{th}$ treatment, $ \mu $ is gener
  
  
  \begin{align*}
-  \sum_{i=1}^k n_i k_i = \sum_{i} n_i (\mu_i-\mu) &= \sum n_i\mu_i - \sum n_i\mu = 0
+  \sum_{i=1}^k n_i \alpha_i = \sum_{i} n_i (\mu_i-\mu) &= \sum n_i\mu_i - \sum n_i\mu = 0
  \end{align*}
  $ \varepsilon_{ij}$ is random error or eror component (assume $ \varepsilon_{ij} \sim N(0, \sigma^2) $)
 
@@ -328,8 +328,8 @@ Assume $ \varepsilon_{ij}\sim N(0,\sigma^2) $
 	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})^2\right]&=\sum_i n_i [E[\overline{e_i.}^2]+E[\overline{e..}^2]-2E[\overline{e_i.}-\overline{e..}]]\\
 	&=\sum_i n_i \left[\frac{\sigma^2}{n_i}+\frac{\sigma^2}{N}-2E[\overline{e_i.}-\overline{e..}]\right]\\
 	&=k\sigma^2+\sigma^2-2\sum_i n_i (\overline{e_i.}-\overline{e..})\\
-	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2+\sigma ^2-2\sum_i n_i (\overline{e_i.}-\overline{e..})\\
-	\sum_i n_i (\overline{e_i.}-\overline{e..})&=E\left[ \overline{e_i.}\sum_i n_i (e../n_i) \right]\\
+	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2+\sigma ^2-E\left[2\sum_i n_i (\overline{e_i.}-\overline{e..})\right]\\
+	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})\right]&=E\left[ \overline{e_i.}\sum_i n_i (e../n_i) \right]\\
 	&=E[\overline{e..}N\overline{e..}]\\
 	&=N E[\overline{e..}^2]=\frac{N \sigma^2 }{N}=\sigma^2\\
 	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2-\sigma ^2\\
@@ -485,7 +485,10 @@ $ H_{0_{\beta}}: $ There is no significant difference of factor B,
 \end{align*}
 
 \subsubsection{Alternative hypothesis}
-\textbf{Complete this}
+$ H_{1 \alpha } :$ At least two of the $ \mu_i. $'s are different.\\
+i.e. At least one of the $ \alpha_i  $'s is not zero.\\
+$ H_{1 \beta } :$ At least two of the $ \mu._j $'s are different.\\
+i.e. At least one of the $ \beta_j  $'s is not zero.
 
 \subsection{Least square estimators of parameters}
 To obtain $ \hat{\mu}, \hat{\alpha_i} , \hat{\beta_j}$
@@ -502,17 +505,20 @@ First derivate it with respect to $ \mu  $ and equate it to zero to get $ \hat{\
 
 Derivative it with respect to $ \alpha_i $
 \begin{align*}
-	\frac{\partial E}{\partial \alpha_i }=0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
-	&\implies \sum \sum y_{ij} - \sum \sum \mu - \sum \sum \alpha_i - \sum \sum \beta_j=0\\
-	&\implies y..- \mu n_k - n_k \alpha_i - 0\\
-	&\implies \hat{\alpha_i}=\overline{y_i.}-\overline{y..}
+	\frac{\partial E}{\partial \alpha_i }=0 &\implies 2 \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
+	&\implies \sum_j y_{ij} - \sum_j \mu - \sum_j \alpha_i - \sum_j \beta_j=0\\
+	&\implies \sum_j y_{ij} - h \mu - \sum_j \alpha_i - \sum_j \beta_j =0
+	\intertext{$ \sum_j \beta_j=0 $ so,}
+	&\implies \sum_j y_{ij} - h \widehat{\mu} = h \widehat{\alpha_i}\\
+	&\implies \widehat{\alpha_i}=\frac{1}{h}\sum_j y_{ij}-\widehat{\mu}\\
+	&\implies \widehat{\alpha_i}=\overline{y_i.}-\overline{y..}
 \end{align*}
 
 Differentiate it with respect to $ \beta_j $
 \begin{align*}
-		\frac{\partial E}{\partial \beta_j }=0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
-		&\implies \sum \sum y_{ij} - \sum \sum \mu - \sum \sum \alpha_i - \sum \sum \beta_j=0\\
-		&\implies y..- \mu k - 0 - k \beta_j\\
+		\frac{\partial E}{\partial \beta_j }=0 &\implies 2 \sum_i (y_{ij}-\mu-\alpha_i - \beta_j)(-1)=0\\
+		&\implies \sum_i y_{ij} - \sum_i \mu - \sum_i \alpha_i - \sum_i \beta_j=0
+		\intertext{Similar steps as above}
 		&\implies \hat{\beta_j}=\overline{y._j}-\overline{y..}
 \end{align*}
 
@@ -603,7 +609,7 @@ Now we will find expectation of ss due to factor $ A $,
 	&= h \sum_i \alpha_i^2 + (k-1)\sigma^2
 \end{align*}
 Therefore we have $ E[MSS_A]=\frac{h}{k-1}\sum_{i}\alpha_i^2+\sigma^2 $.\\
-So this will be a unbiased estimator of $ \sigma^2 $ when $ H_0 $ is true, i.e. $ \sum \alpha_i^2=0 $.
+So this will be a unbiased estimator of $ \sigma^2 $ when $ H_{0_\alpha} $ is true, i.e. $ \sum \alpha_i^2=0 $.
 
 Now we will find expectation of ss due to factor B in the exact same manner,
 \begin{align*}
@@ -619,7 +625,7 @@ Now we will find expectation of ss due to factor B in the exact same manner,
 %	&= h \sum_i \alpha_i^2 + kh \frac{\sigma^2}{h}+hk \frac{\sigma^2}{N}-2N \frac{\sigma^2}{N}\\
 	&= k \sum_j \beta_j^2 + (k-1)\sigma^2
 \end{align*}
-So now we have $ E[MSS_B]=\frac{k}{h-1}\sum_j \beta_j^2+\sigma^2 $. So we have that $ MSS_B $ is an unbiased estimator of $ \sigma^2 $ when $ H_0 $ is true i.e. $ \sum_j \beta_j^2=0. $
+So now we have $ E[MSS_B]=\frac{k}{h-1}\sum_j \beta_j^2+\sigma^2 $. So we have that $ MSS_B $ is an unbiased estimator of $ \sigma^2 $ when $ H_{0_\beta} $ is true i.e. $ \sum_j \beta_j^2=0. $
 
 \subsection{Test statistics}
 
@@ -648,10 +654,86 @@ Replace R with T below here,
 	\text{Source of variance} & d.f. & S.S. & S.S.S & F_{cal}\\
 	\text{Between factor A} & k-1 & RSS=\sum_i^k \frac{R_i^2}{n_i}-\frac{G^2}{N} & MRSS=\frac{RSS}{k-1} & F_1=\frac{MRSS}{MESS}\\
 	\text{Between factor B} & h-1 & CSS=\sum_j^h \frac{R_j^2}{n_j}-\frac{G^2}{N} & MCSS=\frac{CSS}{h-1} & F_2=\frac{MLSS}{MESS}\\
-	\text{Error)} & (k-1)(h-1) & ESS=+ & MESS=\frac{CSS}{(h-1)(k-1)} & -\\
+	\text{Error} & (k-1)(h-1) & ESS=+ & MESS=\frac{CSS}{(h-1)(k-1)} & -\\
 	\text{Total} & N-1 & T_{ss}=\sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
 \end{bmatrix} \]
 
+\section{Critical difference (CD)}
+\begin{itemize}
+	\item When we reject $ H_0 $ we can conclude that the treatment mean are not all equal, but we cannot be more sure than this.
+	\item We do not know whether all the means are different from one another or only some of them are different.
+	\item Therefore, once we reject the null hypothesis, we conduct further tests to find out which of the means are actually different.
+	\item This is achieved by comparison of means with the critical difference value.
+\end{itemize}
+
+\subsection{Aim of Critical difference}
+\begin{itemize}
+	\item To determine the difference between a pair of means that will be significant.
+	\item To compare that value with teh calculated differences between all pairs of group means.
+\end{itemize}
+If the difference between two means is greater than the critical difference it can be concluded that the difference between this pair of means is significant.
+
+\begin{itemize}
+	\item In ANOVA, the null and alternative hypothesis are ....
+	\item When $ H_0 $ is false then we have to find out those differences between the means which are significant.
+	\item For this we calculate standard error of difference between means
+\end{itemize}
+
+\subsection{Standard error of difference}
+\begin{definition}
+	\[ SE_d=\sqrt{EMS\left(\frac{1}{n_1}+\frac{1}{n_2}\right)} \]
+\end{definition}
+\begin{itemize}
+	\item $ n_1 , n_2$ are the number of observations based on the number of replications of different means under comparisons, if $ n_1=n_2$ then 
+	\[ SE_d=\sqrt{\frac{2 EMS}{r}} \]
+	\item $ r= $number of replications which is equal for all treatments under comparison
+	\item The critical difference at desired level of significant is calculated and the observed difference are very easily compared with CD-value.
+\end{itemize}
+The CD value is calculated as follows,
+\[ CD=SE_d \cdot T_{tab} \]
+Use t-table.
+\textbf{Least significant difference (LSD):} CD value at $ 5 \% $ LOS.
+
+
+\begin{example}
+	Five variates of feeds were equally and randomly allotted to 20 pigs of same sex and approximately of the same body weight. The gain body weight recorded in the feeding experiment were as given in the Table. Analyse data for comparison of feeds.
+	\begin{table}[!htp]
+		\centering
+		\begin{tabular}{@{}ccccccc@{}}
+			\toprule
+			\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Source of\\ Variation\end{tabular}} & \multirow{2}{*}{d.f.} & \multirow{2}{*}{s.s.} & \multirow{2}{*}{m.s.s.} & \multirow{2}{*}{$F_{cal}$} & \multicolumn{2}{c}{$F_{tab}$} \\ \cmidrule(l){6-7} 
+			&  &  &  &  & \multicolumn{1}{l}{$5 \%$} & \multicolumn{1}{l}{$1 \%$} \\ \midrule
+			Between feeds & 4 & 155.2 & 38.8 & 11.18 & 3.06 & 4.89 \\
+			Within feeds & 15 & 52.0 & 3.47 &  &  &  \\
+			Total & 19 & 207.2 &  &  &  &  \\ \bottomrule
+		\end{tabular}
+	\end{table}
+	\FloatBarrier
+\end{example}
+\begin{proof}
+	\begin{itemize}
+		\item However, the F-test is significant even if any of two means differ.
+		\item Thus, when a significant effect is found using ANOVA, we don't know which means actually differ significantly from each other.
+		\item Compute $ SE_d=\frac{2 EMS}{r} = \sqrt{\frac{2(3.47)}{4}}=1.317$. And we get $ CD=2.80 $
+		\item For comparison of means under different variatees of feeds, we arrange means in descending order of magnitude as follows.
+		\begin{itemize}
+			\item $ F_3=16 $
+			\item $ F_4=12 $
+			\item $ F_2=11 $
+			\item $ F_5=9 $
+			\item $ F_1=8 $
+		\end{itemize}
+		\item Compute the differences now and we get that $ (F_4,F_3),(F_3,F_2),(F_3,F_5),(F_3,F_1), \cdots $ have significant differences, if difference is greater than CD.
+		\item To make this easily interpretable we add same superscript over all those means which do not differ from each other in the following way
+	\end{itemize}
+	In our example we could see the following conclusions
+	\begin{itemize}
+		\item $ F_3 $ gave the maximum weight gain and was significantly different from all other means.
+		\item $ F_4, F_2 $ did not differ from each other.
+		\item Similarly, there were no significant difference between feed variates $ F_2, F_5 $ are also between $ F_5, F_1. $
+		\item Therefore, $ F_3 $ is a recommended feed.
+	\end{itemize}
+\end{proof}
 
 
 

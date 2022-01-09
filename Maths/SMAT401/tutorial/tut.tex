@@ -1,0 +1,192 @@
+%This template consists of the minimum of a single book.
+%Please do not think this template is mandatory and the format must be followed strictly.
+%We expect the author adds what he needs.
+\documentclass[oneside,11pt,pdftex]{book}%Remove draft when book editing is completed.
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{stix}
+\usepackage{mathrsfs}
+\usepackage{textcomp,mathcomp}
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{cite}
+\usepackage[final,hiresbb]{graphicx}
+\usepackage[x-1a1]{pdfx}
+\usepackage{amsthm}
+%\usepackage{tikz}
+
+\frenchspacing
+\allowdisplaybreaks
+%Be careful when you use commands which align formulas.
+%If aligned formulas range to two pages, the formulas should be divided into two environments.
+%\makeatletter
+%\AtBeginDocument{\let\mathaccentV\AMS@mathaccentV}
+%\makeatother
+%This is a patch for double bar.
+%Activate it if \bar{\bar{a}} doesn't work.
+
+\newskip\thskip
+\thskip=0.5\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip
+
+\newdimen\dtest%Remove this when book editing is completed.
+\settowidth{\dtest}{letters and symbols here}
+\typeout{<<<\the\dtest>>>}
+
+\newtheorem{theorem}{Theorem}[chapter]%Modify these declarations for your need.
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+
+\newtheorem{xca}[theorem]{Exercise}
+
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+
+\makeindex
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\F}{\mathbb{F}}
+
+\begin{document}
+
+
+\frontmatter
+
+\thispagestyle{empty}
+\begin{flushright}
+{\LARGE \textbf{Bhoris Dhanjal}}%Input your name here.
+\end{flushright}
+\vfill
+\begin{center}
+{\fontsize{29.86truept}{0truept}\selectfont \textbf{Calculus IV}}%Input the book title here.
+%Below is for a book with a subtitle.
+%{\fontsize{29.86truept}{0truept}\selectfont \textbf{The Book Title}} \\
+%\vspace{6.5truept}
+%{\Large, \LARGE, etc. \textbf{The Subtitle}}
+\end{center}
+\vfill
+\begin{flushleft}
+{\LARGE \textbf{Lecture Notes}} \\
+\hspace{-1.75truept}
+{\large \textbf{for SMAT401}}
+\end{flushleft}
+\newpage
+
+\tableofcontents
+
+
+\mainmatter
+
+\chapter{Tutorial 1}
+Show that the limits as the function approaches (0,0) dont exist
+\section{Question 1}
+\[ \frac{x^2-y^2}{x^2+y^2} \] use x and y axis
+
+\section{Question 2}
+\[ \frac{x^3y}{x^6+y^2} \] consider $ y=0 $ then we have limit equal 0. Consider now $ y=x^3 $ so now limit of $ \frac{x^6}{2x^6} =\frac{1}{2}$.
+
+
+
+\section{Question 3}
+\[ \frac{\sin(x^2+y)}{x+y} \] along the x axis (y=0) we get $ \sin(x^2) /x $ and the lim is 0. But for y axis (x=0) we get $ \sin(y)/y$ and the lim is 1. 
+
+\section{Question 4}
+\[ 	\frac{x^3+y^3}{x-y} \] take the line $ y=0 $ we get 
+$ \frac{x^3+m^3x^3}{x-mx} =\frac{(1+m)x^3}{x(1-m)}$ is 0 but with $ y=x-x^3$ is equal to 2.
+
+Try with $ y=x-x^2 $ we get
+\begin{align*}
+	\lim \frac{x^3+(x-x^3)^3}{x-(x-x^3)}&=\lim \frac{x^3}{x^3}+\frac{()x-x^3)^3}{x^3}\\
+	&= 1+ \lim \frac{(x-x^3)^3}{x^3} = 1+ 1=2
+\end{align*}
+
+
+
+\section{Question 5}
+\[ \frac{x^2y^2}{x^2y^2+(x-y)^2} \] consider the line $ x=0 $ then the limit is obviously 0. Now consider $ y=x $ then the limit of $ \frac{x^4}{x^4} =1$.
+
+
+\section{Question 6}
+\[ \frac{2xy^2}{x^3+y^3} \] take y=0 and x=y.
+\backmatter
+
+\chapter{Tutorial 1.5}
+\section{Question 1}
+\[ \lim_{(x,y)\rightarrow (0,0)} xy \sin \left(\frac{1}{x^2+y^2} \right)=0\]
+
+
+
+
+
+
+\chapter{Tutorial 2}
+\section{Question 1}
+Using polar coordinates, show that the function $ f: \R^2 \rightarrow \R  $ defined as $$ f(x,y) = \frac{x^3-y^3}{x^2+y^2}$$ with $ f(0,0) =0$ is continuous at $ (0,0) $.
+\begin{proof}
+	\begin{align*}
+		f(r,\theta )= r \cos \theta^3 - \sin \theta ^3
+	\end{align*}
+Let $ \varepsilon>0 $ so
+\begin{align*}
+	|f(r,\theta )-f(0,0)|&= |r| |\cos \theta^3 - \sin \theta^3\\
+	&\leq |r| (|\cos \theta|^3+|\sin \theta|^3)\\
+	& \leq r (1+1)
+	&= 2r
+\end{align*}
+So pick $ \delta=\varepsilon/2 $
+\end{proof}
+
+\section{Question 2}
+Prove that \[ \lim_{(x,y)\rightarrow (0,0)} xy \sin \left( \frac{1}{x^2+y^2} \right)=0 \] using without polar form.
+\begin{proof}
+	Let $ \varepsilon>0 $
+	\begin{align*}
+		|f(x,y)-f(0,0)|&= |xy| \left|\sin \left( \frac{1}{x^2+y^2} \right) \right|\\
+		&\leq |x||y|\\
+		&\leq \sqrt{x^2+y^2}\sqrt{x^2+y^2}\\
+		&\leq x^2+y^2
+	\end{align*}
+	So just take $ \delta=\sqrt{\varepsilon} $
+\end{proof}
+
+\section{Question 3}
+Prove that \[ \lim_{(x,y)\rightarrow (0,0)} \frac{1}{xy} \sin (x^2y+xy^2)=0 \] with epsilon delta.
+\begin{proof}
+	We will use the fact that for small $ \theta, |\sin \theta| \leq \theta $.\\
+	Let $ \varepsilon<0 $ then,
+	\begin{align*}
+		\left|\frac{1}{xy} \sin (x^2y+xy^2)\right| & \leq \frac{1}{|x||y|} |x^2y+xy^2|\\
+		& \leq |x|+|y|\\
+		& \leq \sqrt{x^2+y^2}+\sqrt{x^2+y^2}\\
+		& \leq 2 \sqrt{x^2+y^2}
+	\end{align*}
+So pick $ \delta=\varepsilon/2 $
+\end{proof}
+
+\section{Question 4}
+Prove that the function $ f: \R^2 \rightarrow \R  $ defined as \[ f(x,y) = \frac{\sqrt{x^2+y^2+1}-1}{x^2+y^2}\] for non zero and $ f(0,0) = (0,0)$ is continuous at $ (0,0) $.
+\begin{proof}
+	Consider limit as $ f $ approaches $ (0,0) $. Let $ \varepsilon>0 $
+	\begin{align*}
+		|f(0,0)-L|&=\left|\frac{\sqrt{x^2+y^2+1}-1}{x^2+y^2}\right|\\
+		&=\left|\frac{x^2y^2}{(x^2+y^2)(\sqrt{x^2+y^2+1}+1)}\right|
+		\intertext{Hint, $\sqrt{x}+1\geq 1, \frac{1}{\sqrt{x}+1}\leq 1$}
+		&= \left|\frac{1}{\sqrt{x^2+y^2+1}+1}\right|
+	\end{align*}
+\end{proof}
+
+\thispagestyle{empty}%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
+{\ }
+\newpage
+
+\end{document}
