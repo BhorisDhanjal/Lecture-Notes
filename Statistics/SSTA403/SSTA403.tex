@@ -1334,9 +1334,142 @@ Process control is achieved mainly through the technique of control charts where
 Many quality characteristics are measurable quantitatively, e.g. length of a screw, life of bulb etc. Most of them are continuous variables.
 \par
 Sometimes the quality of the products cannot be measured in such cases the items can be classified as defective or non defective.
+\section{Control chart}
+A typical control chart consists of three horizontal lines. 
+\begin{itemize}
+	\item \textbf{Control line: }It indicates the desired standard of the process. 
+	\item \textbf{Upper control limit: }It indicates the upper limit of tolerance.
+	\item \textbf{Lower control limit: }It indicates the lower limit of tolerance.
+\end{itemize}
+
+\section{Control charts for variable}
+\subsection{For mean}
+The $ 3-\sigma  $ limits are $ E[\overline{X}] \pm 3 \sqrt{V(\overline{X})}$.\\
+If $ \mu  $ and $ \sigma  $ are known as $ \mu', \sigma'$ then $ UCL=\mu'+3\frac{\sigma'}{\sqrt{n}} $ and $ LCL=\mu'-\frac{3\sigma'}{\sqrt{n}} $. Here $ n $ is sample number not sample size.\par
+If $ \mu, \sigma  $ are unknown, then $ \hat{\mu } = \overline{\overline{X}}=\frac{\overline{X_1}+\dots+\overline{X_k}}{k}$ and $ \hat{\sigma } = \frac{\overline{s}}{c_2}=\frac{\overline{R}}{d_2}$. And we have $ UCL=\overline{\overline{X}} +\frac{3 \overline{s}}{c_2 \sqrt{n}}=\overline{\overline{X}}+A_1\overline{s}$ and similar for $ LCL $.
+
+\subsubsection{Construction of $ \overline{X} $ chart} 
+Sample No. along the $ X- $axis and $ \overline{X} $ along the $ Y- $axis.\\
+Sample points are then plotted against corresponding sample numbers.\\
+The central line is drawn bold.\\
+UCL and LCL are then plotted.\\
+If point falls beyond the control line it is regarded that an assignable cause has thrown the process out of control.\\
+The next step is to remove out sample results which are outside the control lines for the remaining samples.
+\subsection{For range}
+$ UCL=\overline{\overline{\alpha}}+\frac{3\overline{R}}{d_2 \sqrt{n}} =\overline{\overline{X}}+A_2 \overline{R}$ and similar with negative for LCL. 
+Or $ UCL=\overline{\overline{X}} +\frac{3 \overline{S}}{c_2 \sqrt{n}}=\overline{\overline{X}}+A_1...$
+
+\subsection{Construction of $ R- $chart}
+$ \overline{R} =\frac{1}{k}(R_1+R_2+\cdot+R_k)$. So $ UCL=\overline{R} + 3 \sigma$. $ \sigma_R=d_2\hat{\sigma }$ or $ d_3 \overline{R} /d_2 $.\\
+If sigma is known we will take $ UCL=D_2 \sigma, LCL=D_1 \sigma  $. If sigma is known then $ UCL=D_4\overline{R}, LCL= D_3 \overline{R}$.\\
+We get $ D_1,D_2,D_3,D_4  $ from the table for different $ n $ values, for $ 2<n<25 $.
+\subsection{For standard deviation}
+Combination of control chart for mean $ \overline{X} $ and s.d. $ S $ known as $ \overline{X} -S$ chart. It is theoretically more appropriate than a combination of $ \overline{X}$ and $ R $.\\
+$ 3-\sigma  $CL is given by $ UCL=B_2 \sigma, LCL=B_1 \sigma $ when sigma is known. And when sigma is unknown $ UCL=B_4 \overline{S} $ and $ LCL=B_3 \overline{S} $ where $ \overline{S} = \frac{\sum S_i}{n}$
+
+\begin{example}
+	A machine is said to deliver packets of ????? ???? $ 10 $ samples of size $ 5 $ each were examined and the following results were obtained.
+
+	\begin{table}[!htb]
+		\centering
+		\begin{tabular}{@{}ccc@{}}
+			\toprule
+			Sample No. & Mean & \multicolumn{1}{l}{Range} \\ \midrule
+			1 & 43 & 5 \\
+			2 & 49 & 6 \\
+			3 & 37 & 5 \\
+			4 & 44 & 7 \\
+			5 & 45 & 7 \\
+			6 & 37 & 4 \\
+			7 & 51 & 8 \\
+			8 & 46 & 6 \\
+			9 & 43 & 4 \\
+			10 & 47 & 6 \\ \bottomrule
+		\end{tabular}
+	\end{table}
+
+\end{example}
+
+\begin{proof}
+	Compute $ \overline{\overline{X}} = 44.2$ and $ \overline{R}=5.8 $.\\
+	First do for $ \overline{X} $,
+	$ CL=\overline{\overline{X}}=44.2 $, $ UCL=\overline{\overline{X}}+\frac{3\overline{R}}{d_2 \sqrt{n}}=44.2+\frac{3\times 5.8}{2.326 \times \sqrt{5}}=47.546$, and $ LCL=\overline{\overline{X}}-\frac{3 \overline{R}}{d_2 \sqrt{n}}=40.85455 $ \\
+	Then do for $ \overline{R} $, we have $ CL=\overline{R} =5.8$, and $ UCL=D_4\overline{R} =2.115 \times 5.8= 12.267$ and $ LCL=D_3 \overline{R} = 0 \times 5.8=0 $
+\end{proof}
+
+\FloatBarrier
+\section{Control charts for attributes}
+The most commonly used control charts under this category are,
+\subsection{$ p -$chart}
+Control chart for fraction defective. The objective of this chart is to evaluate the quality of the items, i.e. the average fraction defective or percent defective. And note the changes in quality over period of time. The chart can also be used in routine control and guide for correcting causes of bad quality. In many situations these charts suggest where $ \overline{X} $ and $ R $ charts could be used.\par
+Steps to make a $ p- $chart,
+\begin{enumerate}
+	\item $ P=\frac{\text{No. of defectives in the sample}}{\text{Sample size}}=\frac{np}{n} = \frac{d}{n}$, average $ f.d.p=\frac{\sum d}{\sum n} $
+	\item $ UCL_P=P+3\sigma_p, LCL=P-3\sigma_p $ where $ \sigma_p=\sqrt{\frac{P(1-P)}{n}} $
+\end{enumerate}
+\subsubsection{Case I:}
+$ P'=P $ then $ LCL_p=P'-3\sqrt{P'(1-P')/n}=P'-A\sqrt{P'(1-P')} $ similar for $ UCL $ and $ CL $.
+
+\subsubsection{Case II:}
+$ P=\overline{P} $
+same formula as above but with $ \overline{P} $.
+
+If $ LCL_p $ is found to be negative according to the formulas it is taken to be $ 0 $.
+
+If the point goes above the UCL it reflects the lack of statistical control since it has changed for the worse. Such a point known as high spot, indicates deterioration in the lot quality. 
+
+If the point goes below the LCL it again exhibits lak of control as the process has changed for the better. Such a point is known as low spot, indicates improvement in the lot quality.
+
+\subsection{$ np-$chart/$ d-$chart}
+Control chart for number of defectives.
 
 
 
+If ??????? on each occasion is the same the plotting of actual number of defectives may be more convenient and meaningful than the fraction defective. The difference is that the actual number of defectives (np) in samples of fixed size is plotted instead of fractional defectives and the central line is drawn at np instead of p.
+
+Following values required for np,
+\begin{enumerate}
+	\item $n=$sample size constant
+	\item The number of defectives in each sample $d=np$
+	\item Average number of defectives per sample of constant size, $$nP=\frac{\text{total no. of defectives}}{\text{number of samples}}$$ 
+\end{enumerate}
+The $ 3-\sigma  $ limits are as follows,
+\begin{enumerate}
+	\item $ UCL_{np} = nP+3\sigma_{np}$
+	\item $ LCL_{np} =nP-3\sigma_{np}$
+\end{enumerate}
+Where, $ P= $the fraction defective true in process (population), $ nP= $the average number of defectives per sample based on all possible sample size $ n $ from the population and $ \sigma_{np}=\sqrt{nP(1-P)} $.
+
+\textbf{Case I: }If $ P=p' $ then $ LCL=np'-3\sqrt{np'(1-p')} $ with CL UCL as expected.
+
+\textbf{Case II: }Suppose we have $ k $ different samples, $ LCL=np-3\sqrt{np(1-p)} $ with CL UCL as expected.
+
+
+\textbf{$ np -$chart vs $ p- $chart}
+... control line and control limits will vary, in such case $ p- $chart is better to use. However, in case of constant sample size for all the sample, any one of $ p- $chart or $ np- $chart can be used. But in practice $ np- $chart is most commonly used.
+
+\subsection{$ c- $chart}
+Control chart for number of defects per unit.
+
+The $ c-$chart is used for control of number of defects per unit. Although the applications of $ c- $chart is somewhat limited compared with $ p- $chart there are many instances in industry where it is useful. E.g. for control of number of defects of a material, number of soiled packages in a given consignment or number of weak spots in a given length.
+
+....based on number of defectives per unit. E.g. in case of inspection of fairly complex assembled units such as T.V. set.
+
+\textbf{The construction of control chart.}
+
+The number of defects where the sample was constant was as follows,
+
+\begin{enumerate}
+	\item Count the number of defects individually. Obtain average number of defects $ \overline{c} = \frac{\text{no of defects in all samples}}{\text{total no of samples}}$.
+	\item Create $ UCL, LCL $ with $ 3-\sigma  $ limits. $ UCL_c=\hat{c} + \sqrt{\hat{c}} $ and $ LCL_c= 3 \sqrt{\hat{c}}$. Where $ \hat{c} =\overline{c}=\frac{c_1+c_2+\cdots+c_k}{k}$ is true average no of defects per product.
+\end{enumerate}
+
+When the estimate value is used, the two limits may be written as $ UCL_c=\overline{c} + 3 \sqrt{\overline{c}}$ and $ LCL_c=\overline{c} - \sqrt{\overline{c}}$. Where $ c_1,c_2,\dots,c_k $ are the number of defects observed in $ 1^{st}, \dots, k^{th}$ sample respectively.
+
+
+The interpretation of this chart is similar to the chart for fraction defective and number of defectives. The evaluation of the standards are also done in the same line.
+
+Although the applications for the $ c- $chart is somewhat limited compared with the $ p- $chart still there are many instances in industry where it is useful. It can be used to identify or to highlight the number of surface(?????) effects observed in roll of galvanized sheet of printed/plated ????? or sheet photographic film.?????????????
 
 
 

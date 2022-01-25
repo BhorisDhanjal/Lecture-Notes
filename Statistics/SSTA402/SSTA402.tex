@@ -738,6 +738,62 @@ Use t-table.
 
 
 \chapter{Design of Experiments}
+Ratio of design $ D_1 $ with $ D_2 $ are the ratio of their error variance $ E=\frac{\sigma_2^2}{\sigma_1^2} \frac{n_1}{n_2}$
+
+\section{Completely randomized design}
+\subsection{Statistical analysis}
+$ y_{ij} $ denotes response measurement of $ j^{th} $ experiment unit receiving $ i^{th} $ treatment for $ i=1,2,\dots,k $ and $ j=1,2,\dots,n $.
+
+Mathematical model is the same as that of ANOVA one way classification.
+
+$ y_{ij} \sim N(\mu+\alpha_i, \sigma^2) $
+$ \mu=\frac{\sum_i^k n_i \mu_i}{\sum n_i} $
+TSS=SST+SSE
+$ TSS=\sum (y_{ij}-\overline{y..})^2 $ with $ N-1 $d.f.
+$ SST= \sum n_i(y) $
+\textbf{complete this up later its same as anova }
+\subsection{Estimation of treatment constants}
+Let $ c_1,c_2,\dots,c_k $ be constants such that their sum is zero then the linear combination $ \sum_i c_i \alpha_i $ is called treatment constant.
+
+An estimate of $ \sum_i c_i \alpha_i $ is $ \sum_i c_i \overline{y_i.} $, 
+
+So we have \[ V(\sum_i c_i \hat{\alpha_i})=\sum c_i^2 \frac{\sigma^2}{n_i} \]
+
+So estimate of standard error of $ \sum c_i \hat{\alpha_i} $ is 
+\begin{align*}
+	\sqrt{MSE \sum_i \frac{c_i^2}{n_i}}
+\end{align*}
+
+So the confidence intervals is 
+\[ \left[ \sum_i c_i \overline{y_i.}-t_{(N-k,\alpha/2)}\sqrt{MSSE \sum \frac{c_i^2}{n_i}},\overline{y_i.}+t_{(N-k,\alpha/2)}\sqrt{MSSE \sum \frac{c_i^2}{n_i}} \right]\]
+
+\subsection{Advantages, disavantages and applications}
+\subsubsection{Advantages}
+\begin{enumerate}
+	\item It is easy to layout the design
+	\item All experimental units can be used, i.e. it results in maximum use of experimental material.
+	\item Complete flexibility is allowed, any number of treatments and replicates may be used.
+	\item Relatively easy statistical analysis, even with variable replicates and variable experimental errors for different treatments.
+	\item Analysis remains simple when data are missing.
+	\item Provides the maximum number of degrees of freedom for error for a given number of experimental units and treatments.
+\end{enumerate}
+\subsubsection{Disadvantages}
+\begin{enumerate}
+	\item Relatively low accuracy due to lack of restrictions which allows environmental variation to enter experimental error.
+	\item Not suited for large number of treatments because a relatively large amount of experimental material is needed which increases the variation.
+\end{enumerate}
+\subsubsection{Applications}
+\begin{enumerate}
+	\item Under conditions where the experimental material is homogenous, i.e. laboratory, or green house experiments or growth chamber experiments.
+	\item Where a fraction of the experimental units is likely to be destroyed or fail to respond.
+	\item In small experiments where there is a small number of degrees of freedom.
+\end{enumerate}
+
+\section{Randomized block designs}
+
+
+
+
 
 
 \chapter{Latin square design (LSD)}

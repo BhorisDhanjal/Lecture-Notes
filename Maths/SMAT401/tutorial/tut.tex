@@ -184,6 +184,57 @@ Prove that the function $ f: \R^2 \rightarrow \R  $ defined as \[ f(x,y) = \frac
 		&= \left|\frac{1}{\sqrt{x^2+y^2+1}+1}\right|
 	\end{align*}
 \end{proof}
+\chapter{Tutorial 3: Incomplete}
+\chapter{Tutorial 4}
+\section{Question 1}
+If $ u=x^2 \arctan \left( \frac{y}{x}\right) -y^2 \arctan \left( \frac{x}{y}\right)$, find $ u_{yx} $
+\begin{proof}
+	First begin by finding $ \partial u/ \partial y $
+	\begin{align*}
+		\frac{\partial u}{\partial y}&=\lim_{h \rightarrow 0} \left( \frac{f(x,y+h)-f(x,y)}{h}\right)\\
+		&=\frac{x^3}{x^2+y^2}-y\left(2 \arctan(x/y)-\frac{xy}{x^2+y^2}\right)\\
+		&=x-2y \arctan(x/y)
+	\end{align*}
+	Now find its partial derivative with erespect to $ y $
+	\begin{align*}
+		u_{yx}&=\frac{\partial }{\partial x} (x-2y \arctan(x/y))\\
+		&=1-\frac{2y^2}{x^2+y^2}\\
+		&=\frac{x^2-y^2}{x^2+y^2}
+	\end{align*}
+\end{proof}
+
+\section{Question 2}
+If $ u=x^y $ prove that $ \frac{\partial^3 u}{\partial x^2 \partial y} = \frac{\partial^3 u}{\partial x \partial y \partial x}$
+\begin{proof}
+	First consider LHS we will find partial wrt y first
+	\begin{align*}
+		\frac{\partial u }{\partial y}&=x^y \log(x)
+	\end{align*}
+	Now double derivative w.r.t. $ x $
+	\begin{align*}
+		\frac{\partial u}{\partial x}&= x^{y-1}(y \log(x)+1)
+	\end{align*}
+	Again
+	\begin{align*}
+		\frac{\partial^3 u}{\partial x^2 \partial y}&=x^{y-2}((y-1)y \log x + 2y-1)
+	\end{align*}
+	Now consider the RHS,
+	partial with x first
+	\begin{align*}
+		\frac{\partial u}{\partial x}&=yx^{y-1}
+	\end{align*}
+	Then with y
+	\begin{align*}
+		\frac{\partial^2 u}{\partial y \partial x}&=x^{y-1}(y \log x +1 )
+	\end{align*}
+	Finally with $ x $
+	\begin{align*}
+		\frac{\partial^3 u}{\partial x \partial y  \partial x}&=x^{y-2}((y-1)y \log x + 2y-1)
+	\end{align*}
+\end{proof}
+
+\section{Question 3}
+If $ v=\frac{c}{\sqrt{t}} \exp \left(\frac{-x^2}{4a^2t}\right)$
 
 \thispagestyle{empty}%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
 {\ }

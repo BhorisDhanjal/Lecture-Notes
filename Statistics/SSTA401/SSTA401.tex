@@ -968,7 +968,144 @@ So $ U \sim \beta_1(m=4,n=5)$. Compute the mean and variance as follows,
 
 \chapter{Chi-square distribution}
 
+\section{PDF}
+\section{MGF}
+\section{CGF}
+\begin{theorem}
+	The CGF of Chi squared disitributed is given by \[ K_x(t) = -\frac{n}{2} \log (1-2t)\]
+\end{theorem}
+\begin{proof}
+	MGF is given by $ (1-2t)^{-n/2} $ and since CGF is just $ \log  $ MGF. We have the result as required.
+\end{proof}
+The values of the cumulants are given as follows,
+\begin{align*}
+	K_1 &= n\\
+	K_2 &= 2n\\
+	K_3 &= 8n\\
+	K_4 &= 48n \text{ so } \mu_4=48n+12n^2
+\end{align*}
 
+\section{Skewness and kurtosis}
+\begin{theorem}
+	Skewness is \[ \beta_1=\frac{\mu_3^2}{\mu_2^3}=\frac{8}{n} \] so it is positively skewed.
+\end{theorem}
+\begin{theorem}
+	Kurtosis is \[ \beta_2=\frac{\mu_4}{\mu_2^2}= 3+\frac{12}{n}\] so it is leptokurtic and approaches normal as $ n \rightarrow \infty $.
+\end{theorem}
+Plot a graph of chi square with 6 degrees of freedom.
+\section{Additive property of chi squared distribution}
+\begin{theorem}
+	If $ X_1, X_2, \dots, X_k $ are $ k $ independent $ \chi^2 $ variates with degrees of freedom $ n_i $ for $ i=1,2,\dots,k $ then $$ \sum_i^n X_i \sim \chi^2_{\sum n_i}$$
+\end{theorem}
+\begin{proof}
+	Take the MGF multiply it that's it.
+\end{proof}
+
+\section{Mode}
+We will obtain the mode as follows,
+\begin{enumerate}
+	\item $ f'(x) =0$
+	\item Check if $ f''(x)<0 $
+\end{enumerate}
+
+Begin with the pdf,
+\[ f(x)=\begin{cases}
+	\frac{1}{2^{n/2}\Gamma(n/2)}e^{-x/2}x^{n/2-1} & x>0, n>2\\
+	0 & o.w.
+\end{cases} \]
+Now take its logarithm,
+\[ \log f(x) = \frac{f'(x)}{f(x)}\]
+\begin{align*}
+	\frac{d \log f(x)}{dx}=0\implies x=n-2\\
+	\frac{d^2 \log f(x)}{dx^2}=0-\frac{n-2}{2x^2}<0
+\end{align*}
+
+You can also do it by just taking the derivative and doing it the long way.
+
+You can do it in a third method by getting a recurrence relation after derivative it once.
+
+
+\begin{theorem}[Mode of Chi-square distribution]
+	Mode of Chi-square distribution with $ n $ degrees of freedom is $ n-2 $
+\end{theorem}
+
+
+\section{Applications of Chi-square distribution}
+\subsection{Goodness of fit}
+This is a very powerful test for testing significance of difference between theoretical and experimental values. It was given by Prof. Karl Pearson in 1900.
+
+If $ O_i, i=1,2,\dots, k $ is a set of observed or experimental frequencies and $ E_I, i=1,2,\dots,k$ is a set of corresponding expected (hypothetical) frequencies, then Karl Pearson's $ \chi^2 $ statistic is given by,\\
+$ H_0: $ There is no significant difference between the observed and expected frequencies (the dist. is a good fit).\\
+$ H_1: $ There is significant difference.
+
+The test statistic is given by, 
+\[ \chi^2=\frac{\sum_{i=1}^k (O_i-E_i)^2}{E_i} \sim \chi^2_{k-1,\alpha}\]
+The decision criteria is,\\
+Reject $ H_0 $ if $ \chi^2_{cal} > \chi^2_{tab}=\chi^2_{\alpha,k-1}$
+
+For computation \[ \chi^2=\frac{\sum O_i^2}{E_i} - N\]
+
+The test is one sided (right sided).
+
+Conditions for validity of the $ \chi^2 $ test,
+\begin{enumerate}
+	\item Sample observations should be independent.
+	\item Constraints on the cell frequencies should be similar, i.e. $ \sum O_i = \sum E_i $.
+	\item The total frequencies $ (N) $ should be reasonably large. Say $ N>50 $.
+	\item No theoretical frequencies should be less than $ 5 $. If a frequency is less than $ 5 $ then it is pooled with the preceding or succeeding frequency such that the pooled frequency is greater than $ 5 $. The degrees of freedom will decrease by the number of observations that are pooled.
+\end{enumerate}
+
+Note: Sometimes while fitting a distribution the given data, some parameters have to be estimated. If $ p $ parameters are estimated, the degrees of freedom will be $ k-p-1 $ where $ k $ is the number of classes. and $ p $ is the number of parameters estimated.
+Therefore, $ d.f.=(k-1) - \text{(no of pooled values)}-\text{(no. of parameters estimated)}$
+
+\begin{example}
+	Four identical coins are tossed $ 160 $ times, and the number of heads is recorded as follows,
+	$ X: $ No. of heads
+	\begin{align*}
+		X && 0 && 1 && 2 && 3 && 4\\
+		O_i && 14 && 30 && 70 && 35 && 11
+	\end{align*}
+	Test the hypothesis that the coins are perfect.
+\end{example}
+\begin{proof}
+	$ H_0: $ Coins are perfect or Binomial is a good fit.\\
+	$ H_1: $ Not $ H_0 $
+	
+	We say $ X: $ No. of heads in 4 coin tosses and $ X \sim B(n=4,p=0.5) $ and $ N=160 $.
+	
+	We get the following,
+	\begin{align*}
+		X && 0 && 1 && 2 && 3 && 4\\
+		O_i && 14 && 30 && 70 && 35 && 11\\
+		E_i && 10 && 40 && 60 && 40 && 10
+	\end{align*}
+	So $ \chi^2_{cal} = \frac{\sum O_i^2}{E_i}-N=6.4917$ and $ \chi^2_{tab} = 9.488$. So $ \chi^2_{cal} < \chi^2_{tab}$ so it doesn't fall in critical reason and we fail to reject $ H_0 $.
+\end{proof}
+
+\begin{example}
+	A study of printing mistakes in a book of $ 550 $ pages gives the following data.\\
+	$ X: $ No of printing mistakes per page
+	\begin{align*}
+		X && 0 && 1 && 2 && 3 && 4\\
+		O_i && 485 && 52 && 8 && 4 && 1
+	\end{align*}
+\end{example}
+\begin{proof}
+	$ H_0: $ Poisson distribution is a good fit\\
+	$H_1:$ Not $ H_0 $\\
+	$ X \sim P(0.15\overline{27}=\frac{42}{275}) $
+	
+	We get the following,
+	\begin{align*}
+		X && 0 && 1 && 2 && 3 && 4\\
+		O_i && 485 && 52 && 8 && 4 && 1\\
+		E_i && 472 && 72 && 6 && 0 && 0
+	\end{align*}
+	Pool the last 3 classes.
+	
+	
+	So $ \chi^2_{cal} = \frac{\sum O_i^2}{E_i}-N=14.08027$ and $ \chi^2_{tab}=\chi^2_{0.05,1} = 3.841	$. So $ \chi^2_{cal} > \chi^2_{tab}$ so it falls in critical reason and we accept $ H_1 $.
+\end{proof}
 
 \chapter{F-distribution}
 

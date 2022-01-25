@@ -483,6 +483,10 @@ So take $ \delta=\varepsilon/7 $
 	Factorize $ (x-y) $ on numerator and denominator then just plug and chug.
 \end{proof}
 
+
+
+
+\chapter{Differentiation}
 \section{Partial derivatives}
 Partial derivates are defined as derivatives of a function of multiple variables when all but the variable of interest are held fixed during the differentiation.\\
 For a function $ f $ in $ n $ variables $ x_1,x_2,\dots, x_n $ we can define the $ m^{th} $ partial derivative as,
@@ -494,9 +498,48 @@ Partial derivatives can be taken with respect to multiple variables and are deno
 	\frac{\partial^3 f}{\partial x^2 \partial y}&=f_{xxy}
 \end{align*}
 
+\begin{theorem}
+	$ E \subseteq \R^2 $ Let $ f_x, f_y, f_{xy} , f_{yx}$ exist. If $ f_{xy} , f_{yx}$ are continuous at $ (a,b) $ then $ f_{xy}(a,b)=f_{yx} (a,b)$
+ \end{theorem}
+\section{Gradient}
+\begin{definition}[Gradient]
+	For $ f:\R^3 \rightarrow \R $
+	\[ \nabla f = \frac{\partial f }{\partial x} i+ \frac{\partial f }{\partial y}j + \frac{\partial f}{\partial z}k=\left(\frac{\partial f}{\partial x}, \frac{\partial f }{\partial y}\right)\]
+\end{definition}
+\begin{example}
+	If $ f(x,y,z)=\frac{1}{\sqrt{x^2+y^2+z^2}} $ find $ \nabla f_p $ where $ p=(\sqrt{2},\sqrt{2}, -3) $
+\end{example}
+\begin{proof}
+	\[ f_x=\frac{-x}{(x^2+y^2+z^2)^{3/2}} \]
+\end{proof}
+\begin{example}
+	Find $ \nabla f $ at $ p=(0,\pi/2) $ if $ f(x,y) = \sin (xy)$ and its norm at $ p $.
+\end{example}
 
-\chapter{Differentiation}
+\begin{theorem}[Chain rule for two variables]
+	If $ w=f(x,y) $ has continuous p.d. $ f_x , f_y$ and if $ x=x(t), y=y(t) $ are differentiable functions of $ t $ then the composite function $ w \circ f(x(t), y(t)) $ is a differentiable function of $ t $ and 
+	\[ \frac{d f}{dt}=\frac{\partial f}{\partial x}\frac{dx}{dt}+\frac{\partial f}{\partial y}\frac{dy}{dt} \]
+\end{theorem}
 
+\begin{example}
+	If $ u=x^2+y^2 $ and $ x=at^2 $ and $ y=2at $ find $ \frac{du}{dt} $
+\end{example}
+\begin{proof}
+	\[ \frac{du}{dt}=\frac{\partial f }{\partial x} \frac{dx}{dt}+ \frac{\partial f}{\partial y}\frac{dy}{dt}\]
+	Consider the two partial derivatives first,
+	\[ f_x=2x, f_y=2y \]
+	Now $ \frac{dx}{dt} = 2at, \frac{dy}{dt}=2a$
+	So we have $ \frac{du}{dt}=2x(2at)+2y(2a)=4a^2(t^3+2t) $
+\end{proof}
+
+\section{Level curves}
+\begin{definition}
+	The level curves of a function $ f $ of two variables are curves with equations $ f(x,y)=k $ where $ k $ is a constant (in the range of $ f $).
+\end{definition}
+
+\begin{theorem}
+	The vector $ \nabla f(x,y) $ is normal (perpendicular to tangent) to level curve of $ f $.
+\end{theorem}
 
 \chapter{Applications}
 \backmatter
