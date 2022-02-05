@@ -541,6 +541,50 @@ Partial derivatives can be taken with respect to multiple variables and are deno
 	The vector $ \nabla f(x,y) $ is normal (perpendicular to tangent) to level curve of $ f $.
 \end{theorem}
 
+\section{Total derivative}
+If function is differentiable then $ D_u f(a)=\langle \nabla f_a, u \rangle $
+
+\section{How to show not differentiable, maximizing direcitonal derivative}
+
+\begin{example}
+	If $ x=e^u \cos v, y=e^u \sin v $ then prove that \[ y \frac{\partial z}{\partial u} + x \frac{\partial z}{\partial v}= e^{2u}\frac{dz}{???}\]
+\end{example}
+\begin{example}
+	Find D.D. of $ \phi = xy^2+yz^3 $ at $ (2,-1,1) $ in direction of $ i+2j+2k $. Also find direction and magnitude of greater D.D. at that point.
+\end{example}
+\begin{proof}
+	Find $ (\nabla \phi)_ =i-3j-3k$.
+	
+	Then $ (D_u \phi)_p=(\nabla \phi)_p \hat{u} = (i-3j-3k)\cdot (i/3+2j/3+2k/3)=-\frac{11}{3}$
+	
+	Greatest D.D. is normal to the curve and its magnitude is norm of the gradient.
+	$ ||(\nabla \phi)_p||=\sqrt{19} $
+\end{proof}
+\begin{example}
+	Find actuate angle between surfaces at $ (2,-1,2), x^2+y^2+z^2=9 $ and $ z=x^2+y^2+3 $
+\end{example}
+\begin{proof}
+	Acute angle between the surfaces is equal to the acute angles between its normals.
+	
+	$ f=x^2+y^2+z^2, g=x^2+y^2-z $
+	
+	\begin{align*}
+		(\nabla f)_p=4i-2j+4k=u\\
+		(\nabla g)_p=4i-2j-k=v
+	\end{align*}
+
+	We require the angle between $ u,v $ so,
+	\begin{align*}
+		\cos \theta &= \frac{u \cdot v}{||u|| ||v||}=\frac{(4i-2j+4k)\cdot(4i-2j-k)}{\sqrt{16+4+16}\sqrt{16+4+1}}\\
+		&=\frac{16+4-4}{\sqrt{36}\sqrt{21}}\\
+		&=\frac{16}{6 \sqrt{21}}\\
+		&= \frac{8}{3 \sqrt{21}}
+	\end{align*}
+So $ \theta = \arccos \left(\frac{8}{3 \sqrt{21}}\right) $
+\end{proof}
+
+To find the eq of the line/tangent to the curve find its gradient and dot product with p and equate to zero. that gives you equation of tangent line/tangent.
+
 \chapter{Applications}
 \backmatter
 

@@ -61,7 +61,7 @@
 \newcommand{\F}{\mathbb{F}}
 
 \graphicspath{ {graphics/} }
-
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \begin{document}
 
 
@@ -1105,6 +1105,485 @@ Therefore, $ d.f.=(k-1) - \text{(no of pooled values)}-\text{(no. of parameters 
 	
 	
 	So $ \chi^2_{cal} = \frac{\sum O_i^2}{E_i}-N=14.08027$ and $ \chi^2_{tab}=\chi^2_{0.05,1} = 3.841	$. So $ \chi^2_{cal} > \chi^2_{tab}$ so it falls in critical reason and we accept $ H_1 $.
+\end{proof}
+
+\subsection{Test for variance}
+To test,
+$ H_0: \sigma^2= \sigma_0^2$\\
+$ H_1: \sigma^2 \neq \sigma_0^2 $ 
+
+Let $ \alpha  $ be l.o.s.
+
+The test statistic is 
+\[ T=\frac{\sum_{i=1}^n (x_i-\mu)^2}{\sigma_0^2}\sim \chi^2_n \]
+
+Note: If $ \mu  $ is unknown then $ T=\frac{\sum (x_i-\overline{x})^2}{\sigma_0^2}\sim \chi^2_{n-1} $
+
+Decision criteria:\\
+Reject $ H_0 $ if $ \chi^2_{cal} >\chi^2_2$ or $ <\chi^2_1 $
+Where $ \chi^2_1=\chi^2_{1-\alpha/2,n} $ and $ \chi^2_2=\chi^2_{\alpha/2,n} $
+
+If the alternate hypothesis is one-sided, then it becomes a one-sided test. 
+
+If $ H_1:\sigma^2>\sigma_0^2, $ then D.C. is reject $ H_0 $ is $ \chi^2_{cal} >\chi^2_{\alpha,n}$
+
+Similarly, if $ H_1:\sigma^2<\sigma_0^2 $ then, reject $ H_0 $ if $ \chi^2_{cal}<\chi^2_{1-\alpha,n} $
+
+Confidence interval for $ \sigma^2 $ 
+$ [(100(1-\sigma))\% $ Ci.i for population variance $ ] $.
+
+Let $ \phi=\frac{\sum_{i=1}^n(x_i-\mu)^2}{\sigma^2} $ be the pivotal quantity.
+
+Then $ 100(1-\alpha)\% $ C.I. for $ \sigma^2 $ is given as follows,
+
+\begin{align*}
+	P[\chi^2_1<\phi<\chi^2_2] &=(1-\alpha)\\
+	\implies P\left[\chi_1^2 < \frac{\sum (x_i-\mu)^2}{\sigma^2} < \chi_2^2\right]&=1-\alpha\\
+	\implies P\left[\frac{\chi^2_1}{\sum (x_i-\mu)^2} < \frac{1}{\sigma^2}<\frac{\chi^2_2}{\sum (x_i-\mu)^2}\right]&=1-\alpha\\
+	P\left[\frac{\sum (x_i-\mu)^2}{\chi^2_2} < \sigma^2 < \frac{\sum(x_i - \mu)^2}{\chi^2_1}\right]&=1-\alpha
+\end{align*}
+
+So the $ 100(1-\alpha) \%$ C.I. for $ \sigma^2 $ is 
+
+\[ \left[\frac{\sum (x_i-\mu)^2}{\chi^2_{n, \alpha/2}}, \frac{\sum (x_i-\mu)^2}{\chi^2_{n,1-\alpha/2}}\right] = \left[\frac{(n-1)s^2_{n-1}}{\chi^2_{n,\alpha/2}},\frac{(n-1)s^2_{n-1}}{\chi^2_{n,1-\alpha/2}}\right]\]
+
+Where $ \chi_1^2=... $
+
+\subsection{Limiting form of $ \chi^2 $ as $ n \rightarrow \infty $}
+
+Let $ X \sim \chi^2_n $ if $ n\rightarrow \infty $ then $ X \sim N(n,2n) $
+\begin{proof}
+	$ M_x(t)=(1-2t)^{-n/2} $ let $ z=\frac{x-\mu }{\sigma} $ then we have 
+	\begin{align*}
+		M_{\frac{x-\mu }{\sigma}}(t)&=E\left[e^{t(\frac{x-\mu}{\sigma})}\right]\\
+		&=E\left[e^{t \frac{x-n}{\sqrt{2n}}}\right]\\
+		&=e^{-nt/\sqrt{2n}}E\left[e^{\frac{tx}{\sqrt{2n}}}\right]\\
+		M_z(t)&=e^{-t\sqrt{\frac{n}{2}}}\left(1-\frac{2t}{\sqrt{2n}}\right)^{\frac{-n}{2}}
+		\intertext{Take log}
+		\log M_z(t)&=K_z(t)=-t\sqrt{n/2}-n/2 \log \left(1-t\sqrt{2/n}\right)
+		\intertext{Take the series expansion of log}
+		&=-t \sqrt{n/2}+n/2 \left[t\sqrt{2/n}+\frac{t^2}{2}\frac{2}{n}+\frac{t^3}{3}\left(\frac{2}{n}\right)^{3/2}+\dots\right]\\
+		&=\frac{t^2}{2}+\mathcal{O}(n^{-1/2})
+	\end{align*}
+	Ignore $ \mathcal{O}(n^{-1/2}) $.
+	
+	Therefore, $ \lim_{n\rightarrow \infty} K_z(t)= \frac{t^2}{2} \implies M_z(t)=e^{t^2/2}$ which is m.g.f. of a standard normal variance.
+	
+	Hence by uniqueness theorem of mgf of Z is asymptomatically standard normal.
+\end{proof}
+
+\section{Independence of attributes}
+Let us consider two attributes $ A $ and $ B $. $ A $ divided into $ r $ classes and $ B $  divided into $ s $ classes.
+
+Such a classification in which attributes are divided into more than two classes is known as manifold classification. The various cell frequencies can be expressed in the following table known as a $ r \times s $ manifold contingency table.
+
+ Where $ (A_i) $ is the no. of persons possessing the attribute $ A_i$ and similarly for $ (B_j) $. So $ (A_iB_j) $ denotes the no. of persons possessing both $ A_i $ and $ B_j $
+\[ 
+\begin{bmatrix}
+	B\setminus A & A_1 & A_2 & \dots & A_i & \dots & A_r & \text{Total}\\
+	B_1 & (A_1B_1) & (A_2 B_1) & \dots & (A_iB1) & \dots & (A_rB_1) & (B_1)\\
+	B_2 & (A_1B_2) & (A_2 B_2) & \dots & (A_iB2) & \dots & (A_rB_2) & (B_2)\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots\\
+	B_j & (A_1B_j) & (A_2 B_j) & \dots & (A_i B_j) & \dots & (A_rB_j) & (B_j)\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots\\
+	B_s & (A_1B_s) & (A_2 B_s) & \dots & (A_i B_s) & \dots & (A_rB_s) & (B_s)\\
+	\text{Total} & (A_1) & (A_2) & \dots & (A_i) & \dots & (A_r) & N
+\end{bmatrix}
+ \]
+
+The problem is to test if the two attributes $ A $ and $ B $ under consideration are independent or not.\\
+$ H_0: $ The two attributes are independent\\
+$ H_1: $ The two attributes are dependent.
+
+Under the null hypothesis that the attributes are independent, the theoretical cell frequencies are calculated as follows:
+
+$ P(A_i) =$Probability that a person posses the attribute $ A_i =\frac{(A_i)}{N}$
+
+$ P(B_j) =$Probability that a person posses the attribute $ B_j =\frac{(B_j)}{N}$
+
+$ P(A_iB_j) =$Probability that a person posses the attributes $A_i, B_j =\frac{(A_i)}{N}\frac{(B_j)}{N}=P(A_i)P(B_j)$\footnote{Since we are assuming they are independent under the null hypothesis.}
+
+Expected number of persons possessing both the attributes $ A_i,B_j=(A_iB_j)_0=NP[A_iB_j]=\frac{(A_i)(B_j)}{N} $
+
+Under the null hypothesis of independence of attributes the test statistic is,
+
+\[ \chi^2=\sum_{i=1}^r\sum_{j=1}^s \left[\frac{((A_iB_j)-(A_iB_j)_0)^2}{(A_iB_j)_0}\right] \] 
+which is distributed as $ \chi^2 $ variate with $ (r-1)(s-1) $ d.f. for large $ N $.
+
+\textbf{Note on degrees of freedom:} The number of independent variates which make up the statistic is known as the degrees of freedom and is usually denoted by $ \nu $.
+
+The number of degrees of freedom, in general, is the total number of observations less than the number of independent constraints imposed on the observations. For example, if $ k $ is the number of independent constraints in a set of data of $ n $ observations then $ \nu=n-k $
+
+Thus in a set of $ n $ observations usually, the degrees of freedom for $ \chi^2 $ are $ n-1 $, one d.f. being lost because of the linear constraint $ \sum O_i=\sum E_i=N $ on the frequencies.
+
+If $ r $ independent linear constraints are imposed on the cell frequencies, then the d.f. are reduced by $ r $.
+
+In addition, if any of the population parameters are calculated from the given data and used for computing the expected frequencies then in applying $ \chi^2 $- test of goodness of fit, we have to subtract one d.f. from each parameter calculated. Thus if $ s $ is the number of population parameters estimated from the sample observations ($ n $ in number) then the required number of degrees of freedom for $ \chi^2 $ test is $ (n-s-1) $.
+
+If any one or more of the theoretical frequencies is less than $ 5 $ then in applying $ \chi^2 $ test we have also to subtract the degrees of freedom lost in pooling these frequencies with the proceeding or succeeding frequency(ies).
+
+In a $ r \times s $ contingency table, in calculating the expected frequencies, the row totals, the column totals and the grand totals remain fixed. The fixation of $ r $ column totals and $ s $ row totals imposes $ r+s $ constraints on the cell frequencies. But since 
+\[ \sum_{i=1}^r (A_i)=\sum_{j=1}^s (B_j)=N\]
+the total number of independent constraints is only $ r+s-1 $. Further, since the total number of cell frequencies is $ r \times s $ the required number of degrees of freedom is \[ \nu=rs-(r+s-1)=(r-1)(s-1)\]
+
+\begin{example}
+	Two sample polls of votes for two candidates $ A $ and $ B $ for a public office are taken, one from among the residents of rural areas. The results are given the table. Examine whether the nature of the area is related to voting preferncei n this election.
+	\[ \begin{bmatrix}
+		\text{Area} \setminus \text{Votes for} && A && B && \text{Total}\\
+		\text{Rural} && 620 && 380 && 1000\\
+		\text{Urban} && 550 && 450 && 1000\\
+		\text{Total} && 1170 && 830 && 2000
+	\end{bmatrix} \]
+\end{example}
+\begin{proof}
+	Note that $ (r-1)(s-1)=1\cdot1=1 $.
+	\begin{align*}
+		(A_1B_1)=620\\
+		(A_2B_1)=380\\
+		(A_1B_2)=550\\
+		(A_2B_2)=450
+	\end{align*}
+	Now check the expected values
+	\begin{align*}
+		(A_1B_1)_0=\frac{(A_1)(B_1)}{N}=\frac{1170 \cdot 1000}{2000}=585\\
+		(A_2B_1)_0=\frac{(A_2)(B_1)}{N}=\frac{830 \cdot 1000}{2000}=415\\
+		(A_1B_2)_0=\frac{(A_1)(B_2)}{N}=\frac{1170 \cdot 1000}{2000}=585\\
+		(A_2B_2)_0=\frac{(A_2)(B_2)}{N}=\frac{830 \cdot 1000}{2000}=415
+	\end{align*}
+	So the test statistic is as follows,
+	\begin{align*}
+		\chi^2_{cal}=10.0916
+	\end{align*}
+Now the tabulated value is as follows,
+\[ 		\chi^2_{tab}=\chi^2_{1,0.05}=3.841 \]
+Since $ \chi^2_{cal}>\chi^2_{tab} $ we reject $ H_0 $. That is to say, that the nature of area is related to voting preference in the election.
+\end{proof}
+
+\begin{example}
+	\[ \begin{bmatrix}
+		\text{Class} \setminus \text{Autonomy preference} && \text{In favour} && \text{In opposition} && \text{Total}\\
+		FY && 120 && 80 && 200\\
+		SY && 130 && 70 && 200\\
+		TY && 70 && 30 && 100\\
+		MA && 80 && 20 && 100\\
+		\text{Total} && 400 && 200 && 600
+	\end{bmatrix} \]
+\end{example}
+\begin{proof}
+	Write the hypothesis here I'm lazy.
+	
+	Note that there are $ (r-1)(s-1)=3\cdot1=3 $ degrees of freedom.
+	
+	\begin{align*}
+		(A_1B_1)=120\\
+		(A_2B_1)=80\\
+		(A_1B_2)=130\\
+		(A_2B_2)=70\\
+		(A_3B_1)=70\\
+		(A_3B_2)=30\\
+		(A_4B_1)=80\\
+		(A_4B_2)=20
+	\end{align*}
+	Now compute the expectations,
+	\begin{align*}
+		(A_1B_1)_0=133.333\\
+		(A_2B_1)_0=66.666\\
+		(A_1B_2)_0=133.333\\
+		(A_2B_2)_0=66.666\\
+		(A_3B_1)_0=66.666\\
+		(A_3B_2)_0=33.333\\
+		(A_4B_1)_0=66.666\\
+		(A_4B_2)_0=33.333
+	\end{align*}
+The test statistic is as follows,
+\begin{align*}
+	\chi^2_{cal}=12.750
+\end{align*}
+Check the $ \chi^2_{tab} $ and conclude.
+\end{proof}
+
+For a $ r \times s $ contingency table in case of any expected value less than $ 5 $ it will be pooled with the nearby class and the degrees of freedom will be $ (r-1) (s-1)-$no. of pooling.
+
+\begin{example}
+	Observed matrix
+	\[ \begin{bmatrix}
+		50 && 40 && 10 && T=100\\
+		30 && 20 && 1 && =51\\
+		T=80 && =60 && =11 && =151
+	\end{bmatrix} \]
+	Expected values,
+	\[ \begin{bmatrix}
+		53 && 40 && 7 && T=100\\
+		27 && 20 && 3 && =51\\
+		T=80 && =60 && =11 && =151
+	\end{bmatrix} \]
+\end{example}
+\begin{proof}
+	We pool it as follows,
+	\[ \begin{matrix}
+		O_i && E\\
+		50 && 53\\
+		40 && 40\\
+		10 && 7\\
+		30 && 27\\
+		20 && 20 \\
+		1 && 3
+	\end{matrix} \]
+Just pool the last two rows, so $ \chi^2_{tab}=\chi^2_{(2-1)\times(3-1)-1}=\chi^2_1 =3.841$.
+
+And the test statistic is as,
+\[ \chi^2_{cal}=1.9628 \]
+\end{proof}
+
+\begin{theorem}
+	For a $ 2 \times 2 $ contingency table as follows,
+	\[ \begin{bmatrix}
+		a && b\\
+		c && d
+	\end{bmatrix} \]
+the chi square test statistic is given as follows,
+\[ \chi^2=\frac{N(ad-bc)^2}{(a+c)(b+d)(a+b)(c+d)} \]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		(A_1B_1)=a\\
+		(A_2B_1)=b\\
+		(A_1B_2)=c\\
+		(A_2B_2)=d
+	\end{align*}
+and the expected values are as follows,
+\begin{align*}
+	(A_1B_1)_0=\frac{(a+b)(a+c)}{N}\\
+	(A_2B_1)_0=\frac{(a+b)(b+d)}{N}\\
+	(A_1B_2)_0=\frac{(a+c)(c+d)}{N}\\
+	(A_2B_2)_0=\frac{(b+d)(c+d)}{N}
+\end{align*}
+The chi squared test statistic is as follows. This is why we have computers I don't wanna type this out bruh wtf I know how to solve it.
+\begin{align*}
+	\chi^2_{cal}&=
+\end{align*}
+\end{proof}
+
+\begin{example}
+	If $ X $ and $ Y $ are indepedent $ \chi^2 $ variates with $ n_1,n_2 $ d.f. respectively, obtain the dist of $ U=\frac{X}{Y} $
+\end{example}
+\begin{proof}
+	Let $ U=\frac{X}{Y} $ and let $ V=Y $ so we have $ U>0,V>0 $ and $ Y=V, X=UV $.
+	
+	\begin{align*}
+		f(x,y)&=f_1(x)f_2(y)\\
+		&=\frac{1}{2^{n_1/2}\Gamma(n_1/2)}e^{-x/2}x^{n_1/2-1}\frac{1}{2^{n_2/2}\Gamma(n_2/2)}e^{-y/2}y^{n_2/2-1}\\
+		&= \frac{1}{2^{\frac{n_1+n_2}{2}}\Gamma(n_1/2)\Gamma(n_2/2)}e^{-\frac{1}{2}(x+y)}x^{n_1/2-1}y^{n_2/2-1}
+	\end{align*}
+	Compute the Jacobian as follows,
+	\begin{align*}
+		|J|&=\begin{bmatrix}
+			\frac{\partial u}{\partial x} && \frac{\partial u}{\partial y}\\
+			\frac{\partial v }{\partial x} && \frac{\partial v}{\partial y}
+		\end{bmatrix}=\begin{bmatrix}
+		\frac{1}{y} && -\frac{x}{y^2}\\
+		0 && 1
+	\end{bmatrix}=\frac{1}{y}=v
+	\end{align*}
+	So now our required $ h(u,v) $ is as follows,
+	\begin{align*}
+		h(u,v)&=f(x,y)|J|\\
+		&=\frac{1}{2^{\frac{n_1+n_2}{2}}\Gamma(n_1/2)\Gamma(n_2/2)}e^{-\frac{1}{2}(v(1+u))}u^{n_1/2-1}v^{\frac{n_1+n_2}{2}-1} \times v
+		\intertext{Integrate out v}
+		&=\frac{1}{2^{\frac{n_1+n_2}{2}}\Gamma(n_1/2)\Gamma(n_2/2)} u^{n_1/2-1}\int_0^\infty e^{-\frac{v}{2}(1+u)}v^{\frac{n_1+n_2}{2}-1}\, dv\\
+		&=\frac{1}{2^{\frac{n_1+n_2}{2}}\Gamma(n_1/2)\Gamma(n_2/2)}u^{n_1/2-1} \frac{\Gamma\left(\frac{n_1+n_2}{2}\right)}{\left(\frac{1+u}{2}\right)^{\frac{n_1+n_2}{2}}}\\
+		&=\frac{1}{\beta\left(\frac{n_1}{2}, \frac{n_2}{2}\right)} \frac{u^{n_1/2-1}}{(1+u)^{\frac{n_1+n_2}{2}}}
+	\end{align*}
+So we get $ U \sim \beta_2\left( \frac{n_1}{2} , \frac{n_2}{2}\right) $
+\end{proof}
+
+\subsection{Pre-requisite for Application 2 (Test for variance) using MGF}
+\begin{theorem}
+	Let $ X_1, X_2, \dots, X_n $ be a random sample from $ N(\mu, \sigma^2) $, then 
+	\begin{enumerate}
+		\item $ |overline
+		X \sim N\left(\mu, \frac{\sigma^2}{n}\right)$
+		\item $ \overline{X} $ and $ \sum_{i=1}^n \frac{(X_i-\overline{X})^2}{n-1} $ are independently distributed
+		\item $ \sum_{i=1}^n \left(\frac{X_i-\overline{X}}{\sigma}\right)^2\sim \chi^2_{n-1} $
+	\end{enumerate}
+	$ s^2=s^2_{n-1}=\sum \frac{(X_i-\overline{X})^2}{n-1} =$sample variance.
+\end{theorem}
+\begin{proof}
+	To prove $ A), B) $ we shall first prove that $ \overline{X} = \sum \frac{X_i}{n} $ and $ (X_i-\overline{X}) $ are independently distributed.
+	
+	Joint mgf of $ \overline{X} $ and $ (X_i-\overline{X}) $ is,
+	\begin{align*}
+		M(t_1,t_2)&= E[\exp(t_1\overline{X}-t_2(X_i-\overline{X}))]=E[\exp((t_1-t_2)\overline{X}+t_2X_i)]\\
+		&=E \left[\exp \left(\frac{t_1-t_2}{n}\sum_{i=1}^n X_i + t_2 X_i\right)\right]\\
+		&=E\left[\exp \left( \left( \frac{t_1-t_2}{n}+t_2 \right)X_i \right)\right]E\left[\exp \left( \left(\frac{t_1-t_2}{n}\right)\sum_{j=1, j\neq i }^n X_j\right)\right] \numberthis
+	\end{align*}
+$ U=\sum_{j=1, j\neq i}^n X_j$ being sum of $ n-1 $ iid $ N(\mu, \sigma^2) $ is a $ N((n-1)\mu, (n-1)\sigma^2) $.
+
+$ M_u(t)=\exp\left[t(n-1)\mu+\frac{t^2}{2}(n-1)\sigma^2\right] $
+
+\begin{align*}
+	\therefore E\left[\exp \left( \frac{t_1-t_2}{n} \sum_{j=1, j\neq i}^n X_j \right)\right]&= E\left[\exp \left(\frac{t_1-t_2}{n} U\right)\right]=M_u\left[\frac{t_1-t_2}{n}\right]\\
+	&=\exp \left[\frac{t_1-t_2}{n}(n-1)\mu + \left(\frac{t_1-t_2}{n}\right)^2 (n-1)\frac{\sigma^2}{2}\right] \numberthis \\
+	E\left[\exp \left(\frac{t_1-t_2}{n}+t_2\right)X_i\right]&=M_{X_i}\left[\frac{t_1-t_2}{n}+t_2\right]\\
+	&=\exp \left[\left(\frac{t_1-t_2}{n}+t_2\right)\mu + \left(\frac{t_1-t_2}{n}+t_2\right)^2 \frac{\sigma^2}{2}\right] \numberthis
+\end{align*}
+Substitute $ ii, iii $ to $ i $ we get,
+\begin{align*}
+	M(t_1,t_2)&=\exp\left[\left(\frac{t_1-t_2}{n}(n-1)+\frac{t_1-t_2}{n}+t_2\right)U\right] \cdot \exp \left[\left(\left(\frac{t_1-t_2}{n}\right)^2(n-1)+\left(\frac{t_1-t_2}{n}+t_2\right)^2\right)\frac{\sigma^2}{2}\right]\\
+	&=\exp\left[t_1\mu+\frac{1}{2}t_1^2 \frac{\sigma^2}{n}\right] \cdot \exp\left[\frac{1}{2} t_2^2 \frac{n-1}{n} \sigma^2\right]\\
+	&=M(t_1)\cdot M(t_2)
+\end{align*}
+Now consider,
+
+$ A) \overline{X}$ and $ X_i\overline{X} $ are independently distributed -iv\\
+$ B) \overline{X} \sim N \left(\mu, \frac{\sigma^2}{n}\right)$ -v and $ (X_i-\overline{X}) \sim N \left(0, \frac{n-1}{n}\sigma^2\right)$ -vi
+
+So $ \overline{X} $ and $ (X_i-\overline{X}) $ are independently distributed, $ \overline{X} $ and $ s^2=\frac{\sum_{i=1}^n (X_i-\overline
+	X)^2}{n-1} $ are independently distributed -vii
+
+
+To derive distribution of $ s^2 $ we note that,
+\begin{align*}
+	\sum_{i=1}^n (X_i-\mu)^2 = \sum_{i=1}^n(X_i-\overline{X}+\overline{X}-\mu)^2 = \sum_{i=1}^n (X_i-\overline{X})^2+n(\overline{X}-\mu)^2
+	\intertext{Product term vanishes since $ \sum (X_i-\overline{X}) =0$}
+	\therefore \sum_{i=1}^n \left(\frac{X_i-\mu }{\sigma}\right)^2=\sum_{i=1}^n \frac{(X_i-\overline{X})^2}{\sigma^2}+\left[\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}\right]^2 -viii \\
+	v=w+z
+\end{align*}
+Here $ v $ being sum of squares of $ n $ independent SNV is $ \chi^2_{(n)} $, therefore $ M_v(t)=(1-2t)^{-n/2} $ -ix
+
+$ \overline{X} \sim N \left(\mu, \frac{\sigma^2}{n}\right) \implies \frac{\overline{X}-\mu }{\sigma/\sqrt{n }}\sim N(0,1) \implies Z = \left[\frac{\overline{X}-\mu }{\sigma/\sqrt{n}}\right]^2\sim \chi^2_{(1)}$
+
+So $ M_z(t)=(1-2t)^{-1/2} $ -x
+
+So $ \overline{X} $ and $ s^2 $ are independent $ \implies w,z $ are independent.
+
+\begin{align*}
+	 M_u(t)&=M_{w+z}(t)=M_w(t)+M_z(t) \\
+	 (1-2t)^{-n/2}&=M_w(t)(1-2t)^{-1/2}\\
+	 \therefore M_w(t)&=(1-2t)^{\frac{-(n-1)}{2}}
+	 \intertext{Which is mgf of $ \chi^2_{(n-1)} $}
+	 \therefore w&= \sum_{i=1}^n\frac{ (X_i-\overline{X})^2}{\sigma^2}= \frac{(n-1)s^2}{\sigma^2} \sim \chi^2_{(n-1)} -xi
+	 \intertext{c part proved}
+\end{align*}
+Now consider,
+\begin{align*}
+	E \left[\sum_{i=1}^{n} \frac{(X_i-\overline{X})^2}{\sigma^2}\right]=n-1 \implies E \left[\sum_{i=1}^n\frac{(X_i-\overline{X})^2}{n-1}\right]=\sigma^2
+\end{align*}
+So $ s^2 $ is an unbiased estimator of $ \sigma^2 $.
+
+Note that,
+\begin{enumerate}
+	\item If $ \mu  $ is known, $ \sum_{i=1}^n \frac{(X_i-\mu)^2}{\sigma^2}\sim \chi^2_{(n)} $
+	\item When $ n $ is large, $ \hat{\sigma}^2=\sum_{i=1}^n \frac{(X_i-\overline{X})^2}{n} $
+\end{enumerate}
+
+Conclusion is
+\begin{enumerate}
+	\item $ \overline{X} \sim N \left(\mu, \frac{\sigma^2}{n}\right)$
+	\item $ \sum_{i=1}^n \frac{(X_i-\overline{X})^2}{\sigma^2}\sim \chi^2_{n-1} $
+	\item $ \overline{X} $ and $ \sum_{i=1}^n.... $
+\end{enumerate}
+\end{proof}
+
+
+\section{Students t-distribution}
+\begin{definition}[Definition of $ t- $distribution]
+	If $ U, V$ are two independent random variables which $ U \sim SN(0,1) $ and $ V\sim \chi^2_n $ then,
+	\[ X=\frac{U}{\sqrt{V/n}} \] is said to follows $ t- $ distribution where $ n  $ is small $ n<30 $.
+\end{definition}
+
+\begin{definition}[PDF of $ t-$distribution]
+	\[ f(x)=\begin{cases}
+		=\frac{1}{\beta\left(\frac{1}{2}, \frac{n}{2}\right)\sqrt{n}} \left(1+ \frac{x^2}{n}\right)^{-\left(\frac{n+1}{2}\right)} & -\infty < x <\infty\\
+		=0 & \text{otherwise}
+	\end{cases} \]
+\end{definition}
+
+\subsection{Derivation of PDF of $ t- $distribution}
+\begin{proof}
+	Let $ U $ and $ V $ be tow independent random variables where $ U \sim SN(0,1) $ and $ V \sim \chi^2_n $. We have $ -\infty < U < \infty $ and $ 0<v< \infty $.
+	
+	Let $ Y=V, X=\frac{U}{\sqrt{V/n}} $, range of $-\infty< X < \infty$ and $ 0<Y<\infty $.
+	
+	Consider the Jacobian,
+	Compute the Jacobian as follows,
+	\begin{align*}
+		|J|=\sqrt{\frac{Y}{n}}
+	\end{align*}
+	Now compute $ f(x,y) =h(u,v) |J|$
+	\begin{align*}
+		f(x,y)&=\frac{1}{\sqrt{2 \pi}}e^{\frac{-x^2y}{2n}}\frac{1}{2^{n/2}\Gamma(n/2)}e^{-y/2}y^{n/2-1} \sqrt{\frac{y}{n}}\\
+		&=\frac{1}{\Gamma(1/2)\Gamma(n/2)2^{\frac{n+1}{2}}n^{1/2}}e^{-y/2\left(\frac{x^2}{n}+1\right)}y^{\frac{n-1}{2}}
+	\end{align*}
+	$ \therefore X, Y $ are independent,
+	\begin{align*}
+		f_1(x)&=\int_0^\infty f(x,y)\, dy\\
+		&=\frac{1}{\Gamma(1/2)\Gamma(n/2)2^{\frac{n+1}{2}}n^{1/2}} \int_0^\infty e^{\frac{-y}{2}\left( \frac{x^2}{n}+1 \right)}y^{\frac{n-1}{2}}\, dy\\
+		&=\frac{1}{\Gamma(1/2)\Gamma(n/2)2^{\frac{n+1}{2}}n^{1/2}} \int_0^\infty \underbrace{y^{\frac{n}{2}+\frac{1}{2}-1}e^{-\left(\frac{1}{2}\left(\frac{x^2}{n}+1\right)\right)y}\, dy}_{\text{Gamma function}}\\
+		f_1(x)&=\frac{1}{\Gamma(1/2)\Gamma(n/2)2^{\frac{n+1}{2}}n^{1/2}} \frac{\Gamma\left(\frac{n}{2}+\frac{1}{2} \right)}{\left(\frac{x^2}{2n}+\frac{1}{2}\right)^\frac{n+1}{2}}\\
+		&=\frac{1}{\beta\left(\frac{1}{2},\frac{n}{2}\right)n^{1/2}2^{\frac{n+1}{2}}}\frac{2^{\frac{n+1}{2}}}{\left(1+\frac{x^2}{n}\right)^{\frac{n+1}{2}}}\\
+		&=\frac{1}{\beta\left(\frac{1}{2}, \frac{n}{2}\right) \sqrt{n}} \left(1+\frac{x^2}{n}\right)^{-\left(\frac{n+1}{2}\right)}\\
+	\end{align*}
+\end{proof}
+
+\section{Moments of t distribution}
+\begin{theorem}[Odd moments are zero]
+	\[ \mu'_{2r+1}=E[x^{2r+1}]=\int_{-\infty}^\infty x^{2r+1}f(x)\, dx =0\]
+\end{theorem}
+So mean=0 that implies raw moments are equal to central moments.
+
+\begin{theorem}[Even ordered moments]
+	\[ \mu'_{2r}=\frac{n^r \Gamma \left(r+\frac{1}{2}\right)\Gamma\left(\frac{n}{2}-r\right)}{\Gamma\left(\frac{1}{2}\right)\Gamma\left(\frac{n}{2}\right)} \]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		\mu_{2r}'&=\mu_{2r}=E[X^{2r}]\\
+		&=\int_{-\infty}^\infty x^{2r}f(x)\, dx\\
+		&= 2\int_0^{\infty} x^{2r}f(x)\, dx\\
+		&= \frac{2}{\beta\left(\frac{1}{2}, \frac{n}{2}\right)\sqrt{n}}\int_0^\infty x^{2r}\left(1+\frac{x^2}{n}\right)^{- \frac{n+1}{2}}\, dx
+	\end{align*}
+Let $ \frac{x^2}{n} =y \implies x^2=ny$ so we have $ \frac{dy}{dx}=\frac{2x}{n} \implies dx=\frac{n dy}{2x} $ Let beta term be $ c $.
+
+\begin{align*}
+	\mu_{2r}&=c\int_0^\infty (ny)^r (1+y)^{-\frac{n+1}{2}} \frac{n}{2\sqrt{ny}}\, dy\\
+	&= \frac{cn}{2} \int_0^\infty (ny)^{r-1/2}(1+y)^{-\frac{n+1}{2}}\, dy\\
+	&= \frac{nc}{2} n^{r-1/2} \int_0^\infty y^{r-1/2}(1+y)^{-\frac{n+1}{2}}\, dy\\
+	&=\frac{nn^r}{2\sqrt{n}\frac{2}{\beta \left(\frac{1}{2}, \frac{n}{2}\right)\sqrt{n}}}\int_0^\infty \frac{y^{r-1/2}}{(1+y)^{\frac{n+1}{2}}} \, dy\\
+	&= \frac{n^r}{\beta \left(\frac{1}{2}, \frac{n}{2}\right)} \beta\left(r+\frac{1}{2}, \frac{n}{2}-r\right)\\
+	&=\frac{n^r \Gamma \left(r+\frac{1}{2}\right)\Gamma\left(\frac{n}{2}-r\right)}{\Gamma\left(\frac{1}{2}\right)\Gamma\left(\frac{n}{2}\right)}
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Variance]
+	\[ V[x]= \frac{n}{n-2}\]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		V[x]&=\left. \frac{n^r \Gamma \left(r+\frac{1}{2}\right)\Gamma\left(\frac{n}{2}-r\right)}{\Gamma\left(\frac{1}{2}\right)\Gamma\left(\frac{n}{2}\right)} \right|_{r=2}\\
+		&=\frac{n^2 \Gamma(3/2)\Gamma(n/2-1}{\Gamma(1/2)\Gamma(n/2)}\\
+		&=\frac{n}{n-2} && \text{ for $n>2$}
+	\end{align*}
+\end{proof}
+
+\begin{theorem}[Skewness]
+	$$ \beta_1=0 $$
+\end{theorem}
+\begin{proof}
+	Since $ \mu_3=0 $
+	\begin{align*}
+		\beta_1&=\frac{\mu_3^2}{\mu_2^3}=0
+	\end{align*}
+\end{proof}
+
+\begin{theorem}[Kurtosis]
+	\[ \beta_2=??? \]
+\end{theorem}
+\begin{proof}
+	We know $ \mu_4=\frac{3n^2}{(n-2)(n-4)} $ so then,
+	\begin{align*}
+		\beta_2&=\frac{\mu_4}{\mu_2^2}=\frac{3n^2}{(n-2)(n-4)} \frac{(n-2)^2}{n^2}\\
+		&=3+
+	\end{align*}
 \end{proof}
 
 \chapter{F-distribution}

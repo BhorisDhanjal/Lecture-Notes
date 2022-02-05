@@ -797,8 +797,49 @@ So the confidence intervals is
 
 
 \chapter{Latin square design (LSD)}
+Latin square design is an experimental design that can be used to control the random variation of two factors. It is arranged with equal number of rows and columns, so that all combinations of possible values of two variables can be tested multiple times.
 
+Latin square of order $ k $ is an arrangement of $ k $ symbols arranges in $ k $ rows and $ k $ columns such that each treatment occurs once and only once in each row and each column. In the context of experimental design te Latin letters are the treatments.
 
+\section{Statistical analysis}
+There are three factors which is affecting the outcome namely treatment effect and block effect.
+
+Let $ y_{ij(t)} $ denote the response measurement from $ i^{th} $ row and $ j^{th} $ column receiving $ t^{th} $ treatment for $ i,j,t=1,2,\dots,k $.
+
+$ y_{ij(t)} $ are independently normal distributed with mean $ \mu_{ij(t)} $ and variance $ \sigma^2 $.
+
+\subsection{Mathematical model}
+$ y_{ij(t)}=\mu_{ij(t)}+e_{ij} $ where $ (i,j,t)\in S $ where S denoted the sample space containing $ k^2 $ points.
+
+\[ y_{ij(t)}=\mu+\alpha_i+\beta_j+\tau_i+e_{ij(t)} \]
+Also,
+\[ \sum_i \alpha_i=\sum_j \beta_j=\sum_t \tau_t=0 \]
+$$ e_{ij(t)} \sim N(0,\sigma^2) $$
+\subsection{Least square estimators of the parameters}
+The normal equations are 
+\begin{align*}
+	\frac{\partial S^2_e}{...}...
+	...
+\end{align*}
+
+\subsection{Variance of estimates}
+
+\section{?????}
+\subsection{Notation}
+$ N=kh $
+\begin{align*}
+	y..=\sum_i \sum_j y_{ij} && \overline{y..}=\frac{y..}{N}\\
+	y_i.=\sum_{j=1}^h y_{ij} && \overline{y_i.}=\frac{y_i.}{h}\\
+	y._j=\sum_{i=1}^k y_{ij} && \overline{text} 
+\end{align*}
+
+\section{ANOVA}
+
+\section{Missing plot techniques}
+
+\subsection{For RBD}
+\[ x=\frac{kT_i+nB_j-G'}{(n-1)(k-1)} \]
+Adjustment factor
 \backmatter
 \thispagestyle{empty}
 \newpage

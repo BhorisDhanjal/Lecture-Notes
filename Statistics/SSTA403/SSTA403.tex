@@ -1348,6 +1348,8 @@ The $ 3-\sigma  $ limits are $ E[\overline{X}] \pm 3 \sqrt{V(\overline{X})}$.\\
 If $ \mu  $ and $ \sigma  $ are known as $ \mu', \sigma'$ then $ UCL=\mu'+3\frac{\sigma'}{\sqrt{n}} $ and $ LCL=\mu'-\frac{3\sigma'}{\sqrt{n}} $. Here $ n $ is sample number not sample size.\par
 If $ \mu, \sigma  $ are unknown, then $ \hat{\mu } = \overline{\overline{X}}=\frac{\overline{X_1}+\dots+\overline{X_k}}{k}$ and $ \hat{\sigma } = \frac{\overline{s}}{c_2}=\frac{\overline{R}}{d_2}$. And we have $ UCL=\overline{\overline{X}} +\frac{3 \overline{s}}{c_2 \sqrt{n}}=\overline{\overline{X}}+A_1\overline{s}$ and similar for $ LCL $.
 
+
+
 \subsubsection{Construction of $ \overline{X} $ chart} 
 Sample No. along the $ X- $axis and $ \overline{X} $ along the $ Y- $axis.\\
 Sample points are then plotted against corresponding sample numbers.\\
@@ -1355,6 +1357,8 @@ The central line is drawn bold.\\
 UCL and LCL are then plotted.\\
 If point falls beyond the control line it is regarded that an assignable cause has thrown the process out of control.\\
 The next step is to remove out sample results which are outside the control lines for the remaining samples.
+
+UCL is $ \overline{\overline{X}}+A_2 \overline{R} $
 \subsection{For range}
 $ UCL=\overline{\overline{\alpha}}+\frac{3\overline{R}}{d_2 \sqrt{n}} =\overline{\overline{X}}+A_2 \overline{R}$ and similar with negative for LCL. 
 Or $ UCL=\overline{\overline{X}} +\frac{3 \overline{S}}{c_2 \sqrt{n}}=\overline{\overline{X}}+A_1...$
@@ -1471,7 +1475,117 @@ The interpretation of this chart is similar to the chart for fraction defective 
 
 Although the applications for the $ c- $chart is somewhat limited compared with the $ p- $chart still there are many instances in industry where it is useful. It can be used to identify or to highlight the number of surface(?????) effects observed in roll of galvanized sheet of printed/plated ????? or sheet photographic film.?????????????
 
+\begin{example}
+	A sample of 500 wiring boards are taken from the wiring assembly line each day. The number and percentage rejected during 20 consecutive days of production are shown below.
+	\begin{table}[!htp]
+		\centering
+		\begin{tabular}{@{}llll@{}}
+			\toprule
+			Date sampled & No of Samples & Number rejected & Defective percent \\ \midrule
+			8 & 500 & 40 & 8 \\
+			9 & 500 & 30 & 6 \\
+			10 & 500 & 20 & 4 \\
+			11 & 500 & 60 & 12 \\
+			12 & 500 & 30 & 6 \\
+			15 & 500 & 20 & 4 \\
+			16 & 500 & 90 & 18 \\
+			17 & 500 & 50 & 10 \\
+			18 & 500 & 30 & 6 \\
+			19 & 500 & 20 & 4 \\
+			22 & 500 & 20 & 4 \\
+			23 & 500 & 10 & 2 \\
+			24 & 500 & 30 & 6 \\
+			25 & 500 & 20 & 4 \\
+			26 & 500 & 20 & 4 \\
+			29 & 500 & 10 & 2 \\
+			30 & 500 & 30 & 6 \\
+			31 & 500 & 20 & 4 \\
+			1 & 500 & 10 & 2 \\
+			2 & 500 & 39 & 7.8 \\ \bottomrule
+		\end{tabular}
+	\end{table}
+\end{example}
+\begin{proof}
+	We compute $ \overline{P} =\frac{599}{10000}=0.0599$
+\end{proof}
 
+\begin{align*}
+	\begin{matrix}
+		\text{Type} && \text{Standards given} && \text{Standards are not given}\\
+		\text{Mean} && CL= \mu' && CL=\overline{\overline{X}}\\
+		 && UCL=\mu'+\frac{3 \sigma'}{\sqrt{n}} && UCLc = \overline{\overline{X}}+A_2 \overline{R}\\
+		 && LCL = \mu'-\frac{3 \sigma'}{\sqrt{n}} && LCL = \overline{\overline{X}}-A_2 \overline{R}\\
+		 \text{Range} && CL=\sigma' && CL= \overline{R}\\
+		 && UCL = D_1 \sigma' && UCL=D_4 \overline{R}\\
+		 && LCL=D_2 \sigma' && LCL=D_3 \overline{R}
+	\end{matrix}
+\end{align*}\footnote{$ A_2=\frac{3}{d_2\sqrt{n}} $}
+
+\section{Objectives of statistical quality control}
+\begin{enumerate}
+	\item To assess the quality of raw material, semi finished goods and finished products at various stages of production process. To achieve better utilization of raw materials, more efficient utilization of equipment etc. To locate and identify the process faults. In order to control the scrap and waste.
+	\item  To reduce the ????? men and machine during the process of production.
+	\item To see whether the product conforms to the predetermined standards and specifications and whether it satisfies the needs of the customer.
+	\item To take necessary corrective steps to maintain the quality of the product.
+	\item To protect the manufacturers as well as the consumers against heavy losses due to a rejection of a large quantity of product.
+\end{enumerate}
+
+\section{Acceptance sampling}
+If the plan is ????? qualitatively then the plan is referred as attribute sampling plan.
+
+And if the plan is ????? then the plan is referred as variable sampling plan
+
+An attribute sampling plan may be given as follows,
+
+Select a sample of size $ n=50 $ and count the number of defectives $ c $ if $ c \leq 3 $ accept the lot otherwise reject.
+
+A variable sampling plan typically uses the normal distribution and might be stated as follows,
+
+Select a random sample of size $ n =50$ and determine the mean tensile strength $ x $ if $ x>12000 $ accept the lot otherwise reject it.
+
+While in attribute sampling plan the number of defectives in the parent population are estimated from binomial and poisson distribution.
+
+\begin{align*}
+	\begin{bmatrix}
+		\text{Actual condition} && \text{Lot accepted} && \text{Rejected}\\
+		\text{Good lot} && \text{Favourable outcome} && \text{Producer risk, type I error}\\
+		\text{Bad lot} && \text{Consumer risk, Type II Error} && \text{Favourable outcome}
+	\end{bmatrix}
+\end{align*}
+
+Producers risk - Type I error ($ \alpha  $)
+, Consumers risk - Type II error $ p $ is lot tolerance ($ \beta $)
+
+AQL- Acceptable quality level - good lot.
+
+
+By producer we mean any person, firm or department that prepares goods to be supplied to another person, firm or department.
+
+Any sampling inspection plan for acceptance or rejection of a lot possesses the disadvantage of occasionally rejecting a lot of satisfactory quality
+
+$ P $ is called producers process average,
+
+$ P $[rejecting a lot, under the sampling inspection plan]
+
+If a good lot is rejected we refer it as a type I error.
+
+A person, firm, department that receives a product from the producer is called the consumer.
+
+$ P $[accepting a lot of unsatisfactory quality on the basis of sampling inspection]=$ \beta $.
+
+If $ p $ ????? that is maximum fraction defective in a lot then the consumer can tolerate. Then it is called as consumers risk.
+
+Consumers want to keep risk low and we refer it as a type II error.
+
+Acceptable quality level is the lot quality which the supplier believes will be accepted by the consumer. That is he believes that a lot with quality $ p $ will have a small chance of being rejected, i.e. his risk is very small. Hence it is called producers risk where $ p $ denotes the proportion of defectives in the lot.
+
+P[the customer will reject a lot with quality p]=$ \alpha $ which is very small.
+
+LTPD - Lot tolerance perfect defective. Can also be called as rejection quality level (RQL) and it is denoted as $ p' $. It is the maximum perfect defective that the customer is ready to accept, in an accepted lot. He believes that the probability of accepting a lot which quality more than $ p $ is very small.
+
+The ??? ???? of quality $ p' $ is equal to $ \beta  $.
+
+Process average fraction defective which is observed over a long period of time which is given as $ \overline{p} $.
 
 \backmatter
 
