@@ -19,7 +19,7 @@
 \usepackage{placeins}
 \usepackage{mathtools}
 \usepackage{tikz}
-
+\usepackage{quiver}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 %Be careful when you use commands which align formulas.
@@ -1586,6 +1586,157 @@ LTPD - Lot tolerance perfect defective. Can also be called as rejection quality 
 The ??? ???? of quality $ p' $ is equal to $ \beta  $.
 
 Process average fraction defective which is observed over a long period of time which is given as $ \overline{p} $.
+
+\section{OC curve}
+The OC curve for a sampling inspection plan is a curve that shows probability of acceptable. $ P_a $(?) for varies with product quality $ p* $ is $ p* $ against $ P_a $ or $ p* $ against $ P_a(p*) $.
+
+$ P_a(p*) $ can be calculated in any one of the following ways,
+\begin{enumerate}
+	\item From a sample of size $ n $ we can have $ d $ defectives $ d=0,1,\dots,n $. Each unit has a probability $ p* $ of being a defective, $ d \sim B(n,p*) $.
+	
+	Therefore, probability of obtaining $ d $ defectives out of $ n $ is given by pdf of binomial.
+	
+	And accepted if,
+	\[P_a(p*)=\sum_{d=0}^c \binom{n}{d}(p*)^d (q*)^{n-d} \]
+	
+	\item Poisson distribution as an approximation to binomial distribution.
+	
+	If $ n\geq 10 $ and $ p* \leq 0.10 $ then we can use Poisson distribution as an approximation to binomial distribution.
+	
+	\[ P_a(p') = \sum_{d=0}^c \frac{e^{-np}np^d}{d!}\] where $ np* $ is mean.
+	\item If we take the lot size into account then we use hypergeometric distribution.
+	
+	Let $ N= $lot size, $ M= $no of defectives in the lot$ =Np* $.
+	Then probability of $ r $ defective is $ =\frac{\binom{M}{r}\binom{N-M}{n-r}}{\binom{N}{n}} $
+	\[ P_a(p*)= \sum_{r=0}^c \frac{\binom{Np*}{r}\binom{N-Np*}{n}}{\binom{N}{n}}\]
+\end{enumerate}
+
+The values of $ p* $ are plotted on the $ x- $axis and corresponding $ P_a(p*) $ on $ y- $axis. The locus of points thus obtained is called as $ OC-$curve. Such a curve gives the probability of acceptance of a lot for various submitted lot quality $ p* $ and vice versa.
+
+\textbf{Ideal OC curve:} If a particular lot quality say $ p*=p $ is considered to be satisfactory, then producer would wish all the lots with quality better than $ p $ to be accepted in the market with probability $ 1 $. On the other hand the lot whose lot quality is inferior to $ p $ (i.e. $ p*>p $), would be accepted with probability zero.
+
+\section{Sampling plan for attributes}
+\subsection{Single sampling plan (SSP)}
+In this plan, the decision about accepting or rejecting a lot is taken on the basis of a single sample alone.
+
+Let $ N= $lot size, $ d= $no. of defectives in sample, $ n= $sample size, $ c=$acceptance number.
+
+Single sampling plan is described as follows,
+\begin{enumerate}
+	\item Select a random sample of size $ n $ from the lot.
+	\item Inspect all items in the sample. Let $ d $ be the number of defectives in the sample.
+	\item If $ d \leq c  $ accept the lot replacing all the defectives pieces in the sample by non-defective pieces.
+	\item If $ d >c $, reject the lot. In this case inspect the entire lot and replace all the defective pieces by non-defectives pieces.
+\end{enumerate}
+
+\subsubsection{Average outgoing quality}
+The quality of the lot before it passes through the inspection plan is called \textbf{incoming quality} of the lot. The quality of the lot after it passes through the inspection plan is called as \textbf{outgoing quality} of the lot.
+
+The expected or average fraction defective remaining in the lot after the application of the sampling plan is called as $ AOQ $. This is naturally a function of $ p* $. Curve is obtained by plotting $ p* $ against AOQ.
+
+\begin{enumerate}
+	\item $ n $ pieces inspected are all good pieces
+	\item Of the $ N-n $ pieces either
+	\begin{enumerate}
+		\item All are inspected and replaced if necessary (i.e. $ d > c $)
+		\item accepted without further inspection (i.e. if $ d \leq c $)
+	\end{enumerate}
+\end{enumerate}
+
+
+I amd II contains all non defective imtems
+
+But II b is accepted on the basis of the sample. i.e. $ N-n $ pieces are passed without inspection. Therefore there will be $ (N-n)p*$ defectives in the lot after inspection. That is, the proportion of defective in the lot after inspection is \[ \frac{(N-n)p*}{N} \] and the probability of accepting such a lot is $ P_a(p*) $
+
+Therefore,\[ AOQ=\frac{(N-n)p*}{N}P_a(p*) \]
+
+\subsubsection{Average outgoing quality limit}
+The maximum value of AOQ when subjected to various values of $ p* $ is called AOQL. That is, the maximum value of AOQ in the entire range $ p* $ is called AOQL. If AOQL is at $ p'=p_m $ then,
+\[ AOQL=\frac{(N-n)p*_m}{N}P_a(p*) \]
+
+\subsubsection{Average total inspection}
+$ ATI $ is the average number of units that are inspected under the plan. It is also a function of incoming lot quality $ p $. It includes inspection of $ N $ units if lot is rejected. Curve is obtained by plotting $ p* $ against $ ATI $.
+
+\paragraph{For a single S.P.}
+Either i) $ n $ units are inspected (if lot is accepted $ d \leq c $) or ii) $ N $  units are inspected (if lot is rejected $ d>c $) with probability of rejection $ (1-P_a(p*)) $.
+\begin{align*}
+	\therefore ATI&= nP_a(p*)+N(1-P_a(p*))\\
+	&= N-P_a(p*)[N-n]
+\end{align*}
+
+\subsubsection{Average sample number (ASN)}
+Expected value of the sample size required for coming ot a decision of accepting or rejecting the lot under the sampling inspection plan is called ASN. ASN is a function of lot function defectives ($ p* $). The ASN curve is obtained by plotting $ p* $ against $ ASN $. Hence lower the $ ASN $ better is the plan.
+
+For SSP, $ ASN=n $.
+
+Note: When incoming quality is good $ p $ is small the outgoing quality is also small. As $ p $ increases $ AOQ $ (average outgoing quality) also increases but beyond certain limit if $ p $ increases then decision of rejection is taken. And suddenly $ AOQ $ drops to zero.
+
+Hence the maximum $ AOQ $ is defined as $ AOQL $.
+
+\subsection{Double sampling plan (DSP)}
+In double sampling plan decision using single sample is not acceptable in majority of the process, also if in the first sample the size is $ n_1 $, the number of defectives is neither too large nor too small for acceptance.
+
+Dodge and ???? suggested the double sampling plan in which decision is taken on the basis of number of defectives found in two samples. 
+
+Notations are as follows,
+$ N= $lot size, \\
+$ n_1= $size of sample $ 1 $,\\
+$ n_2=2 $size of sample $ 2 $, \\
+$ c_1= $acceptance no for $ 1^{st} $ sample and maximum permissible range of defective in $ 1^{st} $ sample, \\
+$ c_2= $acceptance no of sample $ 1,2 $ combined and maximum permissible range of defectives in both samples if lot is accepted,\\
+$ d_1= $no. of defectives in $ 1^{st} $ sample.\\
+$ d_2= $no. of defectives in $ 2^{nd} $ sample.
+
+
+% https://q.uiver.app/?q=WzAsNyxbMiwwLCJOIl0sWzIsMSwibl8xIl0sWzAsMiwiZF8xXFxsZXEgY18xIl0sWzQsMiwiZF8xPmNfMSJdLFswLDMsIkFjY2VwdCJdLFs0LDMsIlJlamVjdCJdLFsyLDJdLFswLDFdLFsyLDMsIiIsMix7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMiw0XSxbMyw1XSxbMSw2LCIiLDIseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d
+\[\begin{tikzcd}
+	&& N \\
+	&& {n_1} \\
+	{d_1\leq c_1} && {} && {d_1>c_1} \\
+	Accept &&&& Reject
+	\arrow[from=1-3, to=2-3]
+	\arrow[no head, from=3-1, to=3-5]
+	\arrow[from=3-1, to=4-1]
+	\arrow[from=3-5, to=4-5]
+	\arrow[no head, from=2-3, to=3-3]
+\end{tikzcd}\]
+
+\[\begin{tikzcd}
+	&& c_1+1<d_1<c_2 \\
+	&& {n_2} \\
+	{d_1+d_2\leq c_2} && {} && {d_1+d_2>c_1} \\
+	Accept &&&& Reject
+	\arrow[from=1-3, to=2-3]
+	\arrow[no head, from=3-1, to=3-5]
+	\arrow[from=3-1, to=4-1]
+	\arrow[from=3-5, to=4-5]
+	\arrow[no head, from=2-3, to=3-3]
+\end{tikzcd}\]
+
+Double sampling plan on the average requires less amount of inspection than single sampling plan for given values of $ \alpha $(producers risk) and $ \beta  $(consumers risk).
+
+Usually double sampling plan results in $ 25\% $ to $ 33\% $ reduction in cost.
+
+\subsubsection{OC Curve}
+If $ p $ is incoming quality with incoming fraction defective $ p $. 
+
+\begin{align}
+	OC=P_a(p) = P(\text{accept on 1st} \cup \text{2nd sample})=P_{a_1}(p)+P_{a_2}(p)
+\end{align}
+
+$ P_{a_1}(p)=P(d_1\geq c_1) $. 
+
+Let $ g(d_1,p) $ be the pmf of $ d_1 $ so  
+\begin{align}
+	P_{a_1} (P)=P(d_1\geq c_1)=\sum_{d_1=0}^{c_1}g(d_1,p)
+\end{align}
+
+$ d_1 \rightarrow  $ hypergeometric situation (???) represented as $ N $ goes to $ Np $ and $ N-np $. And $ n_1 $ going to $ d_1, n_1-d_1 $ \footnote{make a flowchart thing later}.
+
+\begin{align} 
+	P_{a_1} (p)= \sum_{d_1=0}^{c_1} \frac{\binom{N_p}{d_1}\binom{N-np}{n_1-d_1}}{\binom{N}{n_1}}
+\end{align}
+
 
 \backmatter
 

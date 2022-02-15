@@ -561,7 +561,7 @@ If function is differentiable then $ D_u f(a)=\langle \nabla f_a, u \rangle $
 	$ ||(\nabla \phi)_p||=\sqrt{19} $
 \end{proof}
 \begin{example}
-	Find actuate angle between surfaces at $ (2,-1,2), x^2+y^2+z^2=9 $ and $ z=x^2+y^2+3 $
+	Find acute angle between surfaces at $ (2,-1,2), x^2+y^2+z^2=9 $ and $ z=x^2+y^2+3 $
 \end{example}
 \begin{proof}
 	Acute angle between the surfaces is equal to the acute angles between its normals.
@@ -583,7 +583,69 @@ If function is differentiable then $ D_u f(a)=\langle \nabla f_a, u \rangle $
 So $ \theta = \arccos \left(\frac{8}{3 \sqrt{21}}\right) $
 \end{proof}
 
-To find the eq of the line/tangent to the curve find its gradient and dot product with p and equate to zero. that gives you equation of tangent line/tangent.
+To find the eq. of the line/tangent to the curve find its gradient and dot product with p and equate to zero. that gives you equation of tangent line/tangent.
+
+
+Equation of line $ L $ through $ A $ parallel to $ \overline{V} $.  As $ L || \overline{V} $ we have $ \overline{AB} || \overline{V} $ 
+\[ (x-a_1)i+(y-a_2)j+(z-a_3)k || v_1i+v_2j+v_3j \]
+so we get \[ t=\frac{x-a_1}{v_1}=\frac{y-a_2}{v_2}=\frac{z-a_3}{v_3} \]
+
+In view of this equation of normal at $ p $ is 
+\[ \frac{x-x_0}{(f_x)p}=\frac{y-y_0}{(f_y)p}=\frac{z-z_0}{(f_z)_p]} \]
+
+\begin{example}
+	Find the equation of tangent plane and normal line to surface $ f(x,y,z)=f(p) $ at $ p=(1,2,3) $ ???
+\end{example}
+\begin{proof}
+	Equation of tangent is
+	
+	Equation of normal line at $ p $ is given by
+	\[ \frac{x-1}{-24}=\frac{y-2}{-1}=\frac{z-3}{1} \]
+\end{proof}
+
+\section{Lagrange mean value theorem in $ \R^n $}
+\begin{theorem}
+	Let $ E $ be an open set in $ \R^n $. Let $ f:E \rightarrow \R  $ be differentiable. If $ a,b \in E$ then $ \exists \theta \in (0,1) $ such that,\[ f(b)-f(a)=\langle \nabla f(a+\theta(b-a)), (b-a)\rangle\]
+\end{theorem}
+\begin{proof}
+	Consider a unit vector $ u=\frac{b-a}{||b-a||} $ let $ ||b-a||=r\in \R $.
+	
+	Then we have $ ||b-a||=r \in \R $. 
+	
+	Define a function $ g:[0,r]\rightarrow \R  $ as $ g(t)=f(a+tu), \forall t \in [0,r] $.
+	
+	Then $ g  $ is continuous on $ [0,r] $ and differentiable on $ (0,r) $. Applying LMVT (in $ \R  $) to this function $ g $.
+	
+	Therefore, there exists $ c \in (0,r) $ such that \[ g'(c)=\frac{g(r)-g(0)}{r-0} \]
+	\begin{align*}
+		\lim_{h \rightarrow 0} \frac{content...}{den}&=\\
+		\vdots\\
+		D_uf(a+cu)&=\frac{1}{r}(f(b)-f(a))\\
+		\langle \nabla f(a+cu),u \rangle &= \frac{1}{r}(f(b)-f(a))
+	\end{align*}
+	Let $ \theta=\frac{c}{r}$ so $ \theta \in (0,1) $
+	\begin{align*}
+		\frac{1}{r}(f(b)-f(a))&=\langle \nabla f\left(a+c\left(\frac{b-a}{r}\right)\right),\frac{b-a}{r}\rangle
+	\end{align*}
+	Since $ \langle u, \alpha v\rangle = \overline{\alpha}\langle u, v\rangle $
+	So we get the 1/r out and cancel from both sides giving the desired result.
+\end{proof}
+
+\begin{example}
+	Find $ \theta \in (0,1) $ in MVT for the function $ f: \R^3 \rightarrow \R $ defined as $$ f(x,y,z)=xy+yz+zx $$ take $ a=(0,0,0), b=(2,1,1) $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		f(b)-f(a)&=\langle \nabla f(a+\theta(b-a)), (b-a)\rangle\\
+		f(2,1,1)-f(0,0,0)&=\langle \nabla f(\theta(2,1,1)), (2,1,1) \rangle\\
+		5&=\langle \nabla f(2\theta,\theta,\theta), (2,1,1) \rangle
+		\intertext{Gradient is given as $ \nabla f= (y+z)i+(x+z)j+(x+y)k $}
+		5&=\langle (2\theta, 3\theta, 3 \theta) ,(2,1,1)\rangle\\
+		5&=4\theta+3\theta+3\theta\\
+		\theta&=\frac{1}{2}
+	\end{align*}
+
+\end{proof}
 
 \chapter{Applications}
 \backmatter

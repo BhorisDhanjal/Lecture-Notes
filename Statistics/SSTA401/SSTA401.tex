@@ -972,7 +972,7 @@ So $ U \sim \beta_1(m=4,n=5)$. Compute the mean and variance as follows,
 \section{MGF}
 \section{CGF}
 \begin{theorem}
-	The CGF of Chi squared disitributed is given by \[ K_x(t) = -\frac{n}{2} \log (1-2t)\]
+	The CGF of Chi squared distributed is given by \[ K_x(t) = -\frac{n}{2} \log (1-2t)\]
 \end{theorem}
 \begin{proof}
 	MGF is given by $ (1-2t)^{-n/2} $ and since CGF is just $ \log  $ MGF. We have the result as required.
@@ -1526,7 +1526,7 @@ Conclusion is
 	\end{align*}
 \end{proof}
 
-\section{Moments of t distribution}
+\subsection{Moments of t distribution}
 \begin{theorem}[Odd moments are zero]
 	\[ \mu'_{2r+1}=E[x^{2r+1}]=\int_{-\infty}^\infty x^{2r+1}f(x)\, dx =0\]
 \end{theorem}
@@ -1586,6 +1586,123 @@ Let $ \frac{x^2}{n} =y \implies x^2=ny$ so we have $ \frac{dy}{dx}=\frac{2x}{n} 
 	\end{align*}
 \end{proof}
 
+\section{Applications of $ t- $distributions}
+\subsection{Test for single mean}
+\subsubsection{Assumptions}
+\begin{enumerate}
+	\item The parent population from which the sample is drawn is normal.
+	\item The sample drawn is a random sample, i.e. the observations are chosen independently.
+	\item Population variance is unknown.
+\end{enumerate}
+To test if the random sample of size $ n $ is drawn from a normal population with mean $ \mu=\mu_0 $, or,
+
+To test if the sample mean $ \overline{x} $ differs significantly from the hypothetical values $ \mu_0, $
+
+$ H_0:\mu=\mu_0 $ and $ H_1:\mu \neq \mu_0 $ with $ LOS=\alpha $
+\subsubsection{Test Statistic}
+For test statistic consider,
+\[ T=\frac{\overline{x}-\mu}{\hat{\sigma}/\sqrt{n}} =\frac{(\overline{x}-\mu)\sqrt{n}}{\hat{\sigma}}=\frac{(\overline{x}-\mu)\sqrt{n}}{\sqrt{\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n-1}}}\]
+
+Divide numerator and denominator by $ \sigma  $,
+\begin{align*}
+	T&=\frac{(x-\mu)\sqrt{n}/\sigma }{\sqrt{\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n-1} \frac{1}{\sigma^2}} }\\
+	&=\frac{\frac{(\overline{x}-\mu )}{\sigma/\sqrt{n}}}{\sqrt{\frac{\sum (x_i-\overline{x})^2}{(n-1)\sigma^2}}}=\frac{SNV}{\sqrt{\frac{\chi^2}{n-1}}}\sim t_{n-1}
+\end{align*}
+Where, \begin{align*}
+	\overline{x}&=\frac{\sum x}{n}, \hat{\sigma }=s=\sqrt{\frac{\sum(x_i-\overline{x})^2}{n-1}} \text{ for raw data}\\
+	\overline{x}&=\frac{\sum fx}{\sum f}, \hat{\sigma }=s=\sqrt{\frac{\sum f(x_i-\overline{x})^2}{\sum f-1}} \text{ for frequency distribution}
+\end{align*}
+\subsubsection{Decision criteria}
+Reject $ H_0 $ if $ T_{cal} $ lies in the critical region, i.e. $ |T_{cal}| <-t_{\alpha/2, n-1}  $ or $ |T_{cal}|>t_{\alpha/2, n-1} $.
+
+\subsubsection{$ 100(1-\alpha)\% $ confidence interval for $ \mu $}
+We know that \[ \frac{\overline{x}-\mu }{\hat{\sigma}/\sqrt{n}}\sim t_{n-1} \]
+
+So $ 100(1-\alpha)\% $confidence intervals are given as,
+\begin{align*}
+	P\left[-t_{n-1, \alpha/2} < \frac{\overline{x}-\mu }{\hat{\sigma} / \sqrt{n}} < t_{n-1, \alpha/2}\right]&=(1-\alpha)\\
+	P\left[\frac{-t \hat{\sigma}}{\sqrt{n}} < \overline{x}- \mu < \frac{t \hat{\sigma }}{\sqrt{n}}\right]&=(1-\alpha)\\
+	P\left[\frac{-t \hat{\sigma}}{\sqrt{n}} - \overline{x}< - \mu < \frac{t \hat{\sigma }}{\sqrt{n}}-\overline{x}\right]&=(1-\alpha)\\
+	P\left[\overline{x}- \frac{t \hat{\sigma }}{\sqrt{n}} < \mu < \overline{x}+\frac{t\hat{\sigma }}{\sqrt{n}}\right]&=(1-\alpha)
+\end{align*}
+
+So the confidence interval is,
+\[ \overline{x} \pm t_{\alpha/2, n-1} \frac{\hat{\sigma^2}}{\sqrt{n}}\]
+
+\begin{example}
+	It is claimed that the depth of the sea has increased from the previous record for $ 55 $ meters. Test this claim given a sample of size $ 6 $ where the depths are $ 60, 62, 53, 57, 60, 59$
+\end{example}
+\begin{proof}
+	$ H_0:\mu=\mu_0 $ and $ H_1:\mu \neq \mu_0 $ with $ LOS=\alpha $
+	
+	The test statistic is $ t_{6-1}=t_{5,0.05}$.
+	
+	The table values are $ [-2.57058, 2.57058] $
+	
+	$T_{cal}= \frac{58.5-55}{3.14642/\sqrt{6}}=2.72475$
+	
+	Since $ T_{cal} > T_{tab}$ we reject $ H_0 $.
+\end{proof}
+
+\subsection{Test for two means for two independent samples}
+Let $ x_1, x_2,\dots,x_{n_1} $ and $ y_1,y_2,\dots,y_{n_2} $ be two random samples from two normal populations with mean $ \mu_x  $ and variance $ \sigma^2 $ and $ \mu_y  $ and variance $ \sigma^2 $.
+
+\subsubsection{Assumptions}
+\begin{enumerate}
+	\item The parent population follows normal distribution.
+	\item The two samples are independent.
+	\item The variances are unknown but equal.
+\end{enumerate}
+To test if he two independent samples come from $ 2 $ populations with euqal means, we proceed as follows.
+
+\subsubsection{Hypothesis}
+To test,\\
+$ H_0:\mu_x-\mu_y=d $,\\
+$ H_1:\mu_x - \mu_y \neq d $,\\
+LOS=$ \alpha $
+
+\subsubsection{T statistic}
+\[ T=\frac{(\overline{x}-\overline{y})-(\mu_x-\mu_y)}{\hat{\sigma}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} \]
+$ \hat{\sigma}^2=s_p^2= \frac{\sum_i (x_i-\overline{x})^2+\sum_j(y_j-\overline{y})^2}{n_1+n_2-2}$
+Divide by $ \sigma $
+\begin{align*}
+	T&=\frac{(\overline{x}-\overline{y})-(\mu_x-\mu_y)}{\hat{\sigma}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\\
+	&=\frac{SNV}{\sqrt{\frac{\chi^2}{n_1+n_2-2}}} \sim t_{n_1+n_2-2}
+\end{align*}
+
+\subsubsection{Decision criteria}
+Reject $ H_0 $ if $ T_{cal} < -t_{n_1+n_2-2,\alpha/2}$ or $ T_{cal}>t_{n_1+n_2-2,\alpha/2} $
+
+
+For $ H_1: \mu_x-\mu_y>d $ reject $ H_0 $ if $ T_{cal} >t_{n_1+n_2-2,\alpha/2}$\\
+For $ H_1: \mu_x-\mu_y<d $ reject $ H_0 $ if $ T_{cal} <t_{n_1+n_2-2,\alpha/2}$
+
+\subsubsection{Confidence intervals}
+$ (1-\alpha)100\% $ confidence intervals for $ \mu_x-\mu_y $,
+\begin{align*}
+	P\left[-t < \frac{\overline{x}-\overline{y}-(\mu_x-\mu_y)}{s_p \sqrt{1/n_1+1/n_2}}<t\right]&=(1-\alpha)\\
+	P\left[-t s_p \sqrt{1/n_1+1/n_2}-(\overline{x}-\overline{y}) < -(\mu_x-\mu_y) < t s_p \sqrt{1/n_1+1/n_2}-(\overline{x}-\overline{y})\right]&=(1-\alpha)\\
+	P\left[(\overline{x}-\overline{y})-t s_p \sqrt{1/n_1+1/n_2} < \mu_x-\mu_y < (\overline{x}+\overline{y})+t s_p \sqrt{1/n_1+1/n_2}\right]&=(1-\alpha)
+\end{align*}
+So the $ 100(1-\alpha)\% $ confidence interval for $ \mu_x-\mu_y  $ is,
+\[ (\overline{x}-\overline{y})\pm t_{(\alpha/2, n_1+n_2-2)}s_p \sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \]
+
+
+\begin{example}
+	Test for equality of mean for the following sets of values,
+	$ 54, 60, 62, 55, 63 $ and $ 40, 60, 70, 50, 60, 50, 52 $. Also find confidence interval for difference in the means.
+\end{example}
+\begin{proof}
+	To test,\\
+	$ H_0:\mu_x-\mu_y=d=0$,\\
+	$ H_1:\mu_x - \mu_y \neq d=0 $,\\
+	LOS=$ \alpha=0.05 $
+	
+	
+	$ n_1=5, n_2=7 $ so the test statistic is given as $ t_{10} $.
+	
+	\[ T=\frac{(\overline{x}-\overline{y})}{\hat{\sigma}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} = \frac{58.8-54.5714}{7.9026 \sqrt{\frac{1}{5}+\frac{1}{7}}}\]
+\end{proof}
 \chapter{F-distribution}
 
 
