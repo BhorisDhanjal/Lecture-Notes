@@ -1627,7 +1627,7 @@ So $ 100(1-\alpha)\% $confidence intervals are given as,
 \end{align*}
 
 So the confidence interval is,
-\[ \overline{x} \pm t_{\alpha/2, n-1} \frac{\hat{\sigma^2}}{\sqrt{n}}\]
+\[ \overline{x} \pm t_{\alpha/2, n-1} \frac{\hat{\sigma}}{\sqrt{n}}\]
 
 \begin{example}
 	It is claimed that the depth of the sea has increased from the previous record for $ 55 $ meters. Test this claim given a sample of size $ 6 $ where the depths are $ 60, 62, 53, 57, 60, 59$
@@ -1674,8 +1674,8 @@ Divide by $ \sigma $
 Reject $ H_0 $ if $ T_{cal} < -t_{n_1+n_2-2,\alpha/2}$ or $ T_{cal}>t_{n_1+n_2-2,\alpha/2} $
 
 
-For $ H_1: \mu_x-\mu_y>d $ reject $ H_0 $ if $ T_{cal} >t_{n_1+n_2-2,\alpha/2}$\\
-For $ H_1: \mu_x-\mu_y<d $ reject $ H_0 $ if $ T_{cal} <t_{n_1+n_2-2,\alpha/2}$
+For $ H_1: \mu_x-\mu_y>d $ reject $ H_0 $ if $ T_{cal} >t_{n_1+n_2-2,\alpha}$\\
+For $ H_1: \mu_x-\mu_y<d $ reject $ H_0 $ if $ T_{cal} <t_{n_1+n_2-2,\alpha}$
 
 \subsubsection{Confidence intervals}
 $ (1-\alpha)100\% $ confidence intervals for $ \mu_x-\mu_y $,
@@ -1703,7 +1703,200 @@ So the $ 100(1-\alpha)\% $ confidence interval for $ \mu_x-\mu_y  $ is,
 	
 	\[ T=\frac{(\overline{x}-\overline{y})}{\hat{\sigma}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} = \frac{58.8-54.5714}{7.9026 \sqrt{\frac{1}{5}+\frac{1}{7}}}\]
 \end{proof}
+
+\subsection{Paired t-test}
+If we want to test for a significant difference in the readings before and after a training program, we consider the difference in the readings as the variable $ d $.
+
+Consider $ n $ readings $ d_i=(x_i-y_i) $
+
+\subsubsection{Hypothesis}
+To test,\\
+$ H_0: \mu= \alpha  $ for some constant $ \alpha  $\\
+$ H_1: \mu_d \neq \alpha $
+
+\subsubsection{Test statistic}
+The test statistic is,
+\[ T=\frac{\overline{d}-\mu_d }{\hat{\sigma_d}/\sqrt{n}} \sim t_{n-1,\alpha/2}\]
+where $ \hat{\sigma_d}= \sum_{i=1}^n \frac{(d_i-d)^2}{n-1}, \overline{d}=\sum_{i=1}^n \frac{d_i}{n}$
+
+To prove that $ T \sim t_{n-1} $
+multiply and divide $ T $ by $ \frac{1}{\sigma_d} $
+\begin{align*}
+	T&=\frac{\frac{\overline{d}-\mu_d }{\sigma_d}}{\frac{\hat{\sigma}_d}{\sigma_d}\frac{1}{\sqrt{n}}}=\frac{SNV}{\sqrt{\frac{\chi^2}{n-1}}}
+\end{align*}
+
+\subsubsection{Decision criteria}
+Reject $ H_0 $ if $ T_{cal} < -t_{n-1,\alpha/2}$ or $ T_{cal} >t_{n-1,\alpha/2}$
+\subsubsection{Confidence intervals}
+\[ \mu_d=\overline{d} \pm \frac{\hat{\sigma_d}}{\sqrt{n}}t_{n-1,\alpha/2}\]
+
+\begin{example}
+	content...
+\end{example}
+
+
 \chapter{F-distribution}
+
+\section{Applications of F-distributions}
+\begin{example}
+	$ F_{0.01(9,4)} =14.66$
+\end{example}
+\begin{example}
+	$ F_{0,05 (3,12)}=3.49 $
+\end{example}
+
+\begin{example}
+	$ F_{0.99 (4,10)} = \frac{1}{F_{0.01 (10,4)}}=\frac{1}{14.5}=0.0689$
+\end{example}
+
+\begin{example}
+	$ F_{0.025(3,12)}=4.47 $
+\end{example}
+\begin{example}
+	$ F_{0.005 (4,9)}=7.96$
+\end{example}
+\begin{example}
+	$ F_{0.95 (7.8)} = \frac{1}{F_{0.05 (8,7)}}=\frac{1}{3.75}=0.27$
+\end{example}
+\begin{example}
+	content...
+\end{example}
+\subsection{One way ANOVA}
+\subsubsection{Layout of one way ANOVA}
+\[
+\begin{bmatrix} 
+	\text{Factor level} & \text{Observations} & \text{Total} & \text{Mean} \\
+	1 & y_{11} \hfill y_{12} \hfill \dots \hfill y_{1n_1} & \sum_{j=1}^{n_1}y_{1j}=y_1. & \frac{y_1.}{n_1}=\overline{y_{1}.}\\
+	2 & y_{21} \hfill y_{22} \hfill \dots \hfill y_{2n_1} & \sum_{j=1}^{n_2}y_{2j}=y_2. & \frac{y_2.}{n_2}=\overline{y_{2}.}\\
+	\vdots & \vdots \hfill \vdots \hfill \ddots \hfill \vdots & \vdots & \vdots \\
+	k & y_{k1} \hfill y_{k2} \hfill \dots \hfill y_{kn_{k}} & \sum_j y_{kj}=y_k. & \frac{y_k .}{n_k}=\overline{y_{k}.}
+\end{bmatrix}
+\]
+$ y_{ij} $ is $ j^{th} $ observation due to $ i^{th} $ level of factor, $ i=1,2,\dots, k; j=1,2,\dots,n_i $
+
+\begin{align*}
+	\sum_{i=1}^k n_i&=n_1+n_2+\cdots n_k = N\\
+	y_i.&= \sum_{j=1}^{n_i} y_{ij}, \text{ when, } i=1,2,\dots,k \text{ total of $i^{th}$ row}\\
+	y..&= \sum_{i=1}^{k} y_i. = G = \text{Grand total}= \sum_{i=1}^k \left[ \sum_{j=1}^{n_i} y_{ij} \right]\\
+	x \overline{y_i.}&= \frac{y_i.}{n_i}=\sum_{j=1}^{n_i}\frac{y_{ij}}{n_i}= \text{Mean of obs of $i^{th}$ level of factor}, i=1,2, \dots, k\\
+	\overline{y..}&=\frac{1}{N}\sum_i \sum_j y_{ij}=\frac{1}{N} \sum_i n_i \overline{y_i.}=\text{Overall mean}
+\end{align*}
+
+
+
+\subsubsection{Null hypothesis}
+We want to test the equality of the population means, i.e. the homogeneity of different treatment. Hence, the null hypothesis is given by 
+\[ H_0: \mu_1=\mu_2=\cdots=\mu_k=\mu \]
+which reduces to
+\[ H_0:\alpha_1=\alpha_2=\cdots=\alpha_k=0 \]
+
+\subsubsection{Alternate hypothesis}
+At least two of the means ($ \mu_1, \mu_2, \dots, \mu_k $) are different.
+\subsubsection{One way ANOVA table}
+One way ANOVA table,
+Replace R with T below here,
+
+\[ \begin{bmatrix}
+	\text{Source of variance} & d.f. & s.s. & m.s.s & F\\
+	\text{Between factor (treatment)} & k-1 & \sum_i \frac{T_i^2}{n_i}-\frac{G^2}{N}=S_T^2 & s^2_T=\frac{S_T^2}{k-1} & F=\frac{s_T^2}{s^2_E}\\
+	\text{Within factor (error)} & N-k & + = S_E^2 & s_E^2=\frac{s_E^2}{N-k} & -\\
+	\text{Total} & N-1 & \sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
+\end{bmatrix} \]
+
+\subsubsection{Test statistics}
+Using Cochran's theorem.\\
+We have $ \frac{s.s due to factor}{\sigma^2}, \frac{ss due to error}{sigma^2} $ follows chi squared with $(k-1)$ and $(N-k)$ degrees of freedom respectively.\\
+Therefore, the test statistics are defined as follows
+\begin{align*}
+	f&=\frac{\chi_1^2/d.f.}{\chi_2^2/d.f.}=\frac{\text{s.s. due to factors}/\sigma^2/(k-1)}{\text{s.s. due to error}/\sigma^2/(N-k)}\\
+	&\frac{\text{M.s.s for factor}}{\text{m.s.s. for error}}
+\end{align*}
+We will reject $ H_0: \alpha_i=0 \forall i $ if $ F_{cal}>F_{tab} $ as two independent $ \chi^2 $ variates with $ (k-1) , (N-k)$ d.f. respectively.
+
+\subsection{Two way ANOVA}
+\subsubsection{Layout of two-way classification}
+\[ \begin{matrix}
+	\text{Levels} & 1 & 2 & \dots & j & \dots & h & \text{Total} & \text{Mean}\\
+	1 & y_{11} & y_{12} & \dots & y_{1j} & \dots & y_{1h} & y_1. & \overline{y_1.}\\
+	2 & y_{21} & y_{22} & \dots & y_{2j} & \dots & y_{2h} & y_2. & \overline{y_2.}\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+	i & y_{i1} & y_{i2} & \dots & y_{ij} & \dots & y_{ih} & y_i. & \overline{y_i.}\\
+	\vdots & \vdots & \vdots & \ddots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+	k & y_{k1} & y_{k2} & \dots & y_{kj} & \dots & y_{kh} & y_k. & \overline{y_k.}\\
+	\text{Total} & y._1 & y._2 & \dots & y._j & \dots & y._h &  & \\
+	\text{Mean} & \overline{y._1} & \overline{y._2} & \dots & \overline{y._j} & \dots & \overline{y._h} &  & \\
+\end{matrix} \]
+
+\subsubsection{Notation}
+\begin{align*}
+	N&=kh\\
+	y..&=\sum_i \sum_j y_{ij}=G\\
+	\overline{y..}&=\sum_i \sum_j \frac{y_{ij}}{N}=\frac{y..}{kh}\\
+\end{align*}
+$y_{ij}=\text{The observation receiving $ i^{th} $ level of factor A and $ j^{th} $ level of factor B}$
+\begin{align*}
+	R_i=y_i.&=\sum_{j=1}^{h}y_{ij}\\
+	\overline{y_i.}&=\frac{y_i.}{h}\\
+	C_j=y._j&=\sum_{i=1}^k y_{ij}\\
+	\overline{y._j}&=\frac{y._j}{k}
+\end{align*}
+
+\subsubsection{Null hypothesis}
+$ H_{0_{\alpha}}: $ There is no significant difference of factor A,
+\begin{align*}
+	\mu_1.=\mu_2.=\cdots=\mu_k.=\mu\\
+	\alpha_1=\alpha_2=\cdots=\alpha_k=0
+\end{align*}
+$ H_{0_{\beta}}: $ There is no significant difference of factor B,
+\begin{align*}
+	\mu._1=\mu._2=\cdots=\mu._k=\mu\\
+	\beta_1=\beta_2=\cdots=\beta_h=0
+\end{align*}
+
+\subsubsection{Alternative hypothesis}
+$ H_{1 \alpha } :$ At least two of the $ \mu_i. $'s are different.\\
+i.e. At least one of the $ \alpha_i  $'s is not zero.\\
+$ H_{1 \beta } :$ At least two of the $ \mu._j $'s are different.\\
+i.e. At least one of the $ \beta_j  $'s is not zero.
+
+\subsubsection{Degrees of freedom}
+\begin{itemize}
+	\item Total d.f. $ N-1 $.
+	\item Factor A d.f. $k-1$.
+	\item Factor B d.f. $h-1$
+	\item Error d.f. $N-k-h+1=(k-1)(h-1)$
+\end{itemize}
+
+\subsubsection{Test statistics}
+
+Total s.s. = s.s. due to factor A + s.s. due to factor B + SSE
+$ N-1=(k-1)+(h-1)+(k-1)(h-1) $\\
+
+Therefore by Cochran's theorem,
+\begin{align*}
+	\chi_1^2&=\frac{SS_A}{\sigma^2}\sim \chi^2_{k-1}\\
+	\chi_2^2&=\frac{SS_B}{\sigma^2} \sim \chi^2_{h-1}\\
+	\chi_3^2&=\frac{SS_{err}}{\sigma^2} \sim \chi^2_{(k-1)(h-1)}
+\end{align*}
+And we have the test statistics as follows,
+\begin{align*}
+	F_1&=\frac{\chi_1^2/(k-1)}{\chi^2_3/(h-1)(k-1)}\\
+	F_2&=\frac{\chi_2^2/(h-1)}{\chi_3^2/(h-1)(k-1)}
+\end{align*}
+
+Also $ E[MSS_A]>E[MSSE] $ then $ H_{0_1} $ is rejected.\\
+$ E[MSS_B]>E[MSSE] $ then $ H_{0_2} $ is rejected.
+
+\subsubsection{Two way ANOVA Table}
+Replace R with T below here,
+
+\[ \begin{bmatrix}
+	\text{Source of variance} & d.f. & S.S. & S.S.S & F_{cal}\\
+	\text{Between factor A} & k-1 & RSS=\sum_i^k \frac{R_i^2}{n_i}-\frac{G^2}{N} & MRSS=\frac{RSS}{k-1} & F_1=\frac{MRSS}{MESS}\\
+	\text{Between factor B} & h-1 & CSS=\sum_j^h \frac{R_j^2}{n_j}-\frac{G^2}{N} & MCSS=\frac{CSS}{h-1} & F_2=\frac{MLSS}{MESS}\\
+	\text{Error} & (k-1)(h-1) & ESS=+ & MESS=\frac{CSS}{(h-1)(k-1)} & -\\
+	\text{Total} & N-1 & T_{ss}=\sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
+\end{bmatrix} \]
 
 
 \backmatter
