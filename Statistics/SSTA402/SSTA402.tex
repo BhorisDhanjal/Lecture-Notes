@@ -149,20 +149,20 @@ The variation due ot assignable causes can be detected and measured, whereas the
 \end{enumerate}
 
 \begin{theorem}[Cochran's theorem]
-	Let $ x_1, x_2, \dots, x_n $ denote a random sample from normal population $ N(0, \sigma^2) $. Let the sum of the squares of theese values be written in in the form \[ \sum_{i=1}^n x_i^2 = Q_1+Q_2+\cdots+Q_k \]
+	Let $ x_1, x_2, \dots, x_n $ denote a random sample from normal population $ N(0, \sigma^2) $. Let the sum of the squares of these values be written in in the form \[ \sum_{i=1}^n x_i^2 = Q_1+Q_2+\cdots+Q_k \]
 	Where $ Q_j $ is a quadratic form in $ x_1, x_2, \dots, x_n$ with rank (degrees of freedom) $ r_j=1,2,\dots,k $ then the random variables $ Q_1, Q_2, \dots, Q_k $ are mutually independent and $ \frac{Q_i}{\sigma^2} $ is $ \chi^2_k $ variable with $ r_j $ degrees of freedom iff $ \sum_{j=1}^k r_j=n $
 \end{theorem}
 
 \section{One-way classification}
 Let us suppose that $ N $ observations $ y_{ij}, (i=1,2,\dots, k; j=1,2,\dots, n)$ of a random variable $ Y $ are grouped on some basis, into $ k $ classes of sizes $ n_1, n_2, \dots, n_k $ respectively, $ \left(N=\sum_{i=1}^{k} n_i \right) $ as exhibited in below table.
 \[
-\begin{bmatrix} 
+\begin{matrix} 
 	\text{Class} & \text{Sample observations} & \text{Total} & \text{Mean} \\
 	1 & y_{11} \hfill y_{12} \hfill \dots \hfill y_{1n_1} & T_1 & \overline{y_{1.}}\\
 	2 & y_{21} \hfill y_{22} \hfill \dots \hfill y_{2n_1} & T_2 & \overline{y_{2.}}\\
 	\vdots & \vdots \hfill \vdots \hfill \ddots \hfill \vdots & \vdots & \vdots \\
 	k & y_{k1} \hfill y_{k2} \hfill \dots \hfill y_{kn_{k}} & T_k & \overline{y_{k.}}
-\end{bmatrix}
+\end{matrix}
 \]
 
 The total variation in the observation $ y_{ij} $ can be split into the following two components: 
@@ -170,9 +170,9 @@ The total variation in the observation $ y_{ij} $ can be split into the followin
 	\item The variation between the classes or the variation due to different bases of the classification, commonly known as treatments.
 	\item The variation within the classes, i.e. the inherent variation of the random variable within the observation of a class.
 \end{enumerate}
-The first type of variation is due to assingable cause which can be detected and controlled by human endeavour and second type of varation is due to chance causes, which are beyond control of human hand.
+The first type of variation is due to assignable cause which can be detected and controlled by human endeavour and second type of variation is due to chance causes, which are beyond control of human hand.
 \par 
-The main object of analysis of variance technique is to examine if there is significant difference ebtween the claass means in view of the inherent vairaiblity within the seperate classes.
+The main object of analysis of variance technique is to examine if there is significant difference between the class means in view of the inherent variability within the separate classes.
 \par 
 \begin{example}
 	In particular, let us consider the effect of $ k $ different rations on the yield in milk of $ N $ cows (of the same breed and stock) divided into $ k $ classes of sizes $ n_1, n_2, \dots, n_k $ respectively, $ N=\sum_{i=1}^{k} n_i$.
@@ -188,27 +188,27 @@ The sources of variation is,
 \begin{align*}
 	y_{ij}&=\mu_i + \varepsilon_{ij} && \\
 	&= \mu + \alpha_i + \varepsilon_{ij}&&\\
-	&= \mu + (\mu_u - \mu) + \varepsilon_{ij} && i=1,\dots,k; j=1,\dots,n_i
+	&= \mu + (\mu_i - \mu) + \varepsilon_{ij} && i=1,\dots,k; j=1,\dots,n_i
 \end{align*}
 Where, $ \alpha_i=\mu_i-\mu $, effect due to $ i^{th} $ treatment.
- \[  y_{ij}=\mu + \alpha_i +\varepsilon_{ij}\]
-$ y_{ij} $ $ j^{th} $ observation receiving $i^{th}$ treatment, $ \mu $ is general mean effect, $ \mu=\sum_{i=1}^{k}\frac{\mu_i n_i}{N} $, $ \alpha_i =$ effect due to $ i^{th} $ level of factor $ i=1,\dots,k $, 
+ \[ \boxed{ y_{ij}=\mu + \alpha_i +\varepsilon_{ij}}\]
+$ y_{ij}= j^{th} $ observation receiving $i^{th}$ treatment, $ \mu $ is general mean effect, $ \mu=\sum_{i=1}^{k}\frac{\mu_i n_i}{N} $, $ \alpha_i =$ effect due to $ i^{th} $ level of factor $ i=1,\dots,k $, 
  
  
  \begin{align*}
-  \sum_{i=1}^k n_i \alpha_i = \sum_{i} n_i (\mu_i-\mu) &= \sum n_i\mu_i - \sum n_i\mu = 0
+  \sum_{i=1}^k n_i \alpha_i = \sum_{i} n_i (\mu_i-\mu) &= \sum n_i\mu_i - \mu \sum n_i =N\mu-N\mu= 0
  \end{align*}
- $ \varepsilon_{ij}$ is random error or eror component (assume $ \varepsilon_{ij} \sim N(0, \sigma^2) $)
+ $ \varepsilon_{ij}$ is random error or error component (assume $ \varepsilon_{ij} \sim N(0, \sigma^2) $)
 
 \subsection{Layout of one way ANOVA}
 \[
-\begin{bmatrix} 
+\begin{matrix} 
 	\text{Factor level} & \text{Observations} & \text{Total} & \text{Mean} \\
 	1 & y_{11} \hfill y_{12} \hfill \dots \hfill y_{1n_1} & \sum_{j=1}^{n_1}y_{1j}=y_1. & \frac{y_1.}{n_1}=\overline{y_{1}.}\\
 	2 & y_{21} \hfill y_{22} \hfill \dots \hfill y_{2n_1} & \sum_{j=1}^{n_2}y_{2j}=y_2. & \frac{y_2.}{n_2}=\overline{y_{2}.}\\
 	\vdots & \vdots \hfill \vdots \hfill \ddots \hfill \vdots & \vdots & \vdots \\
 	k & y_{k1} \hfill y_{k2} \hfill \dots \hfill y_{kn_{k}} & \sum_j y_{kj}=y_k. & \frac{y_k .}{n_k}=\overline{y_{k}.}
-\end{bmatrix}
+\end{matrix}
 \]
 $ y_{ij} $ is $ j^{th} $ observation due to $ i^{th} $ level of factor, $ i=1,2,\dots, k; j=1,2,\dots,n_i $
 
@@ -216,7 +216,7 @@ $ y_{ij} $ is $ j^{th} $ observation due to $ i^{th} $ level of factor, $ i=1,2,
 	\sum_{i=1}^k n_i&=n_1+n_2+\cdots n_k = N\\
 	y_i.&= \sum_{j=1}^{n_i} y_{ij}, \text{ when, } i=1,2,\dots,k \text{ total of $i^{th}$ row}\\
 	y..&= \sum_{i=1}^{k} y_i. = G = \text{Grand total}= \sum_{i=1}^k \left[ \sum_{j=1}^{n_i} y_{ij} \right]\\
-	x \overline{y_i.}&= \frac{y_i.}{n_i}=\sum_{j=1}^{n_i}\frac{y_{ij}}{n_i}= \text{Mean of obs of $i^{th}$ level of factor}, i=1,2, \dots, k\\
+	\overline{y_i.}&= \frac{y_i.}{n_i}=\sum_{j=1}^{n_i}\frac{y_{ij}}{n_i}= \text{Mean of obs of $i^{th}$ level of factor}, i=1,2, \dots, k\\
 	\overline{y..}&=\frac{1}{N}\sum_i \sum_j y_{ij}=\frac{1}{N} \sum_i n_i \overline{y_i.}=\text{Overall mean}
 \end{align*}
 
@@ -247,11 +247,11 @@ To estimate the parameters we use least squares method
 \begin{proof}
 \begin{align*}
 	E &= \sum_{i=1}^{k} \sum_{j=1}^{n_i} \varepsilon_{ij}^2 = \sum_i \sum_j (y_{ij}-\mu - \alpha_i )^2
-	\intertext{Differentiate $ E $ w.r.t $ \mu $ and $ \alpha_i $}
+	\intertext{Differentiate $ E $ w.r.t $ \mu $}
 	\frac{\partial E}{\partial \mu}&= \frac{\partial}{\partial \mu } \left[ \sum_i \sum_j (y_{ij} -\mu -\alpha_i)^2 \right]\\
 	&=2 \sum_i \sum_j (y_{ij}-\mu- \alpha_i)(-1)
 	\intertext{Equating with $ 0 $}
-	\frac{\partial E}{\partial \mu }= 0 &\implies \sum_{i=1}^k \sum_{j=1}^{n_1}=0\\
+	\frac{\partial E}{\partial \mu }= 0 &\implies 2 \sum_i \sum_j (y_{ij}-\mu- \alpha_i)(-1)=0\\
 	&\implies \sum_i \sum_j y_{ij}-\sum_i \sum_j \mu - \sum_i \sum_j \alpha_i =0\\
 	&\implies \sum_i \sum_j y_{ij}- \mu \sum_i \sum_j 1 - \sum_i \sum_j \alpha_i=0\\
 	&\implies \sum_i \sum_j y_{ij}- \mu N - 0 =0\\
@@ -282,7 +282,7 @@ Substituting these in the equation
 	y_{ij}&=\overline{y..}+(\overline{y_i.}+\overline{y..})+(y_{ij}-\overline{y_i.})
 \end{align*}
 Observation = Grand mean + deviation due to $ i^{th} $ treatment + residual or error.\\
-Subtracting $ x \overline{y..} $ from both sides, squaring and summing over $ i, j$.
+Subtracting $ \overline{y..} $ from both sides, squaring and summing over $ i, j$.
 \begin{align*}
 	\sum_i \sum_j (y_{ij}-\overline{y..})^2&= \sum_i \sum_j ((\overline{y_i.}-\overline{y..})+( y_{ij}-\overline{y_i.}))^2\\
 	&= \sum_i \sum_j (\overline{y_i.}-\overline{y..})^2+\sum_i \sum_j (y_{ij}-\overline{y_i.})^2\\
@@ -321,15 +321,17 @@ Assume $ \varepsilon_{ij}\sim N(0,\sigma^2) $
 
 \subsubsection{Expectation of s.s. due to factor}
 \begin{align*}
-	E[s.s. due to facor]&=E\left[\sum_i n_i (\overline{y_i}-\overline{y..})^2 \right]\\
+	E[s.s. due to factor]&=E\left[\sum_i n_i (\overline{y_i.}-\overline{y..})^2 \right]\\
 	&=E\left[\sum_i n_i \left((\mu+\alpha_i+\overline{\varepsilon_{i}.})-(\mu+\overline{\varepsilon..})\right)^2\right]
 	\intertext{Expand this out...}
+	&=E\left[\sum_i n_i(\alpha_i+\overline{e_i.}-\overline{e..})^2\right]\\
+	&=E\left[\sum_i n_i \{\alpha_i^2+(\overline{e_i.}-\overline{e..})^2+2\alpha_i(\overline{e_i.}-\overline{e..})\}\right]\\
 	&=\sum_i n_i \alpha_i^2 +E\left[\sum_i n_i (\overline{\varepsilon_{i}.}-\overline{\varepsilon..})^2\right]+0\\
-	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})^2\right]&=\sum_i n_i [E[\overline{e_i.}^2]+E[\overline{e..}^2]-2E[\overline{e_i.}-\overline{e..}]]\\
-	&=\sum_i n_i \left[\frac{\sigma^2}{n_i}+\frac{\sigma^2}{N}-2E[\overline{e_i.}-\overline{e..}]\right]\\
-	&=k\sigma^2+\sigma^2-2\sum_i n_i (\overline{e_i.}-\overline{e..})\\
-	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2+\sigma ^2-E\left[2\sum_i n_i (\overline{e_i.}-\overline{e..})\right]\\
-	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})\right]&=E\left[ \overline{e_i.}\sum_i n_i (e../n_i) \right]\\
+	E\left[\sum_i n_i (\overline{e_i.}-\overline{e..})^2\right]&=\sum_i n_i [E[\overline{e_i.}^2]+E[\overline{e..}^2]-2E[\overline{e_i.}\cdot \overline{e..}]]\\
+	&=\sum_i n_i \left[\frac{\sigma^2}{n_i}+\frac{\sigma^2}{N}-2E[\overline{e_i.}\cdot\overline{e..}]\right]\\
+	&=k\sigma^2+\sigma^2-2\sum_i n_i (\overline{e_i.}\cdot\overline{e..})\\
+	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2+\sigma ^2-E\left[2\sum_i n_i (\overline{e_i.}\cdot\overline{e..})\right]\\
+	E\left[\sum_i n_i (\overline{e_i.}\cdot\overline{e..})\right]&=E\left[ \overline{e..}\sum_i n_i (e../n_i) \right]\\
 	&=E[\overline{e..}N\overline{e..}]\\
 	&=N E[\overline{e..}^2]=\frac{N \sigma^2 }{N}=\sigma^2\\
 	E[s.s. due to factors]&=\sum_i n_i \alpha_i^2+k\sigma^2-\sigma ^2\\
@@ -346,13 +348,13 @@ If $ H_0 $ is true $ \forall i $ then, $ E[\text{m.s.s. due to factor}] =\sigma^
 
 \begin{align*}
 	E[\text{Error s.s.}]&=E\left[\sum_i \sum_j (y_{ij}-\overline{y_i.})^2\right]\\
-	&=E \left[\sum_i \sum_j (y_{ij}-(\mu + \alpha_i + \overline{e_{i}.}))^2\right]
-	\intertext{magic}
-	&=E[\sum_i \sum_j (e_{ij}-\overline{e_i.})^2]\\
+	&=E \left[\sum_i \sum_j (y_{ij}-(\mu + \alpha_i + \overline{e_{i}.}))^2\right]\\
+	&=E\left[\sum_i \sum_j \{(\mu+\alpha_i+e_{ij})-(\mu+\alpha_i+\overline{e_i.})\}^2\right]\\
+	&=E\left[\sum_i \sum_j (e_{ij}-\overline{e_i.})^2\right]\\
 	&=E\left[\sum_i \sum_j (e_{ij}^2)+\sum_i \sum_j (\overline{e_i.}^2)-2 \sum_i \sum_j (e_{ij}-\overline{e_i.})\right]\\
 	&= N \sigma^2 + k \sigma^2 -2 \sum_i \sum_j E[e_{ij}-\overline{e_i.}]
 	\intertext{Consider now,}
-	\sum \sum E[e_{ij}-\overline{e_i.}]&=\sum_i n_i E[\overline{e_i.}^2]=\sum_i \frac{n_i \sigma^2}{n_i}=k\sigma\\
+	\sum \sum E[e_{ij}-\overline{e_i.}]&=\sum_i n_i E[\overline{e_i.}^2]=\sum_i \frac{n_i \sigma^2}{n_i}=k\sigma^2\\
 	E[\text{error s.s.}]&=N\sigma^2+k\sigma^2-2k\sigma^2\\
 	&=(N-k)\sigma^2
 \end{align*}
@@ -367,7 +369,7 @@ Using Cochran's theorem.\\
 We have $ \frac{s.s due to factor}{\sigma^2}, \frac{ss due to error}{sigma^2} $ follows chi squared with $(k-1)$ and $(N-k)$ degrees of freedom respectively.\\
 Therefore, the test statistics are defined as follows
 \begin{align*}
-	f&=\frac{\chi_1^2/d.f.}{\chi_2^2/d.f.}=\frac{\text{s.s. due to factors}/\sigma^2/(k-1)}{\text{s.s. due ot error}/\sigma^2/(N-k)}\\
+	f&=\frac{\chi_1^2/d.f.}{\chi_2^2/d.f.}=\frac{\text{s.s. due to factors}/\sigma^2/(k-1)}{\text{s.s. due to error}/\sigma^2/(N-k)}\\
 	&\frac{\text{M.s.s for factor}}{\text{m.s.s. for error}}
 \end{align*}
 We will reject $ H_0: \alpha_i=0 \forall i $ if $ F_{cal}>F_{tab} $ as two independent $ \chi^2 $ variates with $ (k-1) , (N-k)$ d.f. respectively.
@@ -381,7 +383,7 @@ We will reject $ H_0: \alpha_i=0 \forall i $ if $ F_{cal}>F_{tab} $ as two indep
 	&= \sum \sum y_{ij}^2 + N \overline{y..}^2- 2\overline{y..}\sum \sum y_{ij}\\
 	&=\sum \sum y_{ij}^2 - \frac{N y^2..}{N^2}\\
 	\text{Total s.s.}&= \sum_i \sum_j y_{ij}^2 -\frac{y^2..}{N}=\sum_i \sum_j y_{ij}^2 -\frac{G^2}{N}\\
-	\text{Total s.s.}&= \text{Raw s.s.}-G.F
+	\text{Total s.s.}&= \text{Raw s.s.}-C.F
 \end{align*}
 
 \subsubsection{Computational form of s.s. due to factors}
@@ -397,7 +399,7 @@ Replace R with T below here,
  \[ \begin{bmatrix}
  	\text{Source of variance} & d.f. & s.s. & m.s.s & F\\
  	\text{Between factor (treatment)} & k-1 & \sum_i \frac{R_i^2}{n_i}-\frac{G^2}{N}=S_R^2 & s^2_R=\frac{S_R^2}{k-1} & F=\frac{s_R^2}{s^2_E}\\
- 	\text{Within factor (eror)} & N-k & + = S_E^2 & s_E^2=\frac{s_E^2}{N-k} & -\\
+ 	\text{Within factor (error)} & N-k & + = S_E^2 & s_E^2=\frac{s_E^2}{N-k} & -\\
  	\text{Total} & N-1 & \sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
  \end{bmatrix} \]
 
@@ -409,7 +411,7 @@ Suppose $ n $ observations are classification into $ k $ categories (or classes)
 This scheme of classification according to two factors or criteria is called two-way classification and its analysis is called two way ANOVA. The number of observations in each cell may be equal or different, but we shall consider the case of one observation per cell so that $ n=kh $, i.e. the total no of cell is $ n=kh $.
 
 \begin{example}
-	If we have $ 4 $ different fertilizers say $ A,B,C,D $ and $ 5 $ different types of seeds then we will have $ 20 $ plots with each of oe having one of the four fertilizers and one of the five seeds. The yields from these plots will be analysed to check whether there is significant difference between fertilizers or between seeds there are two was in which we can compare the data the analysis is called two-way analysis.
+	If we have $ 4 $ different fertilizers say $ A,B,C,D $ and $ 5 $ different types of seeds then we will have $ 20 $ plots with each of them having one of the four fertilizers and one of the five seeds. The yields from these plots will be analysed to check whether there is significant difference between fertilizers or between seeds there are two was in which we can compare the data the analysis is called two-way analysis.
 \end{example}
 
 \subsection{Layout of two-way classification}
@@ -448,8 +450,8 @@ $y_{ij}=\text{The observation receiving $ i^{th} $ level of factor A and $ j^{th
 
 \subsection{Model of two-way classification}
 \[ y_{ij} = \mu_{ij}+e_{ij}, i=1,\dots,k; j=1,\dots,h\]
-Here, $ e_{ij} $ is effect due to chance causes. $ E[y_{ij}] =\mu_{ij}=$fixed effect due to assingable causes where $ y_{ij} $ are indepdent $ N(\mu_{ij},\sigma^2) $. \\
-$ \mu_{ij} $ is further split into the followring parts 
+Here, $ e_{ij} $ is effect due to chance causes. $ E[y_{ij}] =\mu_{ij}=$fixed effect due to assignable causes where $ y_{ij} $ are independent $ N(\mu_{ij},\sigma^2) $. \\
+$ \mu_{ij} $ is further split into the following parts 
 \begin{enumerate}
 	\item The general mean effect is given by \[ \mu=\sum_i \sum_j \frac{\mu_{ij}}{N} \]
 	\item $ \alpha_i  $ effect due to $ i^{th} $ level of factor $ A $, $ \alpha_i=\mu_i-\mu, i=1,2,\dots, k$ and $ \mu_i.=\sum_j \frac{\mu_{ij}}{h}, i=1,2,\dots, k $. Sum of $ \alpha_i  $ is zero.
@@ -791,6 +793,37 @@ So the confidence intervals is
 
 \section{Randomized block designs}
 
+\begin{theorem}
+	Efficiency of RBD w.r.t. CRD is given as \[ E=\frac{(n-1)MSB+(N-n)MSE}{(N-1)MSE} \]
+\end{theorem}
+\begin{proof}
+	Efficiency of design $ D_1 $ w.r.t $ D_2 $ is given as the ratio of their precisions,
+	\[ E= \frac{\frac{n_1}{\sigma_1^2}}{\frac{n_2}{\sigma_2^2}}=\frac{\sigma_2^2}{\sigma_1^2}\frac{n_1}{n_2} \]
+	For simplicities sake we consider the case when $ N=n_1=n_2=nk $. So,
+	\[ E=\frac{\sigma_2^2}{\sigma_1^2} \]
+	Here $ \sigma_2^2 $ is the error variance of CRD and $ \sigma_1^2 $ is the error variance of RBD.
+	
+	In both cases the MSE is an unbiased estimator of error variance.
+	\[ E=\frac{\sigma_2^2}{\sigma_1^2}=\frac{MSE_{C}}{MSE_{R}} \]
+	Now proceed to simplify this,
+	\begin{align*}
+		E&=\frac{MSE_{C}}{MSE_{R}}\\
+			&=\frac{\frac{SSE_C}{N-k}}{\frac{SSE_R}{(n-1)(k-1)}}=\frac{\frac{SSE_C}{nk-k}}{\frac{SSE_R}{(n-1)(k-1)}}\\
+			&=\frac{SSE_C}{SSE_R}\frac{(n-1)(k-1)}{k(n-1)}=\frac{SSE_C}{SSE_R}\frac{k-1}{k}\\
+			&=\frac{TSS_C-SST_C}{TSS_R-SST_R-SSB_R}\frac{k-1}{k}
+			\intertext{Note that $ TSS_C $ and $ TSS_R $ are in fact equivalent and even $ SST_C $ and $ SST_R $. Now for simplicity we don't write the subscripts.}
+			&=\frac{TSS-SST}{TSS-SST-SSB}\frac{k-1}{k}\\
+			&=\frac{(SST+SSB+SSE)-SST}{(SST+SSB+SSE)-SST-SSB}\frac{k-1}{k}\\
+			&=\frac{SSB+SSE}{SSE}\frac{k-1}{k}\\
+			&=\frac{(n-1)MSB+(n-1)(k-1)MSE}{(n-1)(k-1)MSE}\cdot \frac{k-1}{k}\\
+			&=\frac{(n-1)MSB+(n-1)(k-1)MSE}{(kn-k) MSE}\\
+			&=\frac{(n-1)MSB+(n-1)(k-1)MSE}{(N-k)MSE}
+			\intertext{But we have assumed that $ k=N/n $}
+			&=\frac{(n-1)MSB+(n-1)(N/n-1)MSE}{(N-N/n)MSE}\\
+			&=\frac{(n)MSB+(N-n)MSE}{(N)MSE}????????????		
+	\end{align*}
+ 	
+\end{proof}
 
 
 
@@ -842,6 +875,278 @@ $ N=kh $
 \[ AF=\frac{(kt_i'+B_j'-G')^2}{k(k-1)(n-1)^2} \]
 $ Adj SST= SST-AF $.
 Adjustment factor
+
+
+\chapter{Factorial experiments}
+\section{Basic terminologies}
+\begin{definition}[Factor]
+	Factor refers to a set of related treatments. We may apply of different doses of nitrogen to a crop. Hence nitrogen irrespective of doses is a factor.
+\end{definition}
+\begin{definition}[Levels of factor]
+	Different states or components making up a factor are known as the levels of that factor, e.g., different doses of nitrogen.
+\end{definition}
+
+
+A factorial experiment is named on the number of factors and levels of factors. For example, when there are $ 3 $ factors each at $ 2 $ levels the experiment is known as $ 2\times2\times2  $ or $ 2^3 $ factorial experiment.
+
+In general if there are $ n $ factors each with $ p $ factors it is known as $ p^n $ experiment.
+
+If the number of levels are different then the factorial experiment is described by the product. For example, an experiment with $ 3 $ factors at $ p,q,r$ levels respectively then it is known as $ p \times q \times r  $ factorial experiment.
+
+If all the factors have the same number of levels the experiment is known as symmetrical factorial experiment. Else it is called mixed factorial experiment.
+
+\begin{example}
+	Consider two fertilizers Phosphate and nitrate. There are $ 4 $ types of doses of Phosphate and $ 5 $ different doses of nitrates. These different $ 4,5 $ doses are known as levels of factors. Then we can conduct $ 4 \times 5 $ factorial experiments in which effects of various combinations of doses are studied.
+\end{example}
+
+\section{Notation}
+Factors are represented by capital letters. Treatment combinations are usually denoted by small letters. 
+
+For example, if there are two factors variety $ V $ and date of sowing $ D $ such that there are two varieties denotes as $ v_0 $ and $ v_1 $ and two dates of sowing such as $ d_0, d_1 $. Then treatment combinations will be $ v_0d_0,v_1d_0,v_0d_1, v_1d_1$.
+
+\section{$ 2^2 $ Factorial design}
+In $ 2^2 $ factorial design there are $ 2 $ factors each at $ 2 $ levels. 
+
+Let the two factors be $ A,B $. Levels of $ A $ denoted by $ a_0,a_1 $ and levels of $ B $ denoted by $ b_0,b_1 $. Then we get four combinations $ a_0b_0,a_0b_1,a_1b_0,a_1b_1 $.
+
+\subsection{Notations treatments combinations}
+\begin{itemize}
+	\item $ a_0b_0=1 $: Both factors $ A,B $ at first level
+	\item $ a_1b_0=a, $ Factor $ A $ at second level and factor $ B $ is at first level
+	\item $ a_0b_1=b, $ Factor $ A $ at first level and factor $ B $ at second level
+	\item $ a_1b_1=ab, $ Both the factors $ A $ and $ B $ are at second level
+\end{itemize}
+Total yield from these treatments are denoted as $ [1], [a], [b],[ab] $ and corresponding average yields are denoted by $ (1), (a),(b),(ab)$.
+
+If the number of replications of the treatments is $ r $, then 
+\[ \text{Average yield} =\frac{\text{Total yield}}{r}\]
+So $ (1)=\frac{[1]}{r}, (a)=\frac{[a]}{r}, (b)=\frac{[b]}{r}, [ab]=\frac{(ab)}{r} $
+
+
+\subsection{Main effects}
+	
+The simple effect of a factor is defined to be the change in response produced by a change in the level of factor.
+
+Simple effect of $ A $ at first level of factor $ B(b_0) $ is \[ =(a_1b_0)-(a_0b_0) =(a)-(1)\]
+
+Simple effect of $ A $ at second level of factor $ B(b_1) $ is \[ =(a_1b_1)-(a_0b_1) =(ab)-(b)\]
+
+The average of these effects is known as main effect is $ A=\frac{(a-1)(b+1)}{2} $ similarly for $ B $ it is, $ B=\frac{(a+1)(b-1)}{2} $
+
+\subsection{Interaction effects}
+The interaction between $ A $ and $ B $ is 
+\[ AB=\frac{(a-1)(b-1)}{2} \] and same for interaction with $ B $ and $ A $.
+
+If interaction effects are zero then simple effects of factors are equal.
+\subsection{Contrast}
+A contrast is a linear combination of treatment means or treatment effects where the sum of the coefficients is zero.
+
+Let $ T_i $ be the $ i^{th} $ treatment mean.
+
+Let $ c_1,c_2,\dots,c_k $ be constants such that $ \sum c_i=0 $ then the linear combination $ \sum_i c_iT_i $ is called a contrast.
+\subsection{Orthogonal contrast}
+Consider two contrasts of treatment means $ T_i $ namely $ \sum_i c_iT_i $ and $ \sum_i d_iT_i $ they are said to be orthogonal if $ \sum_i c_id_i =0$.
+
+\begin{table}[!htb]
+	\centering
+	\begin{tabular}{@{}cccccc@{}}
+		\toprule
+		\multirow{2}{*}{Factorial effects} & \multicolumn{4}{c}{Treatment means} & \multirow{2}{*}{Divisor} \\ \cmidrule(lr){2-5}
+		& (1) & (a) & (b) & (ab) &  \\ \midrule
+		M & + & + & + & + & 4 \\
+		A & - & + & - & + & 2 \\
+		B & - & - & + & + & 2 \\
+		AB & + & - & - & + & 2 \\ \bottomrule
+	\end{tabular}
+	\caption{Table of signs and divisors of mean, main and interaction effects}
+	\label{tab:tableofsigns}
+\end{table}
+\subsection{Yates method of computing factorial effect}
+
+
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{@{}cccc@{}}
+		\toprule
+		Treatment combination & \begin{tabular}[c]{@{}c@{}}Total yield from\\ all replicates\end{tabular} & Sum and difference (1) & Sum and difference (2) \\ \midrule
+		1 & {[}1{]} & {[}a{]}+{[}1{]} & {[}ab{]}+{[}b{]}+{[}a{]}+{[}1{]}=G \\
+		a & {[}a{]} & {[}ab{]}+{[}b{]} & {[}ab{]}-{[}b{]}+{[}a{]}-{[}1{]}={[}A{]} \\
+		b & {[}b{]} & {[}a{]}-{[}1{]} & {[}ab{]}+{[}b{]}-{[}a{]}-{[}1{]}={[}B{]} \\
+		ab & {[}ab{]} & {[}ab{]}-{[}b{]} & {[}ab{]}-{[}b{]}-{[}a{]}-{[}1{]}={[}AB{]} \\ \bottomrule
+	\end{tabular}
+	}
+	\caption{Yate's method for $2^2$ factorial experiment}
+	\label{tab:yatesmethodfor22}
+\end{table}
+
+\subsection{Statistical analysis}
+?????????????
+\subsection{Using RBD}
+\subsubsection{Null Hypothesis}
+$ H_{0_1}: $ There is no significant difference between replicates\\
+$ H_{0_A}: $ The main effect due to factor $ A $ is insignificant.\\
+$ H_{0_B} :$ The main effect due to factor $ B $ is insignificant.\\
+$ H_{0_{AB}}: $ The interaction effect is insignificant
+\subsubsection{ANOVA table}
+
+
+\begin{table}[!htb]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}cccccc@{}}
+			\toprule
+			\begin{tabular}[c]{@{}c@{}}Source of\\ variation\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sum of squares\\ (S.S.)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Degrees of\\ freedom (d.f.)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Mean sum of\\ squares (M.S.S.)\end{tabular} & F cal & F tab \\ \midrule
+			\begin{tabular}[c]{@{}c@{}}Between\\ replicates or block\end{tabular} & $SSR=\sum_{i=1}^r \frac{R_i^2}{4}-CF$ & $r-1$ & $MSR=\frac{SSR}{r-1}$ & $F_r=\frac{MSR}{MSE}$ & $F_{cv1}=F_{(r-1),3(r-1),\alpha}$ \\
+			Main effect A & $SSA=\frac{[A]^2}{4r}$ & $1$ & $MSA=SSA$ & $F_A=\frac{MSA}{MSE}$ & \multirow{3}{*}{$F_{cv2}=F_{1,3(r-1),\alpha}$} \\
+			Main effect B & $SSB=\frac{[B]^2}{4r}$ & $1$ & $MSB=SSB$ & $F_B=\frac{MSB}{MSE}$ &  \\
+			\begin{tabular}[c]{@{}c@{}}Interaction effect\\ AB\end{tabular} & $SSAB=\frac{[AB]^2}{4r}$ & $1$ & $MSAB=SSAB$ & $F_{AB}=\frac{MSAB}{MSE}$ &  \\
+			Error & + & $3(r-1)$ & $MSE=\frac{SSE}{3(r-1)}$ &  &  \\
+			Total & $TSS=\sum_{i=1}^4 \sum_{j=1}^r y_{ij}^2-CF$ & $4r-1$ &  &  &  \\ \bottomrule
+		\end{tabular}%
+	}
+	\caption{ANOVA table for $2^2$ factorial design using RBD}
+	\label{tab:RBDfactorial22}
+\end{table}
+
+\subsubsection{Conclusions}
+If $ F_{cal,R}>F_{tab}=F_{cv1} $ we reject $ H_{0_1} $\\
+If $ F_{cal,A}>F_{tab}=F_{cv2} $ we reject $ H_{0_A} $\\
+If $ F_{cal,B}>F_{tab}=F_{cv2} $ we reject $ H_{0_B} $\\
+If $ F_{cal,AB}>F_{tab}=F_{cv2} $ we reject $ H_{0_{AB}} $
+
+\paragraph{Note}
+Standard error of any factorial effect total is $ \sqrt{4r\cdot MSE} $.\\
+Standard error of any factorial effect mean is $\sqrt{MSE/r}$.\\
+Significance value for any factorial effect total is $ t_{3(r-1),\alpha/2}\sqrt{4r\times MSE} $.\\
+And the significance value for any factorial effect mean is $ t_{3(r-1),\alpha/2}\sqrt{MSE/r} $
+
+
+\begin{example}
+	Following table shows yield of $ 2^2 $ factorial design. Analyse the data,
+\end{example}
+
+\subsection{Using LSD}
+\subsubsection{Null Hypothesis}
+$ H_{0_1}: $ There is no significant difference between row effects.\\
+$ H_{0_2}: $ There is no significant difference between column effects.\\
+$ H_{0_A}: $ The main effect due to factor $ A $ is insignificant.\\
+$ H_{0_B} :$ The main effect due to factor $ B $ is insignificant.\\
+$ H_{0_{AB}}: $ The interaction effect is insignificant
+\subsubsection{ANOVA Table}
+\begin{table}[!htb]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}cccccc@{}}
+			\toprule
+			\begin{tabular}[c]{@{}c@{}}Source of\\ variation\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sum of squares\\ (S.S.)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Degrees of\\ freedom (d.f.)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Mean sum of\\ squares (M.S.S.)\end{tabular} & F cal & F tab \\ \midrule
+			Between rows & $SSR=\sum_{j=1}^4 \frac{R_i^2}{4}-CF$ & $3$ & $MSR$ & $F_R=\frac{MSR}{MSE}$ & \multirow{2}{*}{$F_{cv1}=F_{(3,6,\alpha}$} \\
+			Between columns & $SSR=\sum_{j=1}^4 \frac{C_j^2}{4}-CF$ & $3$ & $MSC$ & $F_C=\frac{MSC}{MSE}$ &  \\
+			Main effect A & $SSA=\frac{[A]^2}{4r}$ & $1$ & $MSA$ & $F_A=\frac{MSA}{MSE}$ & \multirow{3}{*}{$F_{cv2}=F_{(1,6,\alpha)}$} \\
+			Main effect B & $SSB=\frac{[B]^2}{4r}$ & $1$ & $MSB$ & $F_B=\frac{MSB}{MSE}$ &  \\
+			\begin{tabular}[c]{@{}c@{}}Interaction effect\\ AB\end{tabular} & $SSAB=\frac{[AB]^2}{4r}$ & $1$ & $MSAB$ & $F_{AB}=\frac{MSAB}{MSE}$ &  \\
+			Error & + & 6 & $MSE$ &  &  \\
+			Total & $TSS=\sum_{i=1}^4 \sum_{j=1}^r y_{ij}^2-CF$ & $15$ &  &  &  \\ \bottomrule
+		\end{tabular}%
+	}
+	\caption{ANOVA table for $2^2$ factorial design using LSD}
+	\label{tab:LSDfactorial22}
+\end{table}
+
+\subsubsection{Conclusions}
+If $ F_{cal,R}>F_{tab}=F_{cv1} $ we reject $ H_{0_1} $\\
+If $ F_{cal,C}>F_{tab}=F_{cv1} $ we reject $ H_{0_2} $\\
+If $ F_{cal,A}>F_{tab}=F_{cv2} $ we reject $ H_{0_A} $\\
+If $ F_{cal,B}>F_{tab}=F_{cv2} $ we reject $ H_{0_B} $\\
+If $ F_{cal,AB}>F_{tab}=F_{cv2} $ we reject $ H_{0_{AB}} $
+
+\paragraph{Note}
+Standard error of any factorial effect total is $ \sqrt{16\cdot MSE} $.\\
+Standard error of any factorial effect mean is $\sqrt{MSE/4}$.\\
+Significance value for any factorial effect total is $ t_{6,\alpha/2}\sqrt{16 \times MSE} $.\\
+And the significance value for any factorial effect mean is $ t_{6,\alpha/2}\sqrt{MSE/4} $
+
+\section{$ 2^3 $ factorial experiment}
+There are $ 3 $ factors each at $ 2 $ levels.
+
+Let the three factors be $ A,B,C $ and levels denoted as $ a_0,a_1,b_0,b_1,c_0,c_1 $.
+
+\subsection{Notation}
+Treatment combinations,
+\begin{itemize}
+	\item $ a_0b_0c_0=1 $
+	\item $ a_1b_0c0=a $
+	\item $ a_0b_1c_0=b $
+	\item $ a_1b_1c_0=ab $
+	\item $ a_0b_0c_1=c $
+	\item $ a_1b_0c_1=ac $
+	\item $ a_0b_1c_1=bc $
+	\item $ a_1b_1c_1=abc $
+\end{itemize}
+
+\subsection{Main effects and interaction effects}
+Simple effects of factor $ A $ are $ (a)-(1),(ab) $
+
+Main effect is $ A=\frac{1}{4}(a-1)(b+1)(c+1) $
+
+Main effect is $ B=\frac{1}{4}(a+1)(b-1)(c+1) $
+
+
+Main effect is $ C=\frac{1}{4}(a+1)(b+1)(c-1) $
+
+
+Interatcion effect 
+$ AB=\frac{1}{4}(a-1)(b-1)(c+1) $
+
+$ BC=\frac{1}{4}(a+1)(b-1)(c-1) $
+
+$ AC=\frac{1}{4}(a-1)(b+1)(c-1) $
+
+
+$ ABC=\frac{1}{4}(a-1)(b-1)(c-1) $
+
+Mean yield is $ M=\frac{1}{8}[(abc)+(bc)+(ac)+(c)+(ab)+(b)+(a)+(1)] $
+
+Table of signs do it here ??? when something is in first level put it positive else negative.
+
+
+So formula for $ A $ would be $ \frac{-1+a-b+ab-c+ac-bc+abc}{4} $
+
+\subsection{Yates method for $ 2^3 $ experiments}
+do the table later
+
+\subsection{Statistical analysis}
+$ [A] =[abc]-[bc]+[ac]-[c]+[ab]-[b]+[a]-[1]$\\
+$ \vdots $
+
+Sum of squares due to main effect of $ A=\frac{[A]^2}{8r} $
+
+Sum of squares due to main effect of $ B=\frac{[B]^2}{8r} $
+
+
+Sum of squares due to main effect of $ C=\frac{[C]^2}{8r} $
+
+
+Sum of squares due to interaction effect of $ AB=\frac{[AB]^2}{8r} $
+
+Sum of squares due to interaction effect of $ AC=\frac{[AC]^2}{8r} $
+
+Sum of squares due to interaction effect of $ BC=\frac{[BC]^2}{8r} $
+
+Sum of squares due to interaction effect of $ ABC=\frac{[ABC]^2}{8r} $
+
+Each sum of squares carries 1 d.f.
+
+\subsection{Using RBD}
+\subsubsection{Null hypothesis}
+$ H_{01}:$ There is no significant difference between replicates.\\
+$ H_{0A} :$ The main effect due to factor $ A $ is insignificant.\\
+$ H_{0B} :$ The main effect due to factor $ B $ is insignificant.\\
+$ H_{0C} :$ The main effect due to factor $ C $ is insignificant.\\
+$ \vdots $
+
+do anova table here
+\subsection{Using LSD}
 \backmatter
 \thispagestyle{empty}
 \newpage

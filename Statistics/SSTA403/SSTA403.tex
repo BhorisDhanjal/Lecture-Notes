@@ -22,6 +22,7 @@
 \usepackage{quiver}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 %Be careful when you use commands which align formulas.
 %If aligned formulas range to two pages, the formulas should be divided into two environments.
 %\makeatletter
@@ -1368,8 +1369,18 @@ $ \overline{R} =\frac{1}{k}(R_1+R_2+\cdot+R_k)$. So $ UCL=\overline{R} + 3 \sigm
 If sigma is known we will take $ UCL=D_2 \sigma, LCL=D_1 \sigma  $. If sigma is known then $ UCL=D_4\overline{R}, LCL= D_3 \overline{R}$.\\
 We get $ D_1,D_2,D_3,D_4  $ from the table for different $ n $ values, for $ 2<n<25 $.
 \subsection{For standard deviation}
-Combination of control chart for mean $ \overline{X} $ and s.d. $ S $ known as $ \overline{X} -S$ chart. It is theoretically more appropriate than a combination of $ \overline{X}$ and $ R $.\\
-$ 3-\sigma  $CL is given by $ UCL=B_2 \sigma, LCL=B_1 \sigma $ when sigma is known. And when sigma is unknown $ UCL=B_4 \overline{S} $ and $ LCL=B_3 \overline{S} $ where $ \overline{S} = \frac{\sum S_i}{n}$
+Combination of control chart for mean $ \overline{X} $ and s.d. $ S $ known as $ \overline{X} -S$ chart. It is theoretically more appropriate than a combination of $ \overline{X}$ and $ R $.
+
+$ E[s]=c_2 \sigma, \sigma_s=c_3 \sigma	$
+
+\paragraph{When standards are known}
+$ CL=E[s]=c_2\sigma, UCL=c_2+3c_3 \sigma =B_2 \sigma, LCL=c_2-3c_3=B_1 \sigma $ when sigma is known. 
+\paragraph{When sigma is unknown}
+$ \hat{\sigma}=\overline{s}/c_2 $
+
+$ CL=\overline{s}=c_2\sigma=c_2 \overline{s}/c2=\overline{s} $ 
+
+$ UCL=B_4 \overline{S} $ and $ LCL=B_3 \overline{S} $ where $ \overline{S} = \frac{\sum S_i}{n}$
 
 \begin{example}
 	A machine is said to deliver packets of ????? ???? $ 10 $ samples of size $ 5 $ each were examined and the following results were obtained.
@@ -1465,10 +1476,10 @@ The number of defects where the sample was constant was as follows,
 
 \begin{enumerate}
 	\item Count the number of defects individually. Obtain average number of defects $ \overline{c} = \frac{\text{no of defects in all samples}}{\text{total no of samples}}$.
-	\item Create $ UCL, LCL $ with $ 3-\sigma  $ limits. $ UCL_c=\hat{c} + \sqrt{\hat{c}} $ and $ LCL_c= 3 \sqrt{\hat{c}}$. Where $ \hat{c} =\overline{c}=\frac{c_1+c_2+\cdots+c_k}{k}$ is true average no of defects per product.
+	\item Create $ UCL, LCL $ with $ 3-\sigma  $ limits. $ UCL_c=\hat{c} + 3\sqrt{\hat{c}} $ and $ LCL_c= \hat{c}+3 \sqrt{\hat{c}}$. Where $ \hat{c} =\overline{c}=\frac{c_1+c_2+\cdots+c_k}{k}$ is true average no of defects per product.
 \end{enumerate}
 
-When the estimate value is used, the two limits may be written as $ UCL_c=\overline{c} + 3 \sqrt{\overline{c}}$ and $ LCL_c=\overline{c} - \sqrt{\overline{c}}$. Where $ c_1,c_2,\dots,c_k $ are the number of defects observed in $ 1^{st}, \dots, k^{th}$ sample respectively.
+When the estimate value is used, the two limits may be written as $ UCL_c=\overline{c} + 3 \sqrt{\overline{c}}$ and $ LCL_c=\overline{c} - 3\sqrt{\overline{c}}$. Where $ c_1,c_2,\dots,c_k $ are the number of defects observed in $ 1^{st}, \dots, k^{th}$ sample respectively.
 
 
 The interpretation of this chart is similar to the chart for fraction defective and number of defectives. The evaluation of the standards are also done in the same line.
@@ -1530,7 +1541,7 @@ Although the applications for the $ c- $chart is somewhat limited compared with 
 	\item To protect the manufacturers as well as the consumers against heavy losses due to a rejection of a large quantity of product.
 \end{enumerate}
 
-\section{Acceptance sampling}
+\chapter{Acceptance sampling}
 If the plan is ????? qualitatively then the plan is referred as attribute sampling plan.
 
 And if the plan is ????? then the plan is referred as variable sampling plan
@@ -1736,6 +1747,109 @@ $ d_1 \rightarrow  $ hypergeometric situation (???) represented as $ N $ goes to
 \begin{align} 
 	P_{a_1} (p)= \sum_{d_1=0}^{c_1} \frac{\binom{N_p}{d_1}\binom{N-np}{n_1-d_1}}{\binom{N}{n_1}}
 \end{align}
+
+\begin{align*}
+	P_{a_2}(p)&=P[c_1+1\leq d_1 \leq c_2 \text{ and } d_1+d_2 \leq c_2]\\
+	&=P[c_1+1\leq d_1 \leq c_2 \cap d_1+d_2 \leq c_2]
+\end{align*}
+Let $ g(d_1,d_2,p) $ be the joitn distribution of $ d_1 $ and $ d_2 $ so that 
+\begin{align*}
+	P_{a_2}(p)&= \sum_{d_1=c_1+1}^{c_2} \sum_{d_2=0}^{c_2-d_1}g(d_1,d_2,p)\\
+	&=\sum_{d_1=c_1+1}^{c_2} \sum_{d_2=0}^{c_2-d_1} g_1(d_1,p)g_2(d_2| d_1) \numberthis
+\end{align*}
+
+Consider conditional distribution of $ d_2|d_1 \to g_2(d_2|d_1)  $
+
+\[\begin{tikzcd}
+	&& {N-n_1} \\
+	{} && {} && {} \\
+	{N_p-d_1} && {} && {(N-n_1)-(N_p-d_1)} \\
+	&& {n_2} \\
+	{} && {} && {} \\
+	{d_2} &&&& {n_2-d_2}
+	\arrow[from=2-5, to=3-5]
+	\arrow[from=2-1, to=3-1]
+	\arrow[from=5-1, to=6-1]
+	\arrow[no head, from=4-3, to=5-3]
+	\arrow[no head, from=5-5, to=5-1]
+	\arrow[from=5-5, to=6-5]
+	\arrow[no head, from=1-3, to=2-3]
+	\arrow[no head, from=2-1, to=2-5]
+	\arrow[from=3-3, to=4-3]
+\end{tikzcd}\]
+
+To obtain $ d_2 $ in the second sample we have to select a sample of size $ n_2$ from remaining elements i.e. from $ N-n_1 $ elements. In entire lot of size $ N $ $ N_p $ items were defective. Now to get conditional distribution of $ d_2|d_1 $.
+
+We know that out of $ N_p $ defectives $ n_1 $ defectives have already been eliminated. That is now the remaining lot of $ N-n_1 $ are defective and $ (N-n_1)-(N_p-d_1) $ are non defective. Hence the situation is hypergeometric situation.
+
+Hence conditional distribution of $ d_2|d_1 $ is hypergeometric distribution of $ d_1 $
+
+
+We get,
+\begin{align*}
+	P_{a_2}(p)&=\sum_{d_1=c_1+1}^{c_2}\sum_{d_2=0}^{c_2-d_1} g_1(d_1,p) g_2(d_2|d_1)\\
+	&=\sum_{d_1}\sum_{d_2} \frac{\binom{N_p}{d_1}\binom{N-N_p}{n_1-d_1}}{\binom{N}{n_1}} \times \frac{\binom{N_p-d_1}{2}\binom{N-n_1-N_p+d_1}{n_2-d_2}}{\binom{N-n_1}{n_2}}\\
+	P_a(p)&=P_{a_1}(p)+P_{a_2}(p)\numberthis
+\end{align*}
+
+\begin{align*}
+	\text{Producers risk}=P_a(\overline{p})&=P_a(\text{rejecting good quality lot})\\
+	&=1-P_a(p)
+\end{align*}
+
+\begin{align*}
+	\text{Consumers risk}=P_o(p_t)&=P_a(\text{accept bad quality lot})\\
+	&=\beta\\
+	AOQ&=\frac{E[X]}{N}
+\end{align*}
+
+\[ \begin{matrix}
+	x & P(x)\\
+	0 & P(\text{reject lot})=1-P_a(p)\\
+	(N-n_1)p & P_{a_1}(p)\\
+	(N-n_1-n_2)P & P_{a_2}(p)
+	
+\end{matrix} \]
+$ AOQ=\frac{\sum xP(x)}{N}$
+
+
+$ ASN=E[x] $, $ X $ takes two possible values $ n_1 $ if the decision is to be taken on the basis of first sample and $ n_2 $ if decision is to be taken on second sample. 
+
+$ P_{a_1}(p) $ probability of accepting a lot on the basis of first sample and $ P_{R_1} (P)$ be the probability of rejecting a lot 
+
+$ P_1=P_{a_1}(p)+P_{R_1}(p) $
+
+$ E[x]=n_1P_1+(n_1+n_2)(1-P_1) $
+
+\[ \begin{matrix}
+	ASN & E[x]\\
+	DC & P(x)\\
+	n_1 & P_1=P(\text{not going to 2nd sample})\\
+	n_1+n_2 & 1-P_1
+
+\end{matrix} \]
+
+Average total inspection (ATI) which is 
+\[ 	E[\text{no of units inspected to take decision to accept or reject the lot}] \]
+Let $ X $ be the number of units inspected to take a decision so that $ ATI $ is $ E[X] $.
+
+Since $ X $ is the total number of units inspected to take a decision. $ X $ assumes the value $ n_1 $- if we accept the lot on the basis of first sample with $ P_{a_1}(P) $.
+
+$ n_1+n_2 $ if Probability of accepting a lot on the basis of second sample $ P_{a_2}(P) $. 
+
+$ N $ if the decision of rejection is taken with the probability of $ P_{R_1} (P) $
+$ 1-P_a(P) $.
+
+
+$ ATI=n_1(P_{a_1}(p)) +(n_1+n_2)(P_{n_2}(p))+a_1(1-P_a(p))$
+
+
+
+
+
+
+
+
 
 
 \backmatter

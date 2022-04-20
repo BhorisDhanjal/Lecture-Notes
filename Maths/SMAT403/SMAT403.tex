@@ -12,7 +12,7 @@
 \usepackage{inputenc}
 \usepackage{multirow}
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
-\usepackage[toc,page]{appendix}
+\usepackage[]{appendix}
 \usepackage[nottoc]{tocbibind}
 \numberwithin{equation}{section}
 \graphicspath{ {./Images/} }
@@ -22,6 +22,26 @@
 \usepackage{epigraph}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
+\usepackage{xparse}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\tikzset{Arrow Style/.style={text=black, font=\boldmath}}
+
+\newcommand{\tikzmark}[1]{%
+	\tikz[overlay, remember picture, baseline] \node (#1) {};%
+}
+\newcommand*{\XShift}{0.5em}
+\newcommand*{\YShift}{0.5ex}
+\NewDocumentCommand{\DrawArrow}{s O{} m m m}{%
+	\begin{tikzpicture}[overlay,remember picture]
+		\draw[->, thick, Arrow Style, #2] 
+		($(#3.west)+(\XShift,\YShift)$) -- 
+		($(#4.east)+(-\XShift,\YShift)$)
+		node [midway,above] {#5};
+	\end{tikzpicture}%
+}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 %Be careful when you use commands which align formulas.
 %If aligned formulas range to two pages, the formulas should be divided into two environments.
 %\makeatletter
@@ -47,7 +67,9 @@
 	\itshape}
 {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
 \makeatother
-
+\makeatletter
+\g@addto@macro\bfseries{\boldmath}
+\makeatother
 
 \newtheorem{theorem}{Theorem}[chapter]%Modify these declarations for your need.
 \newtheorem{lemma}[theorem]{Lemma}
@@ -106,59 +128,60 @@
 	my colleagues have publicly announced that they would rather resign from MIT than lecture in
 	sophomore differential equations''
 \end{chapquote}
-These are lecture notes for the SMAT403 Differential Equations course. If you spot mistakes just message me and let me know. There probably might be some typos.
-\par Differential equations might well be the most boring topic in maths I think I will ever study. 
-\par Hopefully these notes make it more tolerable. If I remember to do it, there might be an appendix with common derivates and integrals at the end.
-\chapter{First order ordinary linear differential equations}
-\begin{chapquote}{Isaac Newton}
+A very dull topic indeed. The appendix at the end has some common derivatives and integrals.		
+
+%\chapter{First order ordinary linear differential equations}
+%\begin{chapquote}{Isaac Newton}
+%	``Just use Mathematica bro.''
+%\end{chapquote}
+%\section{Homogenous equations}
+%The differential equation
+%\[ M(x,y)\, dx + N(x,y)\, dy=0\] is said to be homogenous if $ M $ and $ N $ are of the same degree.\par
+%Substitute $ y=zx $ to solve a homogenous ODE.
+
+
+%\begin{example}
+%	Solve $ (x+y)\ dx - (x-y)\ dy =0$
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		\frac{dy}{dx}&=\frac{x+y}{x-y}
+%		\intertext{Let $ y=vx $}
+%		\frac{dy}{dx}&=v+x\frac{dv}{dx}\\
+%		v+x\frac{dv}{dx}&=\frac{x+vx}{x-vx}\\
+%		\frac{(1-v)}{1+v^2}\, dv&=\frac{1}{x}\, dx
+%		\intertext{Integrate both sides}
+%		\arctan v - \frac{1}{2}\log(1+v^2)&=\log(x)+c\\
+%		\arctan\left(\frac{y}{x}\right)&=\log(\sqrt{x^2+y^2})+c
+%	\end{align*}
+%\end{proof}
+
+%\section{Exact differential equation}
+%	
+%
+%If you have $ M\, dx + N\, dy=0 $ and if $ \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x} $ then the differential equation is exact.\par
+%The solution is $ f(x,y) =c$ where $ \frac{\partial f}{\partial x} =M, \frac{\partial f}{\partial y}=N$
+%\begin{example}
+%	$ e^y\, dx+(xe^y+2y)\, dy=0$
+%\end{example}
+%\begin{proof}
+%	Here we have, $ M=e^y, N=xe^y+2y $\\
+%	\begin{align*}
+%		\frac{\partial M}{\partial y}=\frac{\partial}{\partial y} (e^y)=e^y\\
+%		\frac{\partial N}{\partial x}=\frac{\partial}{\partial x}(xe^y+2y)=e^y
+%	\end{align*}
+%	Therefore, it is exact.
+%	\begin{align*}
+%		\frac{\partial f}{\partial x}&=e^y\\
+%		f(x,y)&=\int e^y\, dx= xe^y+g(y)\\
+%		\frac{\partial f}{\partial y}&=xe^y+\frac{dg}{dy}=N=xe^y+2y\\
+%		\frac{dg}{dy}&=2y
+%	\end{align*}
+%
+%\end{proof}
+\chapter{Second and Higher order ordinary linear differential equations}
+\begin{chapquote}{Euler}
 	``Just use Mathematica bro.''
-\end{chapquote}
-\section{Homogenous equations}
-The differential equation
-\[ M(x,y)\, dx + N(x,y)\, dy=0\] is said to be homogenous if $ M $ and $ N $ are of the same degree.\par
-Substitute $ y=vx $ to solve a homogenous ODE.
-\begin{example}
-	Solve $ (x+y)\ dx - (x-y)\ dy =0$
-\end{example}
-\begin{proof}
-	\begin{align*}
-		\frac{dy}{dx}&=\frac{x+y}{x-y}
-		\intertext{Let $ y=vx $}
-		\frac{dy}{dx}&=v+x\frac{dv}{dx}\\
-		v+x\frac{dv}{dx}&=\frac{x+vx}{x-vx}\\
-		\frac{(1-v)}{1+v^2}\, dv&=\frac{1}{x}\, dx
-		\intertext{Integrate both sides}
-		\arctan v - \frac{1}{2}\log(1+v^2)&=\log(x)+c\\
-		\arctan\left(\frac{y}{x}\right)&=\log(\sqrt{x^2+y^2})+c
-	\end{align*}
-\end{proof}
-
-\section{Exact differential equation}
-	
-
-IF you have $ M\, dx + N\, dy=0 $ and if $ \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x} $ then the differential equation is exact.\par
-The solution is $ f(x,y) =c$ where $ \frac{\partial f}{\partial x} =M, \frac{\partial f}{\partial y}=N$
-\begin{example}
-	$ e^y\, dx+(xe^y+2y)\, dy=0$
-\end{example}
-\begin{proof}
-	Here we have, $ M=e^y, N=xe^y+2y $\\
-	\begin{align*}
-		\frac{\partial M}{\partial y}=\frac{\partial}{\partial y} (e^y)=e^y\\
-		\frac{\partial N}{\partial x}=\frac{\partial}{\partial x}(xe^y+2y)=e^y
-	\end{align*}
-	Therefore, it is exact.
-	\begin{align*}
-		\frac{\partial f}{\partial x}&=e^y\\
-		f(x,y)&=\int e^y\, dx= xe^y+g(y)\\
-		\frac{\partial f}{\partial y}&=xe^y+\frac{dg}{dy}=N=xe^y+2y\\
-		\frac{dg}{dy}&=2y
-	\end{align*}
-
-\end{proof}
-\chapter{Higher order ordinary linear differential equations}
-\begin{chapquote}{Euclid, \textit{When a time traveller showed him differential equations}}
-	``Damn this is boring.''
 \end{chapquote}
 \section{Second order linear differential equations}
 \subsection{Definition}
@@ -174,43 +197,43 @@ or
 Let $ P(x), Q(x), R(x)$ be continuous functions on a closed interval $ [a,b].$ If $ x_0 $ is any point in $ [a,b] $ and if $ y_0, y_0' $ are any numbers. Then eq. \ref{def:secondorder} has one and only one solution $ y(x) $ on the entire interval such that $ y(x_0) =y_0$ and $ y'(x_0) =y_0'$
 \end{theorem}
 \begin{proof}
-	Not covered in class. Just trust me bro.
+	Not covered in class.
 \end{proof}
 
-\begin{example}
-	Find the largest interval where $ (x^2-1)y''+3xy'+(\cos x)y =e^x, y(0)=4, y'(0)=5$ is guaranteed to have a unique solution.
-\end{example}
-
-\begin{proof}
-	We need to divide by $(x^2-1)$ but this automatically implies that from $ \R $ we cannot include $ -1,1 $. \\
-	$ P(x) =\frac{3x}{x^2-1}$, it is continuous over $ \R \setminus \{-1,1\} $,
-	$ Q(x)=\frac{\cos(x)}{x^2-1} $ same case,
-	$ R(x) =\frac{e^x}{x^2-1}$ same.\\
-	Therefore the interval is simply, $ (-\infty,-1)\bigcap (-1,1) \bigcap (1, \infty) $ we will choose just the middle interval since we need $ 0 $.\\
-	Therefore the largest interval in which the DE is guaranteed to have a unique solution is (-1,1).
-\end{proof}
-
-\begin{example}
-	$ (x+2)y''+xy'+(\cot x)y=x^2+1, y(2) =11, y'(2)=-2$
-\end{example}
-\begin{proof}
-	Divide by $ (x+2) $ so $ x=-2 $ cannot be included. Also $ \cot x $ isnt defined for $ x=n\pi  $.\\
-	So the required largest interval would be $ (0,\pi) $
-\end{proof}
-
-\begin{example}
-	Find the largest interval where $ (x^2-4x) y''+3xy' +4y=2, y(3)=0, y'(3)=-1$
-\end{example}
-\begin{proof}
-	We need to divide by $ (x^2-4x) $ so we cannot include the points $ 0, 4 $ so the interval is $ (0,4) $.
-\end{proof}
-
-\begin{example}
-	$(x-3)y''+xy'+\log|x| y=0, y(1)=0,y'(1)=1$
-\end{example}
-\begin{proof}
-	We need to divide by $(x-3)$ so $ x\neq 3 $. Also $ \log x $ is not defined for $ x=0 $. So the required interval is just $ (0,3) $
-\end{proof}
+%\begin{example}
+%	Find the largest interval where $ (x^2-1)y''+3xy'+(\cos x)y =e^x, y(0)=4, y'(0)=5$ is guaranteed to have a unique solution.
+%\end{example}
+%
+%\begin{proof}
+%	We need to divide by $(x^2-1)$ but this automatically implies that from $ \R $ we cannot include $ -1,1 $. \\
+%	$ P(x) =\frac{3x}{x^2-1}$, it is continuous over $ \R \setminus \{-1,1\} $,
+%	$ Q(x)=\frac{\cos(x)}{x^2-1} $ same case,
+%	$ R(x) =\frac{e^x}{x^2-1}$ same.\\
+%	Therefore the interval is simply, $ (-\infty,-1)\bigcap (-1,1) \bigcap (1, \infty) $ we will choose just the middle interval since we need $ 0 $.\\
+%	Therefore the largest interval in which the DE is guaranteed to have a unique solution is (-1,1).
+%\end{proof}
+%
+%\begin{example}
+%	$ (x+2)y''+xy'+(\cot x)y=x^2+1, y(2) =11, y'(2)=-2$
+%\end{example}
+%\begin{proof}
+%	Divide by $ (x+2) $ so $ x=-2 $ cannot be included. Also $ \cot x $ isnt defined for $ x=n\pi  $.\\
+%	So the required largest interval would be $ (0,\pi) $
+%\end{proof}
+%
+%\begin{example}
+%	Find the largest interval where $ (x^2-4x) y''+3xy' +4y=2, y(3)=0, y'(3)=-1$
+%\end{example}
+%\begin{proof}
+%	We need to divide by $ (x^2-4x) $ so we cannot include the points $ 0, 4 $ so the interval is $ (0,4) $.
+%\end{proof}
+%
+%\begin{example}
+%	$(x-3)y''+xy'+\log|x| y=0, y(1)=0,y'(1)=1$
+%\end{example}
+%\begin{proof}
+%	We need to divide by $(x-3)$ so $ x\neq 3 $. Also $ \log x $ is not defined for $ x=0 $. So the required interval is just $ (0,3) $
+%\end{proof}
 
 \subsection{Homogenous equation}
 \begin{definition}\label{def:2ndhomo}
@@ -223,75 +246,79 @@ Let $ P(x), Q(x), R(x)$ be continuous functions on a closed interval $ [a,b].$ I
 	If $ y_p(x) $ is a fixed particular solution of eq \ref{def:secondorder} and $ y(x) $ is any general solution of eq. \ref{def:secondorder}, then $ y(x) -y_p(x)$ is a solution of \ref{def:2ndhomo}
 \end{theorem}
 \begin{proof}
-	Let $ y_1 $ be some solution to \ref{def:secondorder} and $ y_2 $ be some other solution to \ref{def:secondorder}. Then $ y_1-y_2 $ will be a solution to \ref{def:2ndhomo}.??? (\emph{Check this later it makes no sense})
+	\begin{align*}
+		&(y-y_p)''+P(x)(y-y_p)'+Q(x)(y-y_p)\\
+		&=[y''+P(x)y''+Q(x)y]-[y''_p+P(x)y_p'+Q(x)y_p]\\
+		&=R(x)-R(x)=0
+	\end{align*}
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{combosoln}
 	If $ y_1(x) $ and $ y_2(x) $ are any two solutions of eq. \ref{def:2ndhomo}, then $ c_1y_1(x) +c_2 y_2 (x)$ is also a solution for any constants $ c_1 $ and $ c_2 $.
 \end{theorem}
 \begin{proof}
-	The proof is trivial and is left as an exercise to the next person who reads this.\\
+	Just plug in $ c_1y_1(x)+c_2y_2(x) $ in the original DE then by linearity of the differential everything cancels out to 0.\\
 \end{proof}
 
-\begin{example}
-	Verify that $ y=c_1 \cos x + c_2 \sin x $ is a solution of $ y''+y=0 $ Find the solution which satisfies (A)(???) and
-	\begin{itemize}
-		\item $ y(0) =0, y'(0)=1$
-		\item $ y(0)=1, y'(0)=0 $
-	\end{itemize}
-\end{example}
-
-\begin{proof}
-	Consider case $ i $,
-	\begin{align*}
-		y(0)&=c_1 \cos (0)+ c_2 \sin (0)\\
-		&=c_1
-	\end{align*}
-	Therefore, $ c_1=0 $ but $ c_2 $ is undecided.... \emph{finish this later}
-\end{proof}
-
-\begin{example}
-	Solve $ y''+y'=0 $
-\end{example}
-\begin{proof}
-	\begin{align*}
-	y''+y'&=0 \\ 
-	y'=t(x) \ \to y''&=t'(x) 
-	\\ t'+tz&=0 \\ 
-	\frac{dt}{t}+dx&=0 \\
-	 \ln |t|+x&=C \\ 
-	 \ln|t| + \ln e^x &= \ln e^{C} \\ 
-	 t \cdot  e^x&=C_1 \\ 
-	 y' \cdot e^x &=C_1 \\ 
-	 dy=&C_1\frac{dx}{e^x} \\ 
-	 \int dy=&C_1 \int \frac{dx}{e^x} \\ ...
-	\end{align*}
-General solution is $ y=c_1e^{-x}+c_2 $	
-\end{proof}
-
-\begin{example}
-	Solve $ x^2y''+2xy'-2y=0 $
-\end{example}
-
-\begin{proof}
-	Let $ y=x^m $ so $ y'=mx^{m-1} $ and $ y''=m(m-1)x^{m-2} $
-	\begin{align*}
-		x^2m(m-1)x^{m-2}+2x(mx^{m-1})-2x^m&=0\\
-		x^m(m^2-m+2m-2)&=0
-		\intertext{$m=1$ or $m=-2$}
-		\therefore y_1(x)=x'=x \text{ and } y_2(x)&=x^{-2}\\
-		\text{General solution } y(x)&=c_1x+c_2x^{-2}
-		\end{align*}
-	
-\end{proof}
-
-\begin{example}
-	Verify that $ y_1=1, y_2=x^2 $ are solutions of $ xy''-y'=0 $ and write down the general solution.
-\end{example}
-\begin{proof}
-	We will not insult the intelligence of the reader by verifying the solution.\\
-	For the general solution consider that $ 1, x^2 $ are Linearly independent, so the general solution is $ y(x)=c_1(1)+c_2(x^2) $
-\end{proof}
+%\begin{example}
+%	Verify that $ y=c_1 \cos x + c_2 \sin x $ is a solution of $ y''+y=0 $ Find the solution which satisfies (A)(???) and
+%	\begin{itemize}
+%		\item $ y(0) =0, y'(0)=1$
+%		\item $ y(0)=1, y'(0)=0 $
+%	\end{itemize}
+%\end{example}
+%
+%\begin{proof}
+%	Consider case $ i $,
+%	\begin{align*}
+%		y(0)&=c_1 \cos (0)+ c_2 \sin (0)\\
+%		&=c_1
+%	\end{align*}
+%	Therefore, $ c_1=0 $ but $ c_2 $ is undecided.... \emph{finish this later}
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ y''+y'=0 $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%	y''+y'&=0 \\ 
+%	y'=t(x) \ \to y''&=t'(x) 
+%	\\ t'+tz&=0 \\ 
+%	\frac{dt}{t}+dx&=0 \\
+%	 \ln |t|+x&=C \\ 
+%	 \ln|t| + \ln e^x &= \ln e^{C} \\ 
+%	 t \cdot  e^x&=C_1 \\ 
+%	 y' \cdot e^x &=C_1 \\ 
+%	 dy=&C_1\frac{dx}{e^x} \\ 
+%	 \int dy=&C_1 \int \frac{dx}{e^x} \\ ...
+%	\end{align*}
+%General solution is $ y=c_1e^{-x}+c_2 $	
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ x^2y''+2xy'-2y=0 $
+%\end{example}
+%
+%\begin{proof}
+%	Let $ y=x^m $ so $ y'=mx^{m-1} $ and $ y''=m(m-1)x^{m-2} $
+%	\begin{align*}
+%		x^2m(m-1)x^{m-2}+2x(mx^{m-1})-2x^m&=0\\
+%		x^m(m^2-m+2m-2)&=0
+%		\intertext{$m=1$ or $m=-2$}
+%		\therefore y_1(x)=x'=x \text{ and } y_2(x)&=x^{-2}\\
+%		\text{General solution } y(x)&=c_1x+c_2x^{-2}
+%		\end{align*}
+%	
+%\end{proof}
+%
+%\begin{example}
+%	Verify that $ y_1=1, y_2=x^2 $ are solutions of $ xy''-y'=0 $ and write down the general solution.
+%\end{example}
+%\begin{proof}
+%	We will not insult the intelligence of the reader by verifying the solution.\\
+%	For the general solution consider that $ 1, x^2 $ are Linearly independent, so the general solution is $ y(x)=c_1(1)+c_2(x^2) $
+%\end{proof}
 
 \section{General solution of the homogenous system}
 
@@ -306,7 +333,7 @@ Note that, if $ f(x) \equiv 0$ and $ g(x) $ are linearly dependent for every fun
 	\[ W(y_1,y_2)= \begin{vmatrix}
 		y_1 & y_2 \\ 
 		y_1' & y_2' 
-	\end{vmatrix}\]
+	\end{vmatrix}=y_1y_2'-y_2y_1'\]
 \end{definition}
 If two functions are dependent then their Wronskian is identically zero.
 
@@ -314,29 +341,53 @@ If two functions are dependent then their Wronskian is identically zero.
 	If $ y_1(x) , y_2(x)$ are any two solutions to eq. \ref{def:2ndhomo} on interval $ I $ then their Wronskian is either identically zero or never zero on $ I $.
  \end{lemma}
 \begin{proof}
-	I trust my professor.
-\end{proof}
-\begin{example}
-	By eliminating $ c_1 $ and $ c_2 $, find the differential equation for the family of the curves $ y=c_1e^x+c_2e^{-3x} $. Then use Abel's formula to find the Wronskian.
-\end{example}
-\begin{proof}
-	\begin{align}
-		y'&=c_1e^x-3c_2e^{-3x}\\
-		y''&=c_1e^{x}+9c_2e^{-3x}
-		\intertext{Now do $ y-y' $}
-		y-y''&=4c_2e^{3x} \implies c_2=\frac{y-y'}{4e^{-3x}}
-		\intertext{Now do $ y''-y' $}
-		y''-y'&=12c_2e^{-3x}\implies c_2=\frac{y''-y'}{12e^{-3x}}
-		\intertext{But now we have the following equality}
-		y''-y'&=3(y-y')
-		\intertext{Expanding this gives us the differential equation required as,}
-		y''+2y'-3y&=0
-	\end{align}
+	We know that $ W= y_1y_2'-y_2y_1'$. Now consider $ W' $ as follows,
+	\begin{align*}
+		W'&=y_1y_2''+y_1'y_2'-y_2y_1''-y_2'y_1'\\
+		&=y_1y_2''-y_2y_1''
+	\end{align*}
 
+	Since we know both $ y_1,y_2 $ are solutions of \ref{def:2ndhomo} we know that,
+	\begin{align*}
+		y_1''+Py_1'+Qy_1=0\\
+		y_2''+Py_2'+Qy_2=0
+	\end{align*}
+	Now do $ y_2(eq1)-y_1(eq2) $
+	\begin{align*}
+		(y_1y_2''-y_2y_1'')+P(y_1y_2'-y_2y_1')=0\\
+		W'+PW=0
+	\end{align*}
+	The general solution for this first order equation is \[ W=ce^{-\int P\, dx} \]
+	Since the exponential factor is never zero we see that $ W $ is identically zero if the constant is $ c=0 $ and never zero if $ c\neq 0 $.
 \end{proof}
+%\begin{example}
+%	By eliminating $ c_1 $ and $ c_2 $, find the differential equation for the family of the curves $ y=c_1e^x+c_2e^{-3x} $. Then use Abel's formula to find the Wronskian.
+%\end{example}
+%\begin{proof}
+%	\begin{align}
+%		y'&=c_1e^x-3c_2e^{-3x}\\
+%		y''&=c_1e^{x}+9c_2e^{-3x}
+%		\intertext{Now do $ y-y' $}
+%		y-y''&=4c_2e^{3x} \implies c_2=\frac{y-y'}{4e^{-3x}}
+%		\intertext{Now do $ y''-y' $}
+%		y''-y'&=12c_2e^{-3x}\implies c_2=\frac{y''-y'}{12e^{-3x}}
+%		\intertext{But now we have the following equality}
+%		y''-y'&=3(y-y')
+%		\intertext{Expanding this gives us the differential equation required as,}
+%		y''+2y'-3y&=0
+%	\end{align}
+%
+%	We find the Wronskian as follows,
+%	\begin{align*}
+%		W&=ce^{-\int P\, dx}\\
+%		&=ce^{-\int 2\, dx}\\
+%		&=ce^{-2x}
+%	\end{align*}
+%
+%\end{proof}
 
 \begin{lemma}\label{lem:ldwronskian}
-	If $ y_1(x) $ and $ y_2(x) $ are two solutions of eq. \ref{def:2ndhomo} on $ I $, then they are linearly dependent on this interval $ \iff $ their Wronskian is identically 0.
+	If $ y_1(x) $ and $ y_2(x) $ are two solutions of eq. \ref{def:2ndhomo} on $ I $, then they are linearly dependent on this interval $ \iff $ their Wronskian is identically zero.
 \end{lemma}
 \begin{proof}
 	\textbf{Case 1: }If the function is linearly dependent then its Wronskian is equal to 0. \begin{align*}
@@ -355,17 +406,19 @@ If two functions are dependent then their Wronskian is identically zero.
 	If $ y_1(x) $ and $ y_2(x) $ are two solutions of eq. \ref{def:2ndhomo} on $ I $, then they are linearly independent on this interval iff their Wronskian is never zero on $ I $.
 \end{lemma}
 \begin{proof}
-	This proof is very boring and is left as an exercise to the reader. Use lemma \ref{lem:ldwronskian}.\\
+	Use lemma \ref{lem:ldwronskian}.\\
 	Assume that $ y_1, y_2 $ are L.I. then we have to show $ W \neq 0 $. Assume $ W=0 $ then use lemma \ref{lem:ldwronskian}.\\
 	If $ W $ is never zero then show that $ y_1, y_2 $ are L.I.
 \end{proof}
 
-\begin{theorem}
-	Let $ y_1(x) $ and $ y_2(x) $ be linearly independent solutions of the homogenous equation \ref{def:2ndhomo} on $ I $. Then $ c_1 y_1(x) + c_2 y_2 (x)$ is the general soltuion of equation \ref{def:2ndhomo} on $ I $.
+\begin{theorem}[Imp]
+	Let $ y_1(x) $ and $ y_2(x) $ be linearly independent solutions of the homogenous equation \ref{def:2ndhomo} on $ I $. Then $ c_1 y_1(x) + c_2 y_2 (x)$ is the general solution of equation \ref{def:2ndhomo} on $ I $.
 \end{theorem}
 \begin{proof}
-	Show $ c_1 y_1+c_2y_2 $ be a solution of eq \ref{def:2ndhomo}. Next, let $ y(x) $ be any other solution of \ref{def:2ndhomo} then show that there exists $ c_1, c_2 \in \R $ such taht $ y(x)=c_1y_1+c_2y_2 $. That is, to show that for some $ x_0 \in I $ we can find $ c_1, c_2 $ s.t. $ c_1 y_1(x_0) +c_2'y_2(x_0)=y(x_0)$ and $ c_1y_1'(x_0)+c_2y_2'(x_0) $.
-	That is we have to show,
+	First show that $ c_1 y_1+c_2y_2 $ be a solution of eq \ref{def:2ndhomo}. This was done in Th. \ref{combosoln}.
+	
+	 Next, let $ y(x) $ be any other solution of \ref{def:2ndhomo} to show that there exists $ c_1, c_2 \in \R $ such that $ y(x)=c_1y_1+c_2y_2 $. That is, to show that for some $ x_0 \in I $ we can find $ c_1, c_2 $ s.t. $ c_1 y_1(x_0) +c_2y_2(x_0)=y(x_0)$ and $ c_1y_1'(x_0)+c_2y_2'(x_0)=y'(x_0) $.
+	That is we have to show there exists some solution to,
 	\[ \begin{bmatrix}
 	y_1(x_0)	& y_2(x_0)\\ 
 	y_1'(x_0)	& y_2'(x_0) 
@@ -374,104 +427,123 @@ If two functions are dependent then their Wronskian is identically zero.
 \end{bmatrix}=\begin{bmatrix}
 y(x_0)\\ y'(x_0)
 \end{bmatrix} \]
-Complete this later its boring
+It is of the form $ Ax=b $. And we know $ |A|=W \neq 0$ (from Lemma \ref{lem:ldwronskian}). So $ |A| \neq 0 $. 
+
+Since the determinant is non-zero on every interval we can say that $ Ax=b $ has a solution.
+
+So any solution $ y(x)$ will be a linear combination of $ y_1,y_2 $.
 \end{proof}
 
-\begin{example}
-	Show that $ y=c_1 \sin x + c_2 \cos x $ is the general solution of $ y''+y=0 $ on any interval, and find the particular solution for which $ y(0)=2 $ and $ y'(0)=3$.
-\end{example}
-\begin{proof}
-	\begin{align*}
-		y_1&=\sin x, y_2= \cos x
-	\end{align*}
-It is easy to see that it a solution. Now we just have to show that it is linearly independent and them by the previous theorem we can say its linear combination is a general solution. Using the initial conditions we then solve and find the values for $ c_1 $ and $ c_2 $
-\end{proof}
+%\begin{example}
+%	Show that $ y=c_1 \sin x + c_2 \cos x $ is the general solution of $ y''+y=0 $ on any interval, and find the particular solution for which $ y(0)=2 $ and $ y'(0)=3$.
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		y_1&=\sin x, y_2= \cos x
+%	\end{align*}
+%It is easy to see that it a solution. Now we just have to show that it is linearly independent and them by the previous theorem we can say its linear combination is a general solution. Using the initial conditions we then solve and find the values for $ c_1 $ and $ c_2 $
+%\end{proof}
 
 
-\begin{example}[H.W]
-	Show that the space of solutions for the homogenous equation $ y''+P(x)y'+Q(x)y=0 $ is a vector space over $ \R$.
-\end{example}
-
-\begin{example}[Review]
-	Show that $ e^x $ and $ e^{-x} $ are linearly independent solutions of $ y''-y=0 $ in any interval.
-\end{example}
-\begin{proof}
-	Verify that it is a solution. Consider then its Wronskian.
-\end{proof}
+%\begin{example}[H.W]
+%	Show that the space of solutions for the homogenous equation $ y''+P(x)y'+Q(x)y=0 $ is a vector space over $ \R$.
+%\end{example}
+%
+%\begin{example}[Review]
+%	Show that $ e^x $ and $ e^{-x} $ are linearly independent solutions of $ y''-y=0 $ in any interval.
+%\end{example}
+%\begin{proof}
+%	Verify that it is a solution. Consider then its Wronskian.
+%\end{proof}
 \subsection{Using a known solution to find another}
-\begin{theorem}[Use of a known solution to find another]\footnote{Just memorize this garbage.}
-	Consider $ y''+P(x)y'+Q(x)y=0 \to (1)$. Assume $ y_1(x) $ is a known non-zero solution of (1). Assume $ y_2=v y_1 $ is another solution to (1), where $ v=v(x) $. Then $ y_2''+P(x)y_2'+Q(x)y_2 =0\implies [vy_1]''+P(x)[vy_1]'+Q(x)[vy_1]=0$.\[ v=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx\]
+\begin{theorem}\label{knownunknown}
+	Assume $ y_1(x) $ is a known non-zero solution of \ref{def:2ndhomo}. We can find the second solution $ y_2(x)=v y_1 $ where,
+	\[ v=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx \]
 \end{theorem}
-
-\begin{example}
-	Show that $ y_1=x $ is a solution of $ x^2y''+xy'-y=0 $. Find the general solution.
-\end{example}
 \begin{proof}
-	$ y_1'=1,y_1''=0 $, therefore we have
-	\begin{align*}
-		x^2y''+xy'-y&=0\\
-		x^2(0)+x(1)-x&=0
-	\end{align*}
-Therefore, it is a solution.
-Now we need to find $ y_2 $ another solution. Here in the standard form $ P(x)=\frac{1}{x}, x\neq=0$.\\
-Now compute $ v $
+	Assume $ y_2=v y_1 $ is another solution to \ref{def:2ndhomo}, where $ v=v(x) $. Then we have,
+	\begin{gather*}
+		y_2''+P(x)y_2'+Q(x)y_2 =0\implies [vy_1]''+P(x)[vy_1]'+Q(x)[vy_1]=0\\
+		(vy_1''+2v'y_1'+v''y_1)+P[vy_1'+v'y_1]+Q[vy_1]=0\\
+		\underbrace{v(y_1''+Py_1'+Qy_1)}_{\text{ $=0, \because y_1 $ is a solution $ $}}+v''y_1+v'(2y_1'+Py_1)=0
+	\end{gather*}
 \begin{align*}
-	v&=\int \frac{1}{y_1^2}e^{-\int P\, dx}\, dx\\
-	&= \int \frac{1}{x^2} \frac{1}{x}\, dx\\
-	&= \int \frac{1}{x^3}\, dx\\
-	&= - \frac{1}{2x^2}
+	v''y_1+v'(2y_1'+Py_1)&=0 \implies \frac{v''}{v'}=-2\frac{y_1'}{y_1}-P
+	\intertext{Integrate once}
+	\log v'&=-2\log y_1 - \int P \, dx\\
+	v'&=\frac{1}{y_1^2}e^{- \int P\, dx}\\
+	v&=\int \frac{1}{y_1^2}e^{-\int P\, dx}\, dx
 \end{align*}
-So now we can say $ y_2=vy_1=\frac{-1}{2x^2}x=\frac{-1}{2x} $.\\
-Therefore, the general solution for the given differential solution is $ y(x) = c_1 y_1 + c_2 y_2=c_1 x + c_2 \frac{-1}{2x}$ in any interval not containing $ 0 $.
 \end{proof}
-
-\begin{example}
-	Use the method of this section to find $ y_2 $ and the general solution of each of the following equations from the given solution $ y_1 $
-	\begin{enumerate}
-		\item $ y''+y=0, y_1=\sin x $
-		\item $ y''-y=0, y_1=e^x $
-		\item $ x^2y''+xy'-4y=0, y_1=x^2 $
-	\end{enumerate}
-\end{example}
-
-\begin{proof}
-	Consider 1) first, we have $ P(x)=0$. We will now find $ v $,
-	\begin{align*}
-		v&=\int \frac{1}{y_1^2} e^{- \int P\, dx}\, dx\\
-		&= \int \frac{1}{\sin x^2} 1\, dx\\
-		&= -\cot x
-	\end{align*}
-So now we can say $ y_2=v y_1= - \cos x  $. And the general solution is given by $ y(x) =c_1 \sin x + c_2 \cos x $\\
-Consider 2) now, we have again $ P(x) =0$.
-We will now find $ v $,
-\begin{align*}
-	v&=\int \frac{1}{e^{2x}}\, dx\\
-	&=\frac{-e^{-2x}}{2}
-\end{align*}
-\textbf{Complete this up} $ \cdots $\\
-Now consider 3), we have $ P(x)=\frac{1}{x} $. We will now find $ v $,
-\begin{align*}
-	v&=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx\\
-	&= \int \frac{1}{x^4} \frac{1}{x}\, dx\\
-	&= \int \frac{1}{x^5}\, dx\\
-	&= \frac{-1}{4x^4}
-\end{align*}
-Now we can get $ y_2=vy_1=\frac{-1}{4x^2} $. And get the general solution.
-\end{proof}
-
-\begin{example}
-	Show that $ y_1=x $ is a solution to $ (1-x^2)y''+2xy'+2y=0 $. Find the general solution.
-\end{example}
-\begin{proof}
-	First make the DE into standard form by dividing by $ 1-x^2 $. So we have $ P=\frac{-2x}{1-x^2} $. We will now compute $ v $,
-	\begin{align*}
-		v&=\int \frac{1}{x^2} e^{- \int \frac{-2x}{1-x^2}\, dx }\, dx\\
-		&= \int \frac{1}{x^2} \frac{1}{x^2-1}\, dx\\
-		&= \int \frac{1}{x^4-x^2}\, dx\\
-		&= \frac{1}{x}+\frac{1}{2}\log(1-x)-\frac{1}{2} \log(x+1)
-	\end{align*}
-	Now we compute $ y_2=v y_1=1+\frac{1}{2} \log (1-x)-\frac{1}{2} x \log(1+x)$
-\end{proof}
+%\begin{example}
+%	Show that $ y_1=x $ is a solution of $ x^2y''+xy'-y=0 $. Find the general solution.
+%\end{example}
+%\begin{proof}
+%	$ y_1'=1,y_1''=0 $, therefore we have
+%	\begin{align*}
+%		x^2y''+xy'-y&=0\\
+%		x^2(0)+x(1)-x&=0
+%	\end{align*}
+%Therefore, it is a solution.
+%Now we need to find $ y_2 $ another solution. Here in the standard form $ P(x)=\frac{1}{x}, x\neq=0$.\\
+%Now compute $ v $
+%\begin{align*}
+%	v&=\int \frac{1}{y_1^2}e^{-\int P\, dx}\, dx\\
+%	&= \int \frac{1}{x^2} \frac{1}{x}\, dx\\
+%	&= \int \frac{1}{x^3}\, dx\\
+%	&= - \frac{1}{2x^2}
+%\end{align*}
+%So now we can say $ y_2=vy_1=\frac{-1}{2x^2}x=\frac{-1}{2x} $.\\
+%Therefore, the general solution for the given differential solution is $ y(x) = c_1 y_1 + c_2 y_2=c_1 x + c_2 \frac{-1}{2x}$ in any interval not containing $ 0 $.
+%\end{proof}
+%
+%\begin{example}
+%	Use the method of this section to find $ y_2 $ and the general solution of each of the following equations from the given solution $ y_1 $
+%	\begin{enumerate}
+%		\item $ y''+y=0, y_1=\sin x $
+%		\item $ y''-y=0, y_1=e^x $
+%		\item $ x^2y''+xy'-4y=0, y_1=x^2 $
+%	\end{enumerate}
+%\end{example}
+%
+%\begin{proof}
+%	Consider 1) first, we have $ P(x)=0$. We will now find $ v $,
+%	\begin{align*}
+%		v&=\int \frac{1}{y_1^2} e^{- \int P\, dx}\, dx\\
+%		&= \int \frac{1}{\sin x^2} 1\, dx\\
+%		&= -\cot x
+%	\end{align*}
+%So now we can say $ y_2=v y_1= - \cos x  $. And the general solution is given by $ y(x) =c_1 \sin x + c_2 \cos x $\\
+%Consider 2) now, we have again $ P(x) =0$.
+%We will now find $ v $,
+%\begin{align*}
+%	v&=\int \frac{1}{e^{2x}}\, dx\\
+%	&=\frac{-e^{-2x}}{2}
+%\end{align*}
+%\textbf{Complete this up} $ \cdots $\\
+%Now consider 3), we have $ P(x)=\frac{1}{x} $. We will now find $ v $,
+%\begin{align*}
+%	v&=\int \frac{1}{y_1^2} e^{-\int P\, dx}\, dx\\
+%	&= \int \frac{1}{x^4} \frac{1}{x}\, dx\\
+%	&= \int \frac{1}{x^5}\, dx\\
+%	&= \frac{-1}{4x^4}
+%\end{align*}
+%Now we can get $ y_2=vy_1=\frac{-1}{4x^2} $. And get the general solution.
+%\end{proof}
+%
+%\begin{example}
+%	Show that $ y_1=x $ is a solution to $ (1-x^2)y''+2xy'+2y=0 $. Find the general solution.
+%\end{example}
+%\begin{proof}
+%	First make the DE into standard form by dividing by $ 1-x^2 $. So we have $ P=\frac{-2x}{1-x^2} $. We will now compute $ v $,
+%	\begin{align*}
+%		v&=\int \frac{1}{x^2} e^{- \int \frac{-2x}{1-x^2}\, dx }\, dx\\
+%		&= \int \frac{1}{x^2} \frac{1}{x^2-1}\, dx\\
+%		&= \int \frac{1}{x^4-x^2}\, dx\\
+%		&= \frac{1}{x}+\frac{1}{2}\log(1-x)-\frac{1}{2} \log(x+1)
+%	\end{align*}
+%	Now we compute $ y_2=v y_1=1+\frac{1}{2} \log (1-x)-\frac{1}{2} x \log(1+x)$
+%\end{proof}
 
 
 \subsection{Homogenous equation with constants}
@@ -483,53 +555,71 @@ Now we can get $ y_2=vy_1=\frac{-1}{4x^2} $. And get the general solution.
 		\item If the roots are complex ($ m=\alpha\pm \beta i $), $ y=e^{\alpha x}[c_1 \cos (\beta x)+c_2 \sin (\beta x)] $
 	\end{enumerate}
 \end{theorem}
-
-\begin{example}
-	$ y''+3y'-y=0 $
-\end{example}
 \begin{proof}
-	Assume $ e^{mx} $ is a solution to the following differential equation, then we have the following,
-	\begin{align*}
-		y''+3y'-y&=0\\
-		m^2 e^{mx}+ 3m e^{mx}-e^{mx}&=0
-	\end{align*}
-We can know solve for $ m $
-	\begin{align*}
-		m&= \frac{-3}{2}\pm\frac{\sqrt{13}}{2}
-	\end{align*}
-\textbf{Complete this $\dots$}
-\end{proof}
-
-
-\begin{example}
-	Find the general solution for each of the following equations:
-	\begin{enumerate}
-		\item $ y''+y'-6y=0 $
-		\item $ y''+3y'+y=0$
-	\end{enumerate}
-\end{example}
-\begin{proof}
-	Consider 1) first,
-	use the auxiliary equation that appeared out of a hat then,
-	\begin{align*}
-		k^2+pk+q&=0\\
-		k^2+k-6&=0\\
-		k=-3, k&=2
-	\end{align*}
-	So now the general solution is $ y=c_1e^{-3x}+c_2e^{2x} $
+	Assume $ y=e^{mx} $ is a solution. Substitute it in. For case one it is trivial.
 	
-\end{proof}
-
-\begin{example}
-	Solve $ 2y''+5y'-12y=0 $
-\end{example}
-\begin{proof}
-	Use the auxiliary equation,
+	For case 2 you have first solution as $ y_1=e^{mx} $ then use theorem \ref{knownunknown}.
+	
+	For case 3 we have $ m_1=a+ib, m_2=a-ib $. Therefore,
 	\begin{align*}
-		2m^2+5m-12=0
+		y_1=e^{m_1x}=e^{a+ib}=e^{ax}e^{ibx}=e^{ax}(\cos bx+i \sin bx)\\
+		y_2=e^{m_2x}=e^{a-ib}=e^{ax}e^{-ibx}=e^{ax}(\cos bx - i \sin bx)
 	\end{align*}
-We get the values of $ m=3/4, -4 $. These are real and distinct roots. So the general solution is \[ y=c_1 e^{4x}+c_2e^{3/2x} \].
+
+	Since we require real solutions only we do the following,
+	\begin{align*}
+		u_1=\frac{y_1+y_2}{2}=e^{ax}\cos bx\\
+		u_2=\frac{y_1-y_2}{2i}=e^{ax} \sin bx
+	\end{align*}
+	$ u_1,u_2 $ are obviously linearly independent. Show that they are solutions then claim it linear combination is the general solution.
 \end{proof}
+%
+%\begin{example}
+%	$ y''+3y'-y=0 $
+%\end{example}
+%\begin{proof}
+%	Assume $ e^{mx} $ is a solution to the following differential equation, then we have the following,
+%	\begin{align*}
+%		y''+3y'-y&=0\\
+%		m^2 e^{mx}+ 3m e^{mx}-e^{mx}&=0
+%	\end{align*}
+%We can know solve for $ m $
+%	\begin{align*}
+%		m&= \frac{-3}{2}\pm\frac{\sqrt{13}}{2}
+%	\end{align*}
+%\textbf{Complete this $\dots$}
+%\end{proof}
+%
+%
+%\begin{example}
+%	Find the general solution for each of the following equations:
+%	\begin{enumerate}
+%		\item $ y''+y'-6y=0 $
+%		\item $ y''+3y'+y=0$
+%	\end{enumerate}
+%\end{example}
+%\begin{proof}
+%	Consider 1) first,
+%	use the auxiliary equation that appeared out of a hat then,
+%	\begin{align*}
+%		k^2+pk+q&=0\\
+%		k^2+k-6&=0\\
+%		k=-3, k&=2
+%	\end{align*}
+%	So now the general solution is $ y=c_1e^{-3x}+c_2e^{2x} $
+%	
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ 2y''+5y'-12y=0 $
+%\end{example}
+%\begin{proof}
+%	Use the auxiliary equation,
+%	\begin{align*}
+%		2m^2+5m-12=0
+%	\end{align*}
+%We get the values of $ m=3/4, -4 $. These are real and distinct roots. So the general solution is \[ y=c_1 e^{4x}+c_2e^{3/2x} \].
+%\end{proof}
 
 \section{Method of undetermined coefficients (UDC)}
 This is a method to solve non-homogenous linear DE of order 2.
@@ -541,7 +631,7 @@ The second equation is just the associated homogenous equation of the first.\\
 Let $ y_g $ be the general solution of eq. \ref{eq:asshomo} be known as a complementary function (CF).\\
 Let $ y_p $ be a particular solution of eq. \ref{eq:nonhomo} then it is known as particular integral.
 \\
-You begin by computing $ y_g $ then compute $ y_p $ depending on one of the three stupid cases and their subcases \footnote{Just have to memorize it unfortunately. You want a intuitive reason for doing it? Cry more lmao.}. Once you have the $ y_p $ you just add that (\textbf{without} a constant) to the $ y_g $ and you have the general solution for \ref{eq:nonhomo}
+You begin by computing $ y_g $ then compute $ y_p $ depending on one of the three stupid cases and their subcases \footnote{Just have to memorize it unfortunately. You want a proof? Cry more lmao.}. Once you have the $ y_p $ you just add that (\textbf{without} a constant) to the $ y_g $ and you have the general solution for \ref{eq:nonhomo}
 \subsection{Assumptions of UDC}
 \begin{enumerate}
 	\item $ P(x),Q(x) $ are constants
@@ -561,12 +651,12 @@ You begin by computing $ y_g $ then compute $ y_p $ depending on one of the thre
 	\item If $ a $ is a double root of AE, then $ y_p=A x^2 e^{ax} $
 \end{enumerate}
 \end{theorem}
-\begin{example}
-	$ y''-4y'+4y=e^{2x} $
-\end{example}
-\begin{proof}
-	Here $ a=2 $ and computing $ m $ we get a double root with $ m=2,2 $.
-\end{proof}
+%\begin{example}
+%	$ y''-4y'+4y=e^{2x} $
+%\end{example}
+%\begin{proof}
+%	Here $ a=2 $ and computing $ m $ we get a double root with $ m=2,2 $.
+%\end{proof}
 
 \subsubsection{Subcase 1: a is not a root of AE}
 If $ a $ is not a root of the $ AE $ then you take $ y_p=Ae^{ax}$. So you have the following,
@@ -580,24 +670,24 @@ Plug this into the original DE then just append the $ y_p $ to $ y_g $ without c
 For subcase i, you can compute $ A $ directly as follows, \[ A=\frac{1}{a^2+pa+q} \]
 
 
-\begin{example}
-	$ y''-5y'+6y=e^{4x} $
-\end{example}
-\begin{proof}
-	We get $ a=4 $ and this is not a root to the auxiliary equation ($ m=2,3 $).\\
-	So now,
-	\begin{align*}
-		 y_p&=Ae^{4x}\\
-		 y_p'&=4Ae^{4x}\\
-		 y_p''&=16Ae^{4x}
-	\end{align*}
-Now plug this into the DE
-\begin{align*}
-	y''-5y'+6y&=e^{4x}\\
-	16Ae^{4x}-5(4Ae^{4x})+6(Ae^{4x})&=e^{4x}
-\end{align*}
-So we get $ A=1/2 $.
-\end{proof}
+%\begin{example}
+%	$ y''-5y'+6y=e^{4x} $
+%\end{example}
+%\begin{proof}
+%	We get $ a=4 $ and this is not a root to the auxiliary equation ($ m=2,3 $).\\
+%	So now,
+%	\begin{align*}
+%		 y_p&=Ae^{4x}\\
+%		 y_p'&=4Ae^{4x}\\
+%		 y_p''&=16Ae^{4x}
+%	\end{align*}
+%Now plug this into the DE
+%\begin{align*}
+%	y''-5y'+6y&=e^{4x}\\
+%	16Ae^{4x}-5(4Ae^{4x})+6(Ae^{4x})&=e^{4x}
+%\end{align*}
+%So we get $ A=1/2 $.
+%\end{proof}
 
 \subsubsection{Subcase 2: a is a simple root of AE}
 If $ a $ is a simple root of the $ AE $ then you take $ y_p=Axe^{ax} $. So you have the following,
@@ -610,23 +700,23 @@ Now just plug these values into the original differential equation. You will get
 
 For subcase ii, you can compute $ A $ directly as follows, \[ A=\frac{1}{2a+p} \]
 
-\begin{example}
-	Solve $ y''- 5y'+6y=3e^{2x}$
-\end{example}
-\begin{proof}
-	The AHE is $ y''-5y'+6y=0 $, we get the auxiliary equation as $ m^2-5m+6=0 $ we get $ m=2,3$. This is a simple root.
-	 \begin{align*}
-		y_p&=Axe^{2x}\\
-		y_p'&=Ae^{2x}+2Axe^{2x}\\
-		y_p''&=4Ae^{2x}+4Axe^{2x}
-	\end{align*}
-Now plug this into the DE,
-\begin{align*}
-	y''- 5y'+6y&=3e^{2x}\\
-	4Ae^{2x}+4Axe^{2x}-5(Ae^{2x}+2Axe^{2x})+6(Axe^{2x})&=3e^{2x}
-\end{align*}
-We get $ A=-3 $.
-\end{proof}
+%\begin{example}
+%	Solve $ y''- 5y'+6y=3e^{2x}$
+%\end{example}
+%\begin{proof}
+%	The AHE is $ y''-5y'+6y=0 $, we get the auxiliary equation as $ m^2-5m+6=0 $ we get $ m=2,3$. This is a simple root.
+%	 \begin{align*}
+%		y_p&=Axe^{2x}\\
+%		y_p'&=Ae^{2x}+2Axe^{2x}\\
+%		y_p''&=4Ae^{2x}+4Axe^{2x}
+%	\end{align*}
+%Now plug this into the DE,
+%\begin{align*}
+%	y''- 5y'+6y&=3e^{2x}\\
+%	4Ae^{2x}+4Axe^{2x}-5(Ae^{2x}+2Axe^{2x})+6(Axe^{2x})&=3e^{2x}
+%\end{align*}
+%We get $ A=-3 $.
+%\end{proof}
 \subsubsection{Subcase 3: a is a double root of AE}
 If $ a $ is a double root of the $ AE $ then you take $ y_p=Ax^2e^{ax} $. So you have the following,
 \begin{align*}
@@ -636,25 +726,25 @@ If $ a $ is a double root of the $ AE $ then you take $ y_p=Ax^2e^{ax} $. So you
 \end{align*}
 
 
-\begin{example}[Review]
-	Find the general solution of $ y''+3y'-10y=6e^{4x} $
-\end{example}
-\begin{proof}
-	Consider the auxiliary equation,
-	\begin{align*}
-		m^2+3m-10&=0
-	\end{align*}
-We have $ m=-5,2 $ real and distinct roots but $ a $ is not a root of $ AE $. The solution to the AE is $ y=c_1e^{2x}+c_2e^{-5x} $
-So assume the general solution is given as,
-\begin{align*}
-	y_p&= Ae^{4x}\\
-	y_p'&=4Ae^{4x}\\
-	y_p''&=16Ae^{4x}
-\end{align*}
-Substitute this into the original equation to get $ A=\frac{1}{3} $.
-So the general solution is given as $ y=c_1e^{2x}+c_2e^{-5x}+\frac{1}{3}e^{4x} $
-
-\end{proof}
+%\begin{example}[Review]
+%	Find the general solution of $ y''+3y'-10y=6e^{4x} $
+%\end{example}
+%\begin{proof}
+%	Consider the auxiliary equation,
+%	\begin{align*}
+%		m^2+3m-10&=0
+%	\end{align*}
+%We have $ m=-5,2 $ real and distinct roots but $ a $ is not a root of $ AE $. The solution to the AE is $ y=c_1e^{2x}+c_2e^{-5x} $
+%So assume the general solution is given as,
+%\begin{align*}
+%	y_p&= Ae^{4x}\\
+%	y_p'&=4Ae^{4x}\\
+%	y_p''&=16Ae^{4x}
+%\end{align*}
+%Substitute this into the original equation to get $ A=\frac{1}{3} $.
+%So the general solution is given as $ y=c_1e^{2x}+c_2e^{-5x}+\frac{1}{3}e^{4x} $
+%
+%\end{proof}
 
 \subsection{Case 2: Trigonometric}
 If $ y''+py'+qy=\sin kx $ or $ \cos kx $
@@ -674,108 +764,108 @@ If we have $ \sin kx  $ or $ \cos kx  $ is a solution of the AHE then we take $ 
 	y_p'&=A(\sin kx + kx \cos kx)+B(\cos kx - kx \sin kx)\\
 	y_p''&=A(2k \cos kx - k^2 x \sin kx)+B(-x k^2 \cos kx - 2k \sin kx)
 \end{align*}
-\begin{example}
-	Solve $ y''+y=\sin x $
-\end{example}
-\begin{proof}
-	AHE is given $ y''+y=0 $ and AE $ m^2+1=0 $ so $ m=\pm i $.
-	\begin{align*}
-		y_g=c_1\cos x + c_2 \sin  x
-	\end{align*}
-Since $ \sin x $ is a solution of $ y_p $ let 
-\begin{align*}
-	 y_p&=x(A \sin x + B \cos x) \\
-	 y_p'&=A \sin x + B \cos x + x (A \cos x - B \sin x)\\
-	 y_p''&= A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x)
-\end{align*}
-Plug this into the diff eq.
-\begin{align*}
-	y''+y&=\sin x
-\end{align*}
-\begin{align*}
-	A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x) + x(A \sin x + B \cos x)&= \sin x
-\end{align*}
-$ 2A=0, B=\frac{-1}{2} $ so we have $ y_p=-1/2 x \cos x $ and then $ y(x)=y_g+y_p=c_1\cos x + c_2 \sin x - 1/2 x \cos x  $
-\end{proof}
+%\begin{example}
+%	Solve $ y''+y=\sin x $
+%\end{example}
+%\begin{proof}
+%	AHE is given $ y''+y=0 $ and AE $ m^2+1=0 $ so $ m=\pm i $.
+%	\begin{align*}
+%		y_g=c_1\cos x + c_2 \sin  x
+%	\end{align*}
+%Since $ \sin x $ is a solution of $ y_p $ let 
+%\begin{align*}
+%	 y_p&=x(A \sin x + B \cos x) \\
+%	 y_p'&=A \sin x + B \cos x + x (A \cos x - B \sin x)\\
+%	 y_p''&= A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x)
+%\end{align*}
+%Plug this into the diff eq.
+%\begin{align*}
+%	y''+y&=\sin x
+%\end{align*}
+%\begin{align*}
+%	A \cos x - B \sin x + (A \cos x - B \sin x)+ x(-A \sin x - B \cos x) + x(A \sin x + B \cos x)&= \sin x
+%\end{align*}
+%$ 2A=0, B=\frac{-1}{2} $ so we have $ y_p=-1/2 x \cos x $ and then $ y(x)=y_g+y_p=c_1\cos x + c_2 \sin x - 1/2 x \cos x  $
+%\end{proof}
 
 
 
 \subsection{Case 3: Polynomial}
 For $ y''+py'+qy=a_0+a_1x+\cdots+a_nx^n $
-\subsubsection{Subcase 1: If $ \mathbf{q\neq0} $}
+\subsubsection{Subcase 1: If $ q\neq0 $}
 Take $ y_p $ as follows
 \begin{align*}
 	y_p&=A_0+A_1x+\cdots A_nx^n\\
 	y_p'&=A_1+\cdots+n A_nx^{n-1}\\
 	y_p''&=2A_2+\cdots+n(n-1)A_n^{n-2}
 \end{align*}
-\subsubsection{Subcase 2: If $ \mathbf{q=0, p \neq 0} $}
+\subsubsection{Subcase 2: If $ q=0, p \neq 0 $}
 Take $ y_p $ as follows, the derivates are obvious,
 $$y_p=x(A_0+A_1x+\cdots A_nx^n) $$
-\subsubsection{Subcase 3: If $ \mathbf{q=0,p=0} $}
+\subsubsection{Subcase 3: If $ q=0,p=0$}
 Take $ y_p $ as follows,
 $$ y_p=x^2(A_0+A_x+\cdots + A_n x^n) $$
 
 
-\begin{example}
-	Find the general solution of $ y''-y'-2y=4x^2 $
-\end{example}
-\begin{proof}
-	AHE $ y''-y'-2y=0 $ and AE $ m^2-m-2=0 $ so $ m=2,-1 $ so $ y_g=c_1e^{2x}+c_2e^{-x} $.\\
-	Let 
-	\begin{align*}
-		y_p&=A_0+A_1x+A_2x^2 \\
-		y_p'&=A_1+2A_2x\\
-		y_p''&=2A_2
-	\end{align*}
-Substitute this into the original DE
-\begin{align*}
-	2A_2-A_1-2A_2x-2(A_0+A_1x+A_2x^2)&=4x^2
-\end{align*}
-We get $ A_0=-3,A_1=2,A_2=-2 $.
-So the general solution is $ y(x)=c_1e^{2x}+c_2e^{-x}-3+2x-2x^2 $
-\end{proof}
-
-\begin{example}
-	Find general solution of $ y''-2y'+5y=25x^2+12 $
-\end{example}
-\begin{proof}
-	AHE $ y''-2y'+5y=0 $ and AE $ m^2-2m+5=0 $ we get $ m=1\pm2i $.So we have $ \alpha=1, \beta=2 $.\\
-	So we get $ y_g=e^{x}(c_1 \cos 2x + c_2 \sin 2x) $.\\
-	Let
-	\begin{align*}
-		y_p&=A_0+A_1x+A_2x^2\\
-		y_p'&=A_1+2A_2x\\
-		y_p''&=2A_2
-	\end{align*}
-Substitute this into the original DE
-\begin{align*}
-	2A_2-2(A_1+2A_2x)+5(A_0+A_1x+A_2x^2)&=25x^2+12
-\end{align*}
-Upon solving we get $ A_0=2, A_1=4, A_2=5 $. So now we have $ y(x)=y_g+y_p=e^{x}(c_1 \cos 2x + c_2 \sin 2x)+2+4x+5x^2 $
-\end{proof}
-
-\begin{example}[Review]
-	Solve $y''-2y'=12x-10$
-\end{example}
-\begin{proof}
-	Begin with AHE $ y''-2y'=0 $ then see HE $ m^2-2m=0 $ so we got $ m= 0, 2$ so me and my homies say $ y_g=1+e^{2x} $.\\
-	Now since $ q=0 $ we say that
-	\begin{align*}
-		  y_p&=A_1x^2+A_0x\\
-		  y_p'&=2A_1x+A_0\\
-		  y_p''&=2A_1
-	\end{align*}
-Now plug this back into the original differential equation.
-\begin{align*}
-	2A_1-2(2A_1x+A_0)=12x-10
-\end{align*}
-Upon solving, a smart dog or a slow student would see that $ A_0=2, A_1=-3 $. This gives us $ y_p=-3x^2+2x $. And as such our final solution is indubitably,
-\begin{align*}
-	y(x)&=y_g+y_p\\
-	&=c_1+c_2(e^{2x})+(-3x^2+2x)
-\end{align*} 
-\end{proof}
+%\begin{example}
+%	Find the general solution of $ y''-y'-2y=4x^2 $
+%\end{example}
+%\begin{proof}
+%	AHE $ y''-y'-2y=0 $ and AE $ m^2-m-2=0 $ so $ m=2,-1 $ so $ y_g=c_1e^{2x}+c_2e^{-x} $.\\
+%	Let 
+%	\begin{align*}
+%		y_p&=A_0+A_1x+A_2x^2 \\
+%		y_p'&=A_1+2A_2x\\
+%		y_p''&=2A_2
+%	\end{align*}
+%Substitute this into the original DE
+%\begin{align*}
+%	2A_2-A_1-2A_2x-2(A_0+A_1x+A_2x^2)&=4x^2
+%\end{align*}
+%We get $ A_0=-3,A_1=2,A_2=-2 $.
+%So the general solution is $ y(x)=c_1e^{2x}+c_2e^{-x}-3+2x-2x^2 $
+%\end{proof}
+%
+%\begin{example}
+%	Find general solution of $ y''-2y'+5y=25x^2+12 $
+%\end{example}
+%\begin{proof}
+%	AHE $ y''-2y'+5y=0 $ and AE $ m^2-2m+5=0 $ we get $ m=1\pm2i $.So we have $ \alpha=1, \beta=2 $.\\
+%	So we get $ y_g=e^{x}(c_1 \cos 2x + c_2 \sin 2x) $.\\
+%	Let
+%	\begin{align*}
+%		y_p&=A_0+A_1x+A_2x^2\\
+%		y_p'&=A_1+2A_2x\\
+%		y_p''&=2A_2
+%	\end{align*}
+%Substitute this into the original DE
+%\begin{align*}
+%	2A_2-2(A_1+2A_2x)+5(A_0+A_1x+A_2x^2)&=25x^2+12
+%\end{align*}
+%Upon solving we get $ A_0=2, A_1=4, A_2=5 $. So now we have $ y(x)=y_g+y_p=e^{x}(c_1 \cos 2x + c_2 \sin 2x)+2+4x+5x^2 $
+%\end{proof}
+%
+%\begin{example}[Review]
+%	Solve $y''-2y'=12x-10$
+%\end{example}
+%\begin{proof}
+%	Begin with AHE $ y''-2y'=0 $ then see HE $ m^2-2m=0 $ so we got $ m= 0, 2$ so me and my homies say $ y_g=1+e^{2x} $.\\
+%	Now since $ q=0 $ we say that
+%	\begin{align*}
+%		  y_p&=A_1x^2+A_0x\\
+%		  y_p'&=2A_1x+A_0\\
+%		  y_p''&=2A_1
+%	\end{align*}
+%Now plug this back into the original differential equation.
+%\begin{align*}
+%	2A_1-2(2A_1x+A_0)=12x-10
+%\end{align*}
+%Upon solving, a smart dog or a slow student would see that $ A_0=2, A_1=-3 $. This gives us $ y_p=-3x^2+2x $. And as such our final solution is indubitably,
+%\begin{align*}
+%	y(x)&=y_g+y_p\\
+%	&=c_1+c_2(e^{2x})+(-3x^2+2x)
+%\end{align*} 
+%\end{proof}
 
 \section{Variation of Parameters (VOP) method}
 Consider the non-homogenous equation
@@ -801,7 +891,7 @@ Since $ y_1, y_2 $ are solutions to the AHE the terms in the parentheses vanish 
 \[ v_1'y_1'+v_2'y_2'=R(x) \]
 Recall from footnote \ref{lmao} that we now have a system of equations as follows,
 \begin{align*}
-	v_1'+v_2'y_2&=0\\
+	v_1'y_1+v_2'y_2&=0\\
 	v_1'y_1'+v_2'y_2'&=R(x)
 \end{align*}
 Now upon solving we get 
@@ -812,176 +902,177 @@ Now upon solving we get
 
 
 
-\begin{example}
-	Find a particular solution of $ y''+y=\csc x $
-\end{example}
-\begin{proof}
-	Find the AHE $ y''+y=0 $ the solution for this is $$ y_p=c_1 \cos x + c_2 \sin x $$.
-	We have $ R(x)=\csc x $ and we also know that $ W(y_1,y_2)= 1$\\
-	So we got 
-	\begin{align*}
-		v_1=\int \frac{- \sin x (\csc x)}{1}\, dx = =x\\
-		v_2= \int \frac{\cos x \sec x}{1}\, dx = \log (|\sin x|)
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	Find a particular solution to $ y''-2y'+y=2x $
-\end{example}
-\begin{proof}
-	Take the AHE $ y''-2y'+y=0 $
-	and the HE $ m^2-2m+1=0 $ so we get $ y_p=c_1 e^{x}+c_2 x e^{x} $.\\
-	The Wronskian is equal to $ W(y_1,y_2)= e^{2x}$.\\
-	Now do some magic and get $$ v_2= \int \frac{2x e^{x}}{e^{2x}}\, dx = -2e^{-x}(x+1) $$
-	and \[ v_1= \int \frac{-2x^2e^{x} }{e^{2x}}\, dx = 2e^{-x}(x^2+2x+2)\]
-	So the final solution is given as follows
-	\begin{align*}
-		y&=v_1y_1+v_2y_2\\
-		&=2e^{-x}(x^2+2x+2)(e^{x})+(-2e^{-x}(x+1))(xe^{x})\\
-		&=2x+4
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	Find a particular solution of $ y''-y'-6y=e^{x} $ with UDC then with VOP
-\end{example}
-\begin{proof}
-	First do with UDC find the AHE and HE $ m^2-m-6=0 $ so we get $ m=-2, m=3 $ and the $ y_g = c_1e^{-2x}+c_2e^{3x}$. A is not a root so we go
-	\begin{align*}
-		y_p&=Ae^{x}\\
-		y_p'&=Ae^{x}\\
-		y_p''&=Ae^{x}
-	\end{align*}
-Plug thing into the original differential equation
-\begin{align*}
-	Ae^x-Ae^{x}-6Ae^x=e^x
-\end{align*}
-we got $ A=-1/6 $. So the general solution is $ y=e^{-2x}+e^{3x}-1/6e^{x} $.
-\\
-Now do VOP, from AHE and HE we get $ y_g=c_1e^{-2x}+c_2e^{3x} $.
-We also now got the Wronskian as $ 5e^x $.
-\textbf{Complete this later...}
-\begin{align*}
-	content...
-\end{align*}
-\end{proof}
-
-\begin{example}
-	Find a particular solution for each of the following equations
-	\begin{enumerate}
-		\item $ y''+4y=\tan 2x $
-		\item $y''+2y'+y=e^{-x}\log x$
-	\end{enumerate}
-\end{example}
-
-
-\begin{example}[Review]
-	Solve $ y''-2y'-3y=64xe^{-x} $ using
-	VOP and UDC.
-\end{example}
-\begin{proof}
-	Solving with VOP first. Consider its AHE and its HE $ m^2-2m-3=0 $ we get $ m=-1, 3$ so $ y_g=c_1e^{-1}+c_2e^{3}$.\\
-	The Wronskian is $ -4e^{2x} $.
-	We now find $ v_1, v_2 $ as follows,
-	\begin{align*}
-		v_1 &= -\int \frac{y_2R(x)}{W(y_1,y_2)}\, dx\\
-		&=-\int \frac{-e^{-x} 64 xe^{-x}}{-4e^{2x}}\, dx\\
-		&=e^{-4x}(4x+1)
-	\end{align*}
-\begin{align*}
-	 v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx\\
-	 &= \int \frac{e^{3x} 64xe^{-x}}{-4e^{2x}}\, dx\\
-	 &=-8x^2 
-\end{align*}
-So the particular solution is given by,
-\begin{align*}
-	y_p=v_1y_1+v_2y_2=-e^{-4x}(4x+1)e^{3x}-8x^2(e^{-x})
-\end{align*}
-Then use this for the general solution.
-\\
-Now do it with UDC.\\
-If we just had $ x $ we would use $ y_{p_1}=\alpha_0+\alpha_1x $. If we just had $ e^{-x} $ we would use $ y_{p_2}=\beta xe^{-x} $.
-\\
-We will use $ y_{p_1}y_{p_2}=(\alpha_0+\alpha_1x)(\beta x e^{-x})=\alpha_0 \beta x e^{-x}+ \alpha_1 \beta x^2 e^{-x}$ this simplifies to the following trial solution,
-\[ y_p=A_0xe^{-x}+A_1x^2e^{-x} \]
-Differentiate it and get the following,
-\begin{align*}
-	y_p&=A_0xe^{-x}+A_1x^2e^{-x}\\
-	y_p'&=e^{-x}[A_0(1-x)-A_1(x-2)x]\\
-	y_p''&=e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]
-\end{align*}
-Plug this behemoth into the original differential equation,
-\begin{align*}
-	e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]-2(e^{-x}[A_0(1-x)-A_1(x-2)x])-3(A_0xe^{-x}+A_1x^2e^{-x})=64xe^{-x}
-\end{align*}
-Simplify this 
-$ A_0=-4,A_1=-8 $
-
-so $ y_p=-4xe^{-x}-8x^2e^{-x} $
-\end{proof}
+%\begin{example}
+%	Find a particular solution of $ y''+y=\csc x $
+%\end{example}
+%\begin{proof}
+%	Find the AHE $ y''+y=0 $ the solution for this is $$ y_p=c_1 \cos x + c_2 \sin x $$.
+%	We have $ R(x)=\csc x $ and we also know that $ W(y_1,y_2)= 1$\\
+%	So we got 
+%	\begin{align*}
+%		v_1=\int \frac{- \sin x (\csc x)}{1}\, dx = =x\\
+%		v_2= \int \frac{\cos x \sec x}{1}\, dx = \log (|\sin x|)
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Find a particular solution to $ y''-2y'+y=2x $
+%\end{example}
+%\begin{proof}
+%	Take the AHE $ y''-2y'+y=0 $
+%	and the HE $ m^2-2m+1=0 $ so we get $ y_p=c_1 e^{x}+c_2 x e^{x} $.\\
+%	The Wronskian is equal to $ W(y_1,y_2)= e^{2x}$.\\
+%	Now do some magic and get $$ v_2= \int \frac{2x e^{x}}{e^{2x}}\, dx = -2e^{-x}(x+1) $$
+%	and \[ v_1= \int \frac{-2x^2e^{x} }{e^{2x}}\, dx = 2e^{-x}(x^2+2x+2)\]
+%	So the final solution is given as follows
+%	\begin{align*}
+%		y&=v_1y_1+v_2y_2\\
+%		&=2e^{-x}(x^2+2x+2)(e^{x})+(-2e^{-x}(x+1))(xe^{x})\\
+%		&=2x+4
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Find a particular solution of $ y''-y'-6y=e^{x} $ with UDC then with VOP
+%\end{example}
+%\begin{proof}
+%	First do with UDC find the AHE and HE $ m^2-m-6=0 $ so we get $ m=-2, m=3 $ and the $ y_g = c_1e^{-2x}+c_2e^{3x}$. A is not a root so we go
+%	\begin{align*}
+%		y_p&=Ae^{x}\\
+%		y_p'&=Ae^{x}\\
+%		y_p''&=Ae^{x}
+%	\end{align*}
+%Plug thing into the original differential equation
+%\begin{align*}
+%	Ae^x-Ae^{x}-6Ae^x=e^x
+%\end{align*}
+%we got $ A=-1/6 $. So the general solution is $ y=e^{-2x}+e^{3x}-1/6e^{x} $.
+%\\
+%Now do VOP, from AHE and HE we get $ y_g=c_1e^{-2x}+c_2e^{3x} $.
+%We also now got the Wronskian as $ 5e^x $.
+%\textbf{Complete this later...}
+%\begin{align*}
+%	content...
+%\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Find a particular solution for each of the following equations
+%	\begin{enumerate}
+%		\item $ y''+4y=\tan 2x $
+%		\item $y''+2y'+y=e^{-x}\log x$
+%	\end{enumerate}
+%\end{example}
+%
+%
+%\begin{example}[Review]
+%	Solve $ y''-2y'-3y=64xe^{-x} $ using
+%	VOP and UDC.
+%\end{example}
+%\begin{proof}
+%	Solving with VOP first. Consider its AHE and its HE $ m^2-2m-3=0 $ we get $ m=-1, 3$ so $ y_g=c_1e^{-1}+c_2e^{3}$.\\
+%	The Wronskian is $ -4e^{2x} $.
+%	We now find $ v_1, v_2 $ as follows,
+%	\begin{align*}
+%		v_1 &= -\int \frac{y_2R(x)}{W(y_1,y_2)}\, dx\\
+%		&=-\int \frac{-e^{-x} 64 xe^{-x}}{-4e^{2x}}\, dx\\
+%		&=e^{-4x}(4x+1)
+%	\end{align*}
+%\begin{align*}
+%	 v_2 &= \int \frac{R(x)y_1}{W(y_1,y_2)}\, dx\\
+%	 &= \int \frac{e^{3x} 64xe^{-x}}{-4e^{2x}}\, dx\\
+%	 &=-8x^2 
+%\end{align*}
+%So the particular solution is given by,
+%\begin{align*}
+%	y_p=v_1y_1+v_2y_2=-e^{-4x}(4x+1)e^{3x}-8x^2(e^{-x})
+%\end{align*}
+%Then use this for the general solution.
+%\\
+%Now do it with UDC.\\
+%If we just had $ x $ we would use $ y_{p_1}=\alpha_0+\alpha_1x $. If we just had $ e^{-x} $ we would use $ y_{p_2}=\beta xe^{-x} $.
+%\\
+%We will use $ y_{p_1}y_{p_2}=(\alpha_0+\alpha_1x)(\beta x e^{-x})=\alpha_0 \beta x e^{-x}+ \alpha_1 \beta x^2 e^{-x}$ this simplifies to the following trial solution,
+%\[ y_p=A_0xe^{-x}+A_1x^2e^{-x} \]
+%Differentiate it and get the following,
+%\begin{align*}
+%	y_p&=A_0xe^{-x}+A_1x^2e^{-x}\\
+%	y_p'&=e^{-x}[A_0(1-x)-A_1(x-2)x]\\
+%	y_p''&=e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]
+%\end{align*}
+%Plug this behemoth into the original differential equation,
+%\begin{align*}
+%	e^{-x}[A_0(x-2)+A_1(x^2-4x+2)]-2(e^{-x}[A_0(1-x)-A_1(x-2)x])-3(A_0xe^{-x}+A_1x^2e^{-x})=64xe^{-x}
+%\end{align*}
+%Simplify this 
+%$ A_0=-4,A_1=-8 $
+%
+%so $ y_p=-4xe^{-x}-8x^2e^{-x} $
+%\end{proof}
 
 \section{Higher order linear equations}
 \begin{definition}
-	content...
+	$ n^{th} $ order non-homogenous differential equations with constant coefficients is of the form \[ y^{(n)} +a_1y^{(n-1)}+a_2y^{(n-2)}+\cdots+a_{n-1}y'+a_ny=R(x)\]
 \end{definition}
+$ y(x) =y(g)+y(p)$ where $ y(g) $ is the general solution to the associated homogenous equation and $ y(p) $ is the particular solution. There's no general way to solve this. If the order is $ <5 $ then use the auxiliary equation and find the roots and solve as before. Equations with $ n\geq5 $ in general won't be solvable by radicals due to Abel-Ruffini, just pray it factors out.
 
-\begin{example}
-	Solve $ y^{(4)}-5y''+4y=0 $.
-\end{example}
-\begin{proof}
-	The auxiliary equation is $ m^4-5m^2+4=0 $. Substitute $ m^2=p $ so we got $ p^2-5p+4=0 $ so $ p=4,1 $ and then $ m=\pm2,\pm1 $
-	General solution is then $ y=c_1e^{2x}+c_2e^{-2x}+c_3 e^{x}+c_4e^{-x} $
-\end{proof}
-
-\begin{example}
-	Solve $ y^{(4)}-8y''+16y=0 $
-\end{example}
-\begin{proof}
-	Auxiliary equation is $ m^2-8m+16=0 $ substitute $ p^2=m $  and solve we get $ m=\pm2, \pm 2 $  so general solution is $ y=(c_1e^{2x}+c_2xe^{2x})+(c_2e^{-2x}+c_4xe^{-2x}) $
-\end{proof}
-
-\begin{proof}
-	Solving $ y^{(4)}+2y'''+2y''-2y'+y=0 $
-\end{proof}
-\begin{proof}
-	Take the auxiliary equation $ m^4-2m^3+2m^2-2m+1=0 $. We got the thing as $ m=1,1,\pm i $. So the general solution is given by 
-	\[ y=(c_1e^{x}+c_2xe^{x})+(c_3 \cos x + c_4 \sin x)  \]
-\end{proof}
-
-\begin{example}
-	Solve $ y'''+2y''-y'=3x^2-2x+1 $
-\end{example}
-\begin{proof}
-	AHE and HE so auxiliary equation is $ m^3+2m^2-m=0 $ we get $ m=0,-1\pm \sqrt{2} $
-\end{proof}
-
-\begin{example}[Review-9]
-	Find the general solution of $ y''-3y''+2y'=0 $.
-\end{example}
-\begin{proof}
-	Consider the AHE and HE, $ m^3-3m^2+2m=0 $ we get the solutions as $ m=0,1,2 $. So the general solution is just given by
-	\[ y=c_1+c_2e^{x}+c_3e^{2x} \]
-\end{proof}
+%\begin{example}
+%	Solve $ y^{(4)}-5y''+4y=0 $.
+%\end{example}
+%\begin{proof}
+%	The auxiliary equation is $ m^4-5m^2+4=0 $. Substitute $ m^2=p $ so we got $ p^2-5p+4=0 $ so $ p=4,1 $ and then $ m=\pm2,\pm1 $
+%	General solution is then $ y=c_1e^{2x}+c_2e^{-2x}+c_3 e^{x}+c_4e^{-x} $
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ y^{(4)}-8y''+16y=0 $
+%\end{example}
+%\begin{proof}
+%	Auxiliary equation is $ m^2-8m+16=0 $ substitute $ p^2=m $  and solve we get $ m=\pm2, \pm 2 $  so general solution is $ y=(c_1e^{2x}+c_2xe^{2x})+(c_2e^{-2x}+c_4xe^{-2x}) $
+%\end{proof}
+%
+%\begin{proof}
+%	Solving $ y^{(4)}+2y'''+2y''-2y'+y=0 $
+%\end{proof}
+%\begin{proof}
+%	Take the auxiliary equation $ m^4-2m^3+2m^2-2m+1=0 $. We got the thing as $ m=1,1,\pm i $. So the general solution is given by 
+%	\[ y=(c_1e^{x}+c_2xe^{x})+(c_3 \cos x + c_4 \sin x)  \]
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ y'''+2y''-y'=3x^2-2x+1 $
+%\end{example}
+%\begin{proof}
+%	AHE and HE so auxiliary equation is $ m^3+2m^2-m=0 $ we get $ m=0,-1\pm \sqrt{2} $
+%\end{proof}
+%
+%\begin{example}[Review-9]
+%	Find the general solution of $ y''-3y''+2y'=0 $.
+%\end{example}
+%\begin{proof}
+%	Consider the AHE and HE, $ m^3-3m^2+2m=0 $ we get the solutions as $ m=0,1,2 $. So the general solution is just given by
+%	\[ y=c_1+c_2e^{x}+c_3e^{2x} \]
+%\end{proof}
 
 \section{Operator method}
 \begin{itemize}
 	\item Consider the differential equation $ y^{(n)}+a_1y^{(n-1)}+\cdots+a_{n-1}y'+a_ny=R(x) $
-	\item Using the differential operator D, we can re write it as $ D^ny+a_1 D^{n-1}y+\cdots+a_{n-1}Dy+a_ny=R(x) $\\
+	\item Using the differential operator D, we can re write it as $ D^ny+a_1 D^{n-1}y+\cdots+a_{n-1}Dy+a_ny=R(x) $
 	\item $ \implies p(D)y=R(x)$ where $ p(m) $ is called the axuliary polynomial and $ p(m)=(m-m_1)(m-m_2)\cdot(m-m_n) $ where $ m_i $ are roots of the auxiliary equation.
 \end{itemize}
 
-\begin{example}
+\begin{lemma}
 	$ p(D)y=R(x) \implies y= \frac{1}{p(D)}R(x) $
-\end{example}
+\end{lemma}
 \begin{proof}
 	\begin{align*}
 		y&=\frac{1}{D}R(x)\\
 		&=\int R(x)\, dx
 	\end{align*}
 \end{proof}
-\begin{example}
+\begin{lemma}
 	$ (D-m)y=R(x) \implies y = \frac{1}{(D-m)}R(x)$
-\end{example}
+\end{lemma}
 \begin{proof}
 	\begin{align}
 		y&=e^{mx} \int e^{-mx} R(x)\, dx\\
@@ -993,81 +1084,85 @@ so $ y_p=-4xe^{-x}-8x^2e^{-x} $
 \begin{align*}
 	y&=\frac{1}{p(D)} R(x)=\frac{1}{[(D-m_1)(D-m_2)\cdots (D-m_n)]} R(x)\\
 \end{align*}
-Using \ref{eq:operator} successively we get the particular solution.
+Using \ref{eq:operator} successively, i.e. iteratively integrating multiple times till we get the particular solution.
 
-\begin{example}
-	Find a particular solution of $ y''-3y'+2y=x e^{x} $
-\end{example}
-\begin{proof}
-	\begin{align*}
-		(D^2-3D+2) y&=xe^{x}\\
-		(D-1)(D-2)y&=xe^{x}\\
-		y&=\frac{1}{D-1}\left[\frac{1}{D-2} xe^{x}\right]
-	\end{align*}
-Here $ R(x) = xe^{x},  m_1=2 $. So we do
-\begin{align*}
-	\frac{1}{D-2}x e^{x}=e^{2x}\int e^{-2x} x e^{x}\, dx= -(1+x)e^{x}
-\end{align*}
-Step 2,
-\begin{align*}
-	y&= \frac{1}{D-1}[-(1+x)e^x]\\
-	\frac{1}{D-1}[(1+x)e^x]&= e^x \int e^{-x} (1+x) e^x\, dx\\
-	&=e^x\left( .... \right)
-\end{align*}
-\end{proof}
+%\begin{example}
+%	Find a particular solution of $ y''-3y'+2y=x e^{x} $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		(D^2-3D+2) y&=xe^{x}\\
+%		(D-1)(D-2)y&=xe^{x}\\
+%		y&=\frac{1}{D-1}\left[\frac{1}{D-2} xe^{x}\right]
+%	\end{align*}
+%Here $ R(x) = xe^{x},  m_1=2 $. So we do
+%\begin{align*}
+%	\frac{1}{D-2}x e^{x}=e^{2x}\int e^{-2x} x e^{x}\, dx= -(1+x)e^{x}
+%\end{align*}
+%Step 2,
+%\begin{align*}
+%	y&= \frac{1}{D-1}[-(1+x)e^x]\\
+%	\frac{1}{D-1}[(1+x)e^x]&= e^x \int e^{-x} (1+x) e^x\, dx\\
+%	&=e^x\left( .... \right)
+%\end{align*}
+%\end{proof}
 
 \subsection{Partial fraction decomposition}
 \begin{align*}
-	p(D)y=R(x)\implies y=\frac{1}{(D-m_1)(D-m_2)\cdots (D-m_n)}
+	p(D)y=R(x)\implies y=\frac{1}{(D-m_1)(D-m_2)\cdots (D-m_n)}R(x)
 \end{align*}
-Use partial fractions... \textbf{complete this...}
+Use partial fractions, to split it as such
+\begin{align*} 
+	y&=\left(\frac{A}{D-m_1}+\frac{B}{D-m_2}+\cdots+\frac{N}{D-m_n}\right)R(x)\\
+	y&=Ae^{m_1 x}\int e^{-m_1x}R(x)\, dx +\cdots +Ne^{m_nx} \int e^{-m_nx}R(x)\, dx
+\end{align*}
 
-\begin{example}
-	Find a particular solution of $ y''-3y'+2y=xe^x $ using partial fraction decomposition.
-\end{example}
-\begin{proof}
-	\begin{align*}
-		(D^2-3D+2)y&=xe^x\\
-		\implies y &= \frac{1}{(D-1)(D-2)}xe^x\\
-		y&=\left(\frac{-1}{D-1}+\frac{1}{D-2}\right) xe^{x}
-	\end{align*}
-\textbf{i am not typing this out lmao}
-\end{proof}
-
-\begin{example}
-	\begin{align*}
-		\frac{1}{1-r}=1+r+r^2+r^3+\cdots, \text{ if} |r|<1\\
-		\frac{1}{1+r}=1-r+r^2-r^3+\cdots, \text{ if} |r|<1
-	\end{align*}
-\end{example}
-
-\begin{example}[Review-10]
-	Find a particular solution of $ y''-4y=e^{2x} $ by using methods 1 and 2.
-\end{example}
-\begin{proof}
-	Consider the eq as follows,
-	\begin{align*}
-		D^2y-4Dy=e^{2x}
-	\end{align*}
-\end{proof}
+%\begin{example}
+%	Find a particular solution of $ y''-3y'+2y=xe^x $ using partial fraction decomposition.
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		(D^2-3D+2)y&=xe^x\\
+%		\implies y &= \frac{1}{(D-1)(D-2)}xe^x\\
+%		y&=\left(\frac{-1}{D-1}+\frac{1}{D-2}\right) xe^{x}
+%	\end{align*}
+%\textbf{i am not typing this out lmao}
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align*}
+%		\frac{1}{1-r}=1+r+r^2+r^3+\cdots, \text{ if} |r|<1\\
+%		\frac{1}{1+r}=1-r+r^2-r^3+\cdots, \text{ if} |r|<1
+%	\end{align*}
+%\end{example}
+%
+%\begin{example}[Review-10]
+%	Find a particular solution of $ y''-4y=e^{2x} $ by using methods 1 and 2.
+%\end{example}
+%\begin{proof}
+%	Consider the eq as follows,
+%	\begin{align*}
+%		D^2y-4Dy=e^{2x}
+%	\end{align*}
+%\end{proof}
 
 
 \subsection{Series expansion}
 Used when $ R(x) $ is a polynomial.
-\[ y=\frac{1}{p(D)} R(x) = [1+b_1D+b_2D^2+\cdots]R(x)\] higher order derivates vanish
+\[ y=\frac{1}{p(D)} R(x) = [1+b_1D+b_2D^2+\cdots]R(x)\] higher order derivates vanish.
 
-\begin{example}
-	Find particular solution of $ y'''-2y''+y'=x^4+2x+5 $
-\end{example}
-\begin{proof}
-	\begin{align*}
-		D^3-2D^2+Dy&=x^4+2x+5\\
-		\implies y&= \frac{1}{1-(2D^2-D^3)} R(x)
-		&=\left[1+(2D^2-D^3)+(2D^2-D^3)^2+(2D^2-D^3)^3+\cdots \right] R(x)\\
-		&=\left[1+2D^2-D^+4D^4\right]
-	\end{align*}
-	\textbf{complete later...}
-\end{proof}
+%\begin{example}
+%	Find particular solution of $ y'''-2y''+y'=x^4+2x+5 $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		D^3-2D^2+Dy&=x^4+2x+5\\
+%		\implies y&= \frac{1}{1-(2D^2-D^3)} R(x)
+%		&=\left[1+(2D^2-D^3)+(2D^2-D^3)^2+(2D^2-D^3)^3+\cdots \right] R(x)\\
+%		&=\left[1+2D^2-D^+4D^4\right]
+%	\end{align*}
+%	\textbf{complete later...}
+%\end{proof}
 
 \subsection{Exponential shift rule}
 If $ R(x)=e^{kx}g(x) $
@@ -1076,45 +1171,45 @@ If $ R(x)=e^{kx}g(x) $
 	y&=e^{kx}\left[\frac{1}{p(D+k)}g(x)\right]
 \end{align*}
 
-\begin{example}
-	Find a particular solution of $ y''-3y'+2y=xe^x $
-\end{example}
-\begin{proof}
-	\begin{align*}
-		(D^2-3D+2)y&=e^{x}x\\
-		y&=\frac{1}{p(D)} e^x x\\
-		&= e^x \frac{1}{p(D)} x\\
-		&=e^x \frac{1}{p(D+1)}x
-		\intertext{magick}
-		&=-e^{x}\frac{1}{1-D}\frac{x^2}{2}\\
-		&=\frac{-e^x}{2}[1+D+D^2+\cdots]
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	Find a particular solution of $ y''-y=x^2e^{2x} $ using methods 1,2,4 then find general solution.
-\end{example}
-\begin{proof}
-	\begin{align*}
-		(D^2-1)y&=x^2e^{2x}\\
-		y&=\frac{1}{D^2-1}x^{2}e^{2x}\\
-		&= \frac{1}{2}\left(\frac{1}{(D-1)}-\frac{1}{(D+1)}\right) x^2e^{2x}\\
-		&=\frac{1}{2}(-2-2D^2-2D^4+\cdots)x^2e^{2x}
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	Find a particular solution of $ y''-y'+y=x^3-3x^2+1 $
-\end{example}
-\begin{proof}
-	\begin{align*}
-		(D^2-D+1)y&=x^3-3x^2+1\\
-		y&=\frac{1}{D^2-D+1}x^3-3x^2+1\\
-		&=(1+D-D^3-D^4+\cdots)x^3-3x^2+1\\
-		&=(x^3-3x^2+1)+(3x^2-6x)-6\\
-		&=x^3-6x-5
-	\end{align*}
-\end{proof}
+%\begin{example}
+%	Find a particular solution of $ y''-3y'+2y=xe^x $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		(D^2-3D+2)y&=e^{x}x\\
+%		y&=\frac{1}{p(D)} e^x x\\
+%		&= e^x \frac{1}{p(D)} x\\
+%		&=e^x \frac{1}{p(D+1)}x
+%		\intertext{magick}
+%		&=-e^{x}\frac{1}{1-D}\frac{x^2}{2}\\
+%		&=\frac{-e^x}{2}[1+D+D^2+\cdots]
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Find a particular solution of $ y''-y=x^2e^{2x} $ using methods 1,2,4 then find general solution.
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		(D^2-1)y&=x^2e^{2x}\\
+%		y&=\frac{1}{D^2-1}x^{2}e^{2x}\\
+%		&= \frac{1}{2}\left(\frac{1}{(D-1)}-\frac{1}{(D+1)}\right) x^2e^{2x}\\
+%		&=\frac{1}{2}(-2-2D^2-2D^4+\cdots)x^2e^{2x}
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Find a particular solution of $ y''-y'+y=x^3-3x^2+1 $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		(D^2-D+1)y&=x^3-3x^2+1\\
+%		y&=\frac{1}{D^2-D+1}x^3-3x^2+1\\
+%		&=(1+D-D^3-D^4+\cdots)x^3-3x^2+1\\
+%		&=(x^3-3x^2+1)+(3x^2-6x)-6\\
+%		&=x^3-6x-5
+%	\end{align*}
+%\end{proof}
 
 
 
@@ -1130,12 +1225,12 @@ If $ R(x)=e^{kx}g(x) $
 \end{chapquote}
 
 \section{Linear system of DE}
-We are mainly concerned with first order linear system of ODEs.\\
-
-The general system of linear differential equations is given by the following,
-\begin{align*}
-	content...
-\end{align*}
+%We are mainly concerned with first order linear system of ODEs.\\
+%
+%The general system of linear differential equations is given by the following,
+%\begin{align*}
+%	content...
+%\end{align*}
 
 Observe that the single $ n^{th} $ order equation \begin{equation}\label{def:largeeq}
 	y^{(n)}=f(x,y,y',\dots,y^{(n-1)}) 
@@ -1147,65 +1242,88 @@ Is in fact equivalent to the system
 	\vdots &\\
 	y_n'&=f(x,y_1,y_2,\dots,y_n)
 \end{align*}
-\begin{example}
-	$ y''=x^2y'+xy $ make system.
-\end{example}
-\begin{proof}
-	$ n=2 $ so take $ f=x^2y'+xy $. So the system is given as,
-	\begin{align*}
-		y_1'&=y_2\\
-		y_2'&=x^2y_2+xy_1
-	\end{align*}
-\end{proof}
+%\begin{example}
+%	$ y''=x^2y'+xy $ make system.
+%\end{example}
+%\begin{proof}
+%	$ n=2 $ so take $ f=x^2y'+xy $. So the system is given as,
+%	\begin{align*}
+%		y_1'&=y_2\\
+%		y_2'&=x^2y_2+xy_1
+%	\end{align*}
+%\end{proof}
 
 \begin{theorem}[Existence and uniqueness theorem for general system of linear differential equations]
 	Let the functions $ f_1, f_2, \dots, f_n $ and the partial derivatives $ \partial f_1/\partial y_1, \dots, \partial f_1/\partial y_n, \dots \partial f_n/ \partial y_1, \dots, \partial f_n/\partial y_n $ be continuous in a region $ R $ of $ (x,y_1,y_2,\dots,y_n) $ space. If $ (x_0,a_1,a_2,\dots,a_n) $ is an internet point of $ R $, then the system has an unique solution $ y_1(x), y_2(x), \dots, y_n(x)$ that satisfies the initial conditions (5).
 \end{theorem}
-
+\begin{proof}
+	Not covered in class.
+\end{proof}
 \begin{theorem}[Existence and uniqueness theorem for \ref{def:largeeq}]
 	Let the function $ f $ and the partial derivatives $ \partial f/\partial y, \partial f/ \partial y',$ $\dots, \partial f/\partial y^{(n-1)} $ be continuous in a region $ R $ of $ (x,y,y',\dots, y^{(n-1)}) $ space. If $ (x_0, a_1, a_2, \dots, a_n) $ is an interior point of $ R $, then equation \ref{def:largeeq} has a unique solution $ y(x) $ that satisfies the initial conditions $ y(x_0) =a, y'(x_0)=a_2,\dots, y^{(n-1)}(x_0)=a_n.$
 \end{theorem}
-
-\begin{example}
-	Replace each of the following differential equations by an equivalent system of first order equations,
-	\begin{itemize}
-		\item $ 2y^{(4)} +xy''+e^x y'-y \sin(x)=0$
-		\item bleh
-	\end{itemize}
-\end{example}
 \begin{proof}
-	Consider the first one,\\
-	The equation is as follows,
-	\[ y^{(4)}=\frac{1}{2} \left( y \sin x - y'(e^x)-xy'' \right)\]
-	System is then,
-	\begin{align*}
-		y_1'&=y_2\\
-		y_2'&=y_3\\
-		y_3'&=y_4\\
-		y_4'&=\frac{1}{2}\left(y_1 \sin x - y_2 e^x - xy_3\right)
-	\end{align*}
+	Not covered in class.
 \end{proof}
+%\begin{example}
+%	Replace each of the following differential equations by an equivalent system of first order equations,
+%	\begin{itemize}
+%		\item $ 2y^{(4)} +xy''+e^x y'-y \sin(x)=0$
+%		\item bleh
+%	\end{itemize}
+%\end{example}
+%\begin{proof}
+%	Consider the first one,\\
+%	The equation is as follows,
+%	\[ y^{(4)}=\frac{1}{2} \left( y \sin x - y'(e^x)-xy'' \right)\]
+%	System is then,
+%	\begin{align*}
+%		y_1'&=y_2\\
+%		y_2'&=y_3\\
+%		y_3'&=y_4\\
+%		y_4'&=\frac{1}{2}\left(y_1 \sin x - y_2 e^x - xy_3\right)
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}[Review-1]
+%	Replace the following differential equation by an equivalent system of first order equations \[ 2y^{(4)}-xy'''+x^2(y'')^3-yy' =7\]
+%\end{example}
+%\begin{proof}
+%	Consider that $ n=4 $ and $ f=\frac{1}{2} \left( 7+xy'''-x^2(y'')^3+yy' \right)$
+%	\begin{align*}
+%		y_1'&=y_2\\
+%		y_2'&=y_3\\
+%		y_3'&=y_4\\
+%		y_4'&=\frac{1}{2}\left( 7+ xy_4-x^2y_3^2-y_1y_2 \right)
+%	\end{align*}
+%\end{proof}
 
-\begin{example}[Review-1]
-	Replace the following differential equation by an equivalent system of first order equations \[ 2y^{(4)}-xy'''+x^2(y'')^3-yy' =7\]
-\end{example}
-\begin{proof}
-	Consider that $ n=4 $ and $ f=\frac{1}{2} \left( 7+xy'''-x^2(y'')^3+yy' \right)$
-	\begin{align*}
-		y_1'&=y_2\\
-		y_2'&=y_3\\
-		y_3'&=y_4\\
-		y_4'&=\frac{1}{2}\left( 7+ xy_4-x^2y_3^2-y_1y_2 \right)
-	\end{align*}
-\end{proof}
 
+
+%\begin{example}[Review-2]
+%	Solution for the system
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=4x-t^2y\\
+%		\frac{dy}{dt}=2x+y
+%	\end{cases} \]
+%\begin{enumerate}
+%	\item $ x=e^{3t},y=-e^{-3t} $
+%	\item 
+%\end{enumerate}
+%\end{example}
+
+
+
+
+
+
+\section{Homogenous linear system of ODE in two variables}
+Now consider the system of linear homogenous equations (def \ref{def:homosyslinear}).
 We will only see systems of two first order equations in two unknown functions of the following form,
-
 \begin{align*}
 	\dfrac{dx}{dt}&=F(t,x,y)\\
 	\dfrac{dy}{dt}&=G(t,x,y)
 \end{align*}
-
 
 More specifically we have \textbf{linear} systems of the form,
 
@@ -1216,7 +1334,8 @@ More specifically we have \textbf{linear} systems of the form,
 	\end{align*}
 \end{definition}
 
-
+We assume that $ a_i(t),b_i(t),f_i(t) $ for $ i=1,2 $ are continuous on some closed interval $ [a,b] $ on the $ t$-axis.\\
+If $ f_i(t) $ are both identically zero, then the system is called homogenous.
 \begin{definition}[Homogenous linear system of two ODE]\label{def:homosyslinear}
 	\begin{align*}
 		\dfrac{dx}{dt}&=a_1(t)+b_1(t)\\
@@ -1225,66 +1344,58 @@ More specifically we have \textbf{linear} systems of the form,
 \end{definition}
 
 
-We assume that $ a_i(t),b_i(t),f_i(t) $ for $ i=1,2 $ are continuous on some closed interval $ [a,b] $ on the $ t$-axis.\\
-If $ f_i(t) $ are both identically zero, then the system is called homogenous else.
-\\
-A solution of \ref{def:syslinear} is of the following form,
-\begin{align*}
-	x&=x(t)\\
-	y&=y(t)
-\end{align*}
-
-\begin{example}[Review-2]
-	Solution for the system
-	\[ \begin{cases}
-		\frac{dx}{dt}=4x-t^2y\\
-		\frac{dy}{dt}=2x+y
-	\end{cases} \]
-\begin{enumerate}
-	\item $ x=e^{3t},y=-e^{-3t} $
-	\item 
-\end{enumerate}
-\end{example}
 
 
-\section{Existence and uniqueness theorems}
+
 \begin{theorem}
 	If $ t_0 $ is any point of the interval $ [a,b] $ and if $ x_0 $ and $ y_0 $ are any numbers then def. \ref{def:syslinear} has one and only one solution 
 	\begin{align*}
 		x&=x(t)\\
 		y&=y(t)
 	\end{align*}
-valid throughout $ [a,b] $, such that $ x(t_0)=x_0, y(t_0)=y_0 $.
+	valid throughout $ [a,b] $, such that $ x(t_0)=x_0, y(t_0)=y_0 $.
 \end{theorem}
-
-
-\section{Homogenous linear system of ODE in two variables}
-Now consider the system of linear homogenous equations (def \ref{def:homosyslinear}).
-
+\begin{proof}
+	Not covered in class.
+\end{proof}
 \begin{theorem}\label{th:linearsolution}
 	If the homogenous system (def. \ref{def:homosyslinear}) has two solutions on the interval $ [a,b] $
-	\[ \begin{cases}
+	\begin{align}\label{def:homosyslinear2soln}
+		 \begin{cases}
 		x=x_1(t)\\
 		y=y_1(t)
 	\end{cases} \text{and } \begin{cases}
 		x=x_2(t)\\
 		y=y_2(t)
-	\end{cases}\]
+	\end{cases}
+\end{align}
 	then we also have another solution of the form 
-	\[ \begin{cases}
+	\begin{align} \label{def:homosyslinearlinearcomb}
+		\begin{cases}
 		x=c_1x_1(t)+c_2x_2(t)\\
 		y=c_1y_1(t)+c_2y_2(t)
-	\end{cases} \]
+	\end{cases} 
+\end{align}
 	for any constants $ c_1, c_2 $.
 \end{theorem}
+\begin{proof}
+	The proof is obvious and is left as an exercise to the next person to read this.
+\end{proof}
 
 
 \section{Wronskian of homogenous linear system of ODE}
-\begin{definition}[Wronskian]
-	\[ W(t)=\begin{bmatrix}
+\begin{definition}[Wronskian] If \ref{def:homosyslinear} has two solutions \[ \begin{cases}
+		x=x_1(t)\\
+		y=y_1(t)
+	\end{cases} \begin{cases}
+	x=x_2(t)\\
+	y=y_2(t)
+\end{cases}\]
+Then the Wronskian of the two solutions is given as,
+	\[ W(t)=\begin{vmatrix}
 		x_1(t) & x_2(t)\\
 		y_1(t) & y_2(t)
-	\end{bmatrix} \]
+	\end{vmatrix} \]
 \end{definition}
 
 
@@ -1293,40 +1404,84 @@ Now consider the system of linear homogenous equations (def \ref{def:homosysline
 
 
 \begin{theorem}
-	If the two solutions for the homogenous system \ref{def:homosyslinear} have a Wronskian that does not vanish on $ [a,b] $ then its linear combination of the solutions as described in theorem \ref{th:linearsolution} is the general solution of the homogenous system \ref{def:homosyslinear} on that interval.
+	If the two solutions (eq. \ref{def:homosyslinear2soln}) for the homogenous system \ref{def:homosyslinear} have a Wronskian that does not vanish on $ [a,b] $ then its linear combination of the solutions (eq. \ref{def:homosyslinearlinearcomb}) as described in theorem \ref{th:linearsolution} is the general solution of the homogenous system \ref{def:homosyslinear} on that interval.
 \end{theorem}
-
+\begin{proof}
+	Assume there exists a solution $ x=x_0(t),y=y_0(t) $ we wish to show that $ x_0=c_1x_1+c_2x_2, y_0=c_1y_1+c_2y_2 $ for some $ c_1,c_2 \in \R  $.
+	
+	\[ \begin{bmatrix}
+		x_1 & x_2\\
+		y_1 & y_2
+	\end{bmatrix} \begin{bmatrix}
+	c_1 \\
+	c_2
+\end{bmatrix} = \begin{bmatrix}
+x_0\\
+y_0
+\end{bmatrix}\]
+	It is of the form $ Ax=b $ but note that $ |A|=W $. So if the Wronskian does not vanish then $ |A|\neq0 \implies Ax=b$ has a solution.
+\end{proof}
 \begin{theorem}
 	If $ W(t) $ is the Wronskian of two solutions of the homogenous system then $ W(t) $ is either identically zero or nowhere zero on $ [a,b] $.
 \end{theorem}
-
+\begin{proof}
+	Consider that $ W=x_1y_2-x_2y_1 $. Now its derivative is given as,
+	\begin{align*}
+		W'&=x_1'y_2+x_1y_2'-x_2y_1'-x_2'y_1\\
+		&=(a_1x_1+b_1y_1)y_2+x_1(a_2x_2+b_2y_2)-x_2(a_2	x_1+b_2y_1)-(a_1x_2+b_1y_2)y_1\\
+		&=[a_1+b_2](x_1y_2-x_2y_2)=[a_1+b_2]W
+	\end{align*}
+\begin{align*}
+		\frac{dW}{W}&=a_1+b_2 dt\\
+	\log W &= \int a_1(t)+b_2(t)\, dt + \log c\\
+	W&=ce^{a_1+b_2 \, dt}
+\end{align*}
+\end{proof}
 \begin{theorem}
-	If the two solutions of the homogeneous system are linearly independent then the linear combination \ref{th:linearsolution} is its general solution.
+	If the two solutions of the homogeneous system are linearly independent then the linear combination \ref{th:linearsolution} is its general solution on this interval.
 \end{theorem}
+\begin{proof}
+	In view of the previous 2 theorems we need only show that two solutions are linearly dependent $ \iff $ Wronskian is identically zero.
+	
+	 $ \implies $ is obvious I'm not typing it.
+	
+	To show $ \impliedby $. Assume the Wronskian of two solutions is identically zero. Let $ t_0 \in [a,b] $ be some arbitrary fixed point. Since we know that $ W(t_0) =0$ we have the following system, which has a solution $ c_1,c_2 $ where not both $ c_1,c_2 $ are zero.
+	\[ \begin{cases}
+		c_1x_1(t_0)+c_2x_2(t_0)=0\\
+		c_1y_1(t_0)+c_2y_2(t_0)=0
+	\end{cases} \]	
+	But this lead to the solution given below having only the trivial solution
+	\[ \begin{cases}
+		x=c_1x_1(t)+c_2x_2(t)\\
+		y=c_1y_1(t)+c_2y_2(t)
+	\end{cases} \]
+	But from the uniqueness theorem we know it must be trivial for the entire interval.
+\end{proof}
 \begin{lemma}
 	$ W $ is never zero $ \iff  $ the solutions are L.I.
 \end{lemma}
-\begin{example}[Review-2 again?]
-	The Wronskian of the two solutions $ x_1=e^{2t},y_1=2e^{3t} $ and $ x_2=e^{3t},y_2=3e^{2t} $ is zero.
-\end{example}
 
-\begin{example}
-	Find wronskian \[ \begin{cases}
-		x_1=2e^{4t}\\
-		y_1=3e^{4t}
-	\end{cases} \begin{cases}
-	x_2=e^{-t}\\
-	y_2=-e^{-t}
-\end{cases}\] and check if L.I.
-\end{example}
-\begin{proof}
-	The Wronskian is $ -2e^{3t}-3e^{3t}=-5e^{3t} $ so the solutions are L.I.
-\end{proof}
+%\begin{example}[Review-2 again?]
+%	The Wronskian of the two solutions $ x_1=e^{2t},y_1=2e^{3t} $ and $ x_2=e^{3t},y_2=3e^{2t} $ is zero.
+%\end{example}
+%
+%\begin{example}
+%	Find wronskian \[ \begin{cases}
+%		x_1=2e^{4t}\\
+%		y_1=3e^{4t}
+%	\end{cases} \begin{cases}
+%	x_2=e^{-t}\\
+%	y_2=-e^{-t}
+%\end{cases}\] and check if L.I.
+%\end{example}
+%\begin{proof}
+%	The Wronskian is $ -2e^{3t}-3e^{3t}=-5e^{3t} $ so the solutions are L.I.
+%\end{proof}
 
 
 \section{Non-homogenous linear system in two variables}
 \begin{theorem}
-	If the two solutions for the homogenous system (Th. \ref{th:linearsolution}) are linearly independent on $ [a,b] $ and if 
+	If the two solutions (as in eq. \ref{def:homosyslinear2soln}) for the homogenous system (eq. \ref{def:homosyslinear}) are linearly independent on $ [a,b] $ and if 
 	\[ \begin{cases}
 		x&=x_p(t)\\
 		y&=y_p(t)
@@ -1338,107 +1493,118 @@ Now consider the system of linear homogenous equations (def \ref{def:homosysline
 	\end{cases} \]
 is the general solution of the non homogenous system \ref{def:syslinear}.
 \end{theorem}
-
-\begin{example}
-	Show that \[ \begin{cases}
-		x_1=2e^{4t}\\
-		y_1=3e^{4t}
-	\end{cases} \begin{cases}
-		x_2=e^{-t}\\
-		y_2=-e^{-t}
-	\end{cases}\]
-satisfies the following homogeneous system,
-\[ \begin{cases}
-	\dot{x}&=x+2y\\
-	\dot{y}&=3x+2y
-\end{cases} \]
-If we then have the non-homogenous system 
-\[ \begin{cases}
-	\dot{x}&=x+2y+t-1\\
-	\dot{y}&=3x+2y-5t-2
-\end{cases} \]
-show that the following is the particular solution,
-\[ \begin{cases}
-	x_p=3t-2\\
-	y_p=-2t+3
-\end{cases} \]
-\end{example}
 \begin{proof}
-	Consider $ x_1,y_1 $ first verify that it satisfies it,
-	\begin{align*}
-		\dot{x}&=x+2y\\
-		8e^{4t}&=2e^{4t}+6e^{4t}\\
-		\dot{y}&=3x+2y\\
-		12e^{4t}&=6e^{4t}+6e^{4t}
-	\end{align*}
-	now check $ x_2,y_2 $
-	\begin{align*}
-		\dot{x}&=x+2y\\
-		-e^{-t}&=e^{-t}-2e^{-t}\\
-		\dot{y}&=3x+2y\\
-		e^{-t}&=3e^{-t}-2e^{-t}
-	\end{align*}
-	So we have verified that they are both solutions. And since they are linearly independent we have their general solution as follows,
-	\[y_g= \begin{cases}
-		x_g=c_12e^{4t}+c_2e^{-t}\\
-		y_g=c_13e^{4t}+c_2(-e^{-t})
-	\end{cases} \]
-	\par Consider the non-homogenous system now and lets verify it is a solution,
-	\begin{align*}
-		\dot{x}&=x+2y+t-1\\
-		3&=3t-2-4t+6+t-1=3\\
-		\dot{y}&=3x+2y-5t-2\\
-		-2&=9t-6-4t+6-5t-2=-2
-	\end{align*}
-	So our particular solution is verified. And now we have the general solution to be as follows,
-		\[ \begin{cases}
-		x=c_12e^{4t}+c_2e^{-t}+(3t-2)\\
-		y=c_13e^{4t}+c_2(-e^{-t})+(-2t+3)
-	\end{cases} \]
-\end{proof}
-
-\begin{example}[Problem]
-	a) Show that,
+	If we show that for an arbitrary solution of \ref{def:syslinear} given by,
 	\[ \begin{cases}
-		x_1=e^{4t}\\
-		y_1=e^{4t}
-	\end{cases} \begin{cases}
-	x_2=e^{-2t}\\
-	y_2=-e^{-2t}
-\end{cases}\] are solutions to the homogenous system
-\[ \begin{cases}
-	\dot{x}=x+3y\\
-	\dot{y}=3x+y
+		x=x(t)\\
+		y=y(t)
+	\end{cases} \implies \begin{cases}
+	x=x(t)-x_p(t)\\
+	y=y(t)-y_p(t)
 \end{cases} \]
-b) Show in two ways that the given solutions are linearly independent on every closed interval and write the general solution of this system.
-c) Find the particular solution $ x(0) =5, y(0)=1$
-\end{example}
-\begin{proof}
-	Consider the first set of solutions first,
-	\begin{align*}
-		\dot{x}&=x+3y\\
-		4e^{4t}&=e^{4t}+3e^{4t}
-	\end{align*}
-	... complete part a) its easy\\
-	For part b) now begin by computing its wronskian,
-	\begin{align*}
-		W=-e^{4t}e^{-2t}-e^{-2t}e^{4t}=-e^{-2t}
-	\end{align*}
-Also not that there does not exist any constant $ k $ such that $ x_1=kx_2, y_1=ky_2 $ so its also L.I. So we have the general solution to be \[ \begin{cases}
-	x_g=c_1e^{4t}+c_2e^{-2t}\\
-	y_g=c_1e^{4t}+c_2(-e^{-2t})
-\end{cases} \]\\
-For part c) consider the following,
-\begin{align*}
-	c_1+c_2=5\\
-	c_1-c_2=1
-\end{align*}
-So $ c_1=3,c_2=2 $ this forms the particular solution.
+	is a solution to \ref{def:homosyslinear}. We are done.
+	
+	I will lose my mind if I have to type this just do it, it works.
 \end{proof}
+%\begin{example}
+%	Show that \[ \begin{cases}
+%		x_1=2e^{4t}\\
+%		y_1=3e^{4t}
+%	\end{cases} \begin{cases}
+%		x_2=e^{-t}\\
+%		y_2=-e^{-t}
+%	\end{cases}\]
+%satisfies the following homogeneous system,
+%\[ \begin{cases}
+%	\dot{x}&=x+2y\\
+%	\dot{y}&=3x+2y
+%\end{cases} \]
+%If we then have the non-homogenous system 
+%\[ \begin{cases}
+%	\dot{x}&=x+2y+t-1\\
+%	\dot{y}&=3x+2y-5t-2
+%\end{cases} \]
+%show that the following is the particular solution,
+%\[ \begin{cases}
+%	x_p=3t-2\\
+%	y_p=-2t+3
+%\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	Consider $ x_1,y_1 $ first verify that it satisfies it,
+%	\begin{align*}
+%		\dot{x}&=x+2y\\
+%		8e^{4t}&=2e^{4t}+6e^{4t}\\
+%		\dot{y}&=3x+2y\\
+%		12e^{4t}&=6e^{4t}+6e^{4t}
+%	\end{align*}
+%	now check $ x_2,y_2 $
+%	\begin{align*}
+%		\dot{x}&=x+2y\\
+%		-e^{-t}&=e^{-t}-2e^{-t}\\
+%		\dot{y}&=3x+2y\\
+%		e^{-t}&=3e^{-t}-2e^{-t}
+%	\end{align*}
+%	So we have verified that they are both solutions. And since they are linearly independent we have their general solution as follows,
+%	\[y_g= \begin{cases}
+%		x_g=c_12e^{4t}+c_2e^{-t}\\
+%		y_g=c_13e^{4t}+c_2(-e^{-t})
+%	\end{cases} \]
+%	\par Consider the non-homogenous system now and lets verify it is a solution,
+%	\begin{align*}
+%		\dot{x}&=x+2y+t-1\\
+%		3&=3t-2-4t+6+t-1=3\\
+%		\dot{y}&=3x+2y-5t-2\\
+%		-2&=9t-6-4t+6-5t-2=-2
+%	\end{align*}
+%	So our particular solution is verified. And now we have the general solution to be as follows,
+%		\[ \begin{cases}
+%		x=c_12e^{4t}+c_2e^{-t}+(3t-2)\\
+%		y=c_13e^{4t}+c_2(-e^{-t})+(-2t+3)
+%	\end{cases} \]
+%\end{proof}
+%
+%\begin{example}[Problem]
+%	a) Show that,
+%	\[ \begin{cases}
+%		x_1=e^{4t}\\
+%		y_1=e^{4t}
+%	\end{cases} \begin{cases}
+%	x_2=e^{-2t}\\
+%	y_2=-e^{-2t}
+%\end{cases}\] are solutions to the homogenous system
+%\[ \begin{cases}
+%	\dot{x}=x+3y\\
+%	\dot{y}=3x+y
+%\end{cases} \]
+%b) Show in two ways that the given solutions are linearly independent on every closed interval and write the general solution of this system.
+%c) Find the particular solution $ x(0) =5, y(0)=1$
+%\end{example}
+%\begin{proof}
+%	Consider the first set of solutions first,
+%	\begin{align*}
+%		\dot{x}&=x+3y\\
+%		4e^{4t}&=e^{4t}+3e^{4t}
+%	\end{align*}
+%	... complete part a) its easy\\
+%	For part b) now begin by computing its wronskian,
+%	\begin{align*}
+%		W=-e^{4t}e^{-2t}-e^{-2t}e^{4t}=-e^{-2t}
+%	\end{align*}
+%Also not that there does not exist any constant $ k $ such that $ x_1=kx_2, y_1=ky_2 $ so its also L.I. So we have the general solution to be \[ \begin{cases}
+%	x_g=c_1e^{4t}+c_2e^{-2t}\\
+%	y_g=c_1e^{4t}+c_2(-e^{-2t})
+%\end{cases} \]\\
+%For part c) consider the following,
+%\begin{align*}
+%	c_1+c_2=5\\
+%	c_1-c_2=1
+%\end{align*}
+%So $ c_1=3,c_2=2 $ this forms the particular solution.
+%\end{proof}
 
 
 \section{Homogenous linear systems with constant coefficients}
-Technically this section doesn't seem to be in her syllabus but I'm pretty sure its gonna be covered so I've done it anyway.\\
 In this section we will examine the following system of linear ODEs,
 \begin{align}\label{def:constanthomo}
 	\begin{cases}
@@ -1462,7 +1628,7 @@ We want non trivial so we require zero determinant,
 	a_1-m & b_1\\
 	a_2 & b_2-m
 \end{bmatrix} =0 \implies (a_1-m)(b_2-m)-a_2b_1=0\] 
-We are concerned with the following auxiliary equation that is related to this system,
+Expanding that out gives the following auxiliary equation,
 \begin{align}\label{def:sysaux}
 	m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)=0
 \end{align}
@@ -1475,46 +1641,46 @@ x_2=A_2e^{m_2t}\\
 y_2=B_2e^{m_2t}
 \end{cases}
 \]
-\begin{example}
-	Find the auxiliary equation for the following homogenous system with constant coefficients,
-	\[ \begin{cases}
-		\dot{x}=x+y\\
-		\dot{y}=4x-2y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The auxiliary equation is given by,
-	\begin{align*}
-		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-		m^2+m-6&=0
-	\end{align*}
-\end{proof}
-\begin{example}
-	Find Auxiliary equation of 
-	\[ \begin{cases}
-		\dot{x}=4x-3y\\
-		\dot{y}=8x-6y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The auxiliary equation is given by,
-	\begin{align*}
-		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-		m^2+2m&=0
-	\end{align*}
-	So we have $ m_1=-2,m_2=0 $.
-\end{proof}
-
-\begin{example}[Review=4]
-	Find auxiliary equation for the following system
-	\[ \begin{cases}
-		\frac{dx}{dt}=4x-2y\\
-		\frac{dy}{dt}=5x+2y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	Auxiliary equation is $ m^2-6m+18=0 $.
-\end{proof}
+%\begin{example}
+%	Find the auxiliary equation for the following homogenous system with constant coefficients,
+%	\[ \begin{cases}
+%		\dot{x}=x+y\\
+%		\dot{y}=4x-2y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The auxiliary equation is given by,
+%	\begin{align*}
+%		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%		m^2+m-6&=0
+%	\end{align*}
+%\end{proof}
+%\begin{example}
+%	Find Auxiliary equation of 
+%	\[ \begin{cases}
+%		\dot{x}=4x-3y\\
+%		\dot{y}=8x-6y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The auxiliary equation is given by,
+%	\begin{align*}
+%		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%		m^2+2m&=0
+%	\end{align*}
+%	So we have $ m_1=-2,m_2=0 $.
+%\end{proof}
+%
+%\begin{example}[Review=4]
+%	Find auxiliary equation for the following system
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=4x-2y\\
+%		\frac{dy}{dt}=5x+2y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	Auxiliary equation is $ m^2-6m+18=0 $.
+%\end{proof}
 
 \subsection{Distinct real roots}
 \[ \begin{cases}
@@ -1525,7 +1691,7 @@ y_2=B_2e^{m_2t}
 	y_2=B_2e^{m_2t}
 \end{cases}
 \]
-Consider its Wronskian as $ (A_1B_2-A_2B_1)e^{(m_1+m_2)t} $.
+
 
 
 If eq. \ref{def:sysaux} has distinct real roots $ m_1, m_2 $ then the general solution of eq. \ref{def:constanthomo} is given as,
@@ -1537,100 +1703,100 @@ If eq. \ref{def:sysaux} has distinct real roots $ m_1, m_2 $ then the general so
 \end{align*}
 
 
-\begin{example}
-	\[ \begin{cases}
-		\frac{dx}{dt}=x+y\\
-		\frac{dy}{dt}=4x-2y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The auxiliary polynomial is given $ m^2+m-6=0 $ with roots $ m_1=-3, m_2=2 $.
-	So the general solution is given as
-	\[ \begin{cases}
-		x=c_1A_1e^{-3t}+c_2A_2e^{2t}\\
-		y=c_1B_1e^{-3t}+c_2B_2e^{2t}
-	\end{cases} \]
-	Also consider that
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-\begin{cases}
-	(1-m)A+B=0\\
-	4A+(-2-m)B=0
-\end{cases}\]
-Substitute $ m=-3 $ first
-\[ \begin{cases}
-	4A+B=0\\
-	4A+B=0
-\end{cases} \implies 4A+B=0\]
-So let $ A_1=1, B_1=-4 $
-
-Substitute $ m=2 $ and we will get $ A=B $
-$ A_2=1,B_2=1 $
-Compute the Wronskian as a sanity check $ W=e^{-t}+4e^{-t}=5e^{-t} $
-	\[ \begin{cases}
-	x=c_1e^{-3t}+c_2e^{2t}\\
-	y=c_1(-4e^{-3t})+c_2e^{2t}
-\end{cases} \]
-\end{proof}
-
-\begin{example}
-	\[ \begin{cases}
-		\dot{x}=-3x+4y\\
-		\dot{y}=-2x+3y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The auxiliary equation is $ ...$ roots are $ -1,1 $.
-		So the general solution is given as
-	\[ \begin{cases}
-		x=c_1A_1e^{-t}+c_2A_2e^{t}\\
-		y=c_1B_1e^{-t}+c_2B_2e^{t}
-	\end{cases} \]
-	Also consider that
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(-3-m)A+4B=0\\
-		-2A+(3-m)B=0
-	\end{cases}\]
-Substitute $ m=-1 $
-\[ \begin{cases}
-	(-3-m)A+4B=0\\
-	-2A+(3-m)B=0
-\end{cases} \]
-We get $ A=2B $ so pick $ A_1=2,B_2=1 $
-
-Substitute $ m=1 $, we get $ A_2=1,B_2=1 $
-\end{proof}
-
-\begin{example}
-	\[ \begin{cases}
-		\dot{x}=4x-3y\\
-		\dot{y}=8x-6y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The roots of aux eq are $ m_1=0, m_2=-2 $,
-	\[ \begin{cases}
-		x=c_1A_1+c_2A_2e^{-2t}\\
-		y=c_1B_1+c_2B_2e^{-2t}
-	\end{cases} \]
-	Also consider that
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(4-m)A-3B=0\\
-		8A+(-6-m)B=0
-	\end{cases}\]
-Substitute $ m=0 $ we get $ A_1=3,B_1=4 $
-Substitute $ m=-2 $ we get $ A_2= 1, B_2=1$
-\end{proof}
+%\begin{example}
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=x+y\\
+%		\frac{dy}{dt}=4x-2y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The auxiliary polynomial is given $ m^2+m-6=0 $ with roots $ m_1=-3, m_2=2 $.
+%	So the general solution is given as
+%	\[ \begin{cases}
+%		x=c_1A_1e^{-3t}+c_2A_2e^{2t}\\
+%		y=c_1B_1e^{-3t}+c_2B_2e^{2t}
+%	\end{cases} \]
+%	Also consider that
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%\begin{cases}
+%	(1-m)A+B=0\\
+%	4A+(-2-m)B=0
+%\end{cases}\]
+%Substitute $ m=-3 $ first
+%\[ \begin{cases}
+%	4A+B=0\\
+%	4A+B=0
+%\end{cases} \implies 4A+B=0\]
+%So let $ A_1=1, B_1=-4 $
+%
+%Substitute $ m=2 $ and we will get $ A=B $
+%$ A_2=1,B_2=1 $
+%Compute the Wronskian as a sanity check $ W=e^{-t}+4e^{-t}=5e^{-t} $
+%	\[ \begin{cases}
+%	x=c_1e^{-3t}+c_2e^{2t}\\
+%	y=c_1(-4e^{-3t})+c_2e^{2t}
+%\end{cases} \]
+%\end{proof}
+%
+%\begin{example}
+%	\[ \begin{cases}
+%		\dot{x}=-3x+4y\\
+%		\dot{y}=-2x+3y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The auxiliary equation is $ ...$ roots are $ -1,1 $.
+%		So the general solution is given as
+%	\[ \begin{cases}
+%		x=c_1A_1e^{-t}+c_2A_2e^{t}\\
+%		y=c_1B_1e^{-t}+c_2B_2e^{t}
+%	\end{cases} \]
+%	Also consider that
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(-3-m)A+4B=0\\
+%		-2A+(3-m)B=0
+%	\end{cases}\]
+%Substitute $ m=-1 $
+%\[ \begin{cases}
+%	(-3-m)A+4B=0\\
+%	-2A+(3-m)B=0
+%\end{cases} \]
+%We get $ A=2B $ so pick $ A_1=2,B_2=1 $
+%
+%Substitute $ m=1 $, we get $ A_2=1,B_2=1 $
+%\end{proof}
+%
+%\begin{example}
+%	\[ \begin{cases}
+%		\dot{x}=4x-3y\\
+%		\dot{y}=8x-6y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The roots of aux eq are $ m_1=0, m_2=-2 $,
+%	\[ \begin{cases}
+%		x=c_1A_1+c_2A_2e^{-2t}\\
+%		y=c_1B_1+c_2B_2e^{-2t}
+%	\end{cases} \]
+%	Also consider that
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(4-m)A-3B=0\\
+%		8A+(-6-m)B=0
+%	\end{cases}\]
+%Substitute $ m=0 $ we get $ A_1=3,B_1=4 $
+%Substitute $ m=-2 $ we get $ A_2= 1, B_2=1$
+%\end{proof}
 
 \subsection{Equal real root}
 \[ \begin{cases}
@@ -1649,102 +1815,102 @@ If eq. \ref{def:sysaux} has equal real roots $m= m_1=m_2 $ then the general solu
 	\end{cases}
 \end{align*}
 
-\begin{example}
-	\[ \begin{cases}
-		\frac{dx}{dt}=3x-4y\\
-		\frac{dy}{dt}=x-y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	AE is $ m^2-2m+1=0 $ and we get $ m=1,1 $.
-	
-	\[ \begin{cases}
-		(3-m)A-4B=0\\
-		A+(-1-m)B=0
-	\end{cases} \]
-Solving with $ m=1 $ we get
-\[ \begin{cases}
-	2A-4B=0\\
-	A-2B=0
-\end{cases} \]
-We get $ B=1,A=2 $ this is the first solution.
-\[ \begin{cases}
-	x_1=2e^{t}\\
-	y_2=e^t
-\end{cases} \]
-
-We know the second solution should be of the form
-\[ \begin{cases}
-	x_2=(A_1+A_2t)e^{t}\\
-	y_2=(B_1+B_2t)e^{t}
-\end{cases} \]
-Assume this is the solution and substitute it in the original differential equation
-\[ \begin{cases}
-	(2A_2-4B_2)t+(2A_1-A_2-4B_1)=0\\
-	(A_2-2B_2)t+(A_1-2B_1-B_2)=0
-\end{cases} \]
-We get 
-\[ \begin{cases}
-	2A_2-4B_2=0 \text{ and } 2A_1-A_2-4B_1=0\\
-	A_2-2B_2=0 \text{ and } A_1-2B_1-B_2=0
-\end{cases} \]
-We get $ A_2=2B_2 $ and $ A_1-2B_1-B_2=0 $
-So pick $ A_2=2,B_2=1 $ and $ A_1-2B_1=2 $
-and $ A_1=1,B_1=0 $
-
-So finally,
-\[ \begin{cases}
-	x_2=(1+2t)e^{t}\\
-	y_2=(0+t)e^t
-\end{cases} \]
-
-consider the Wronskian as $ 2e^t(te^t)-(1-2t)e^{t}e^2=-e^{2t} $. So they are L.I.
-
-So we have the general solution as its linear combination,
-\end{proof}
-
-\begin{example}
-	\[ \begin{cases}
-		\frac{dx}{dt}=5x+4y\\
-		\frac{dy}{dt}=-x+y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The auxiliary equation is given as $ m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)=0 $ so $ m^2-6m+9=0 $ which has repeated roots $ m=3,3 $.
-	
-		Also consider that
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		2A+4B=0\\
-		-A-2B=0
-	\end{cases}\]
-	Which on solving gives $ A=-1,B=2 $
-	So we have,
-	\[ \begin{cases}
-		x_1=2e^{3t}\\
-		y_2=-e^{3t}
-	\end{cases} \]
-
-	We know the second solution should be of the form
-	\[ \begin{cases}
-		x_2=(A_1+A_2t)e^{t}\\
-		y_2=(B_1+B_2t)e^{t}
-	\end{cases} \]
-	Assume this is the solution and substitute it in the original differential equation
-	\[ \begin{cases}
-		e^t (A_2 t + A_1 + A_2)=5((A_1+A_2t)e^{t})+4((B_1+B_2t)e^{t})\\
-		e^t(B_2t+B_1+B_1)=-(A_1+A_2t)e^{t}+(B_1+B_2t)e^{t}
-	\end{cases} \]
-We get $ ?????? $
-
-\[ \begin{cases}
-	x_2=(-3-2t)e^{3t}\\
-	y_2=(1+t)e^{3t}
-\end{cases} \]
-\end{proof}
+%\begin{example}
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=3x-4y\\
+%		\frac{dy}{dt}=x-y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	AE is $ m^2-2m+1=0 $ and we get $ m=1,1 $.
+%	
+%	\[ \begin{cases}
+%		(3-m)A-4B=0\\
+%		A+(-1-m)B=0
+%	\end{cases} \]
+%Solving with $ m=1 $ we get
+%\[ \begin{cases}
+%	2A-4B=0\\
+%	A-2B=0
+%\end{cases} \]
+%We get $ B=1,A=2 $ this is the first solution.
+%\[ \begin{cases}
+%	x_1=2e^{t}\\
+%	y_2=e^t
+%\end{cases} \]
+%
+%We know the second solution should be of the form
+%\[ \begin{cases}
+%	x_2=(A_1+A_2t)e^{t}\\
+%	y_2=(B_1+B_2t)e^{t}
+%\end{cases} \]
+%Assume this is the solution and substitute it in the original differential equation
+%\[ \begin{cases}
+%	(2A_2-4B_2)t+(2A_1-A_2-4B_1)=0\\
+%	(A_2-2B_2)t+(A_1-2B_1-B_2)=0
+%\end{cases} \]
+%We get 
+%\[ \begin{cases}
+%	2A_2-4B_2=0 \text{ and } 2A_1-A_2-4B_1=0\\
+%	A_2-2B_2=0 \text{ and } A_1-2B_1-B_2=0
+%\end{cases} \]
+%We get $ A_2=2B_2 $ and $ A_1-2B_1-B_2=0 $
+%So pick $ A_2=2,B_2=1 $ and $ A_1-2B_1=2 $
+%and $ A_1=1,B_1=0 $
+%
+%So finally,
+%\[ \begin{cases}
+%	x_2=(1+2t)e^{t}\\
+%	y_2=(0+t)e^t
+%\end{cases} \]
+%
+%consider the Wronskian as $ 2e^t(te^t)-(1-2t)e^{t}e^2=-e^{2t} $. So they are L.I.
+%
+%So we have the general solution as its linear combination,
+%\end{proof}
+%
+%\begin{example}
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=5x+4y\\
+%		\frac{dy}{dt}=-x+y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The auxiliary equation is given as $ m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)=0 $ so $ m^2-6m+9=0 $ which has repeated roots $ m=3,3 $.
+%	
+%		Also consider that
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		2A+4B=0\\
+%		-A-2B=0
+%	\end{cases}\]
+%	Which on solving gives $ A=-1,B=2 $
+%	So we have,
+%	\[ \begin{cases}
+%		x_1=2e^{3t}\\
+%		y_2=-e^{3t}
+%	\end{cases} \]
+%
+%	We know the second solution should be of the form
+%	\[ \begin{cases}
+%		x_2=(A_1+A_2t)e^{t}\\
+%		y_2=(B_1+B_2t)e^{t}
+%	\end{cases} \]
+%	Assume this is the solution and substitute it in the original differential equation
+%	\[ \begin{cases}
+%		e^t (A_2 t + A_1 + A_2)=5((A_1+A_2t)e^{t})+4((B_1+B_2t)e^{t})\\
+%		e^t(B_2t+B_1+B_1)=-(A_1+A_2t)e^{t}+(B_1+B_2t)e^{t}
+%	\end{cases} \]
+%We get $ ?????? $
+%
+%\[ \begin{cases}
+%	x_2=(-3-2t)e^{3t}\\
+%	y_2=(1+t)e^{3t}
+%\end{cases} \]
+%\end{proof}
 
 \subsection{Distinct complex roots}
 If $ m_1=a+ib,m_2=a-ib $ we will have \[ \begin{cases}
@@ -1764,169 +1930,169 @@ If eq. \ref{def:sysaux} has distinct complex roots $a\pm ib $ then the general s
 	\end{cases}
 \end{align*}
 
-\begin{example}
-	\[ \begin{cases}
-		\frac{dx}{dt}=4x-2y\\
-		\frac{dy}{dt}=5x+2y
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	Consider the auxiliary equation associated to the above system,
-	\begin{align*}
-		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-		m^2-(4+2)m+(4\cdot2+2\cdot5)&=0\\
-		m^2-6m+18&=0
-	\end{align*}
-	This has roots $ m_1=3-3i,m_2=3+3i $. These are complex roots with $ a=3,b=3 $, so we know the general solution will be of the form,
-	\begin{align*}
-		\begin{cases}
-			x&=e^{at}[c_1(A_1 \cos bt - A_2 \sin bt)+c_2(A_1 \sin bt + A_2 \cos bt)]\\
-			y&=e^{at}[c_1(B_1 \cos bt- B_2 \sin bt)+c_2(B_1 \sin bt + B_2 \cos bt)]
-		\end{cases}
-	\end{align*}
-	Also consider that,
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(4-m)A-2B=0\\
-		5A+(2-m)B=0
-	\end{cases}\]
-	Begin by substituting $ m=3-3i $
-	\[ \begin{cases}
-			(4-(3+3i))A-2B=0\\
-			5A+(2-(3+3i))B=0
-	\end{cases} \]
-	Which upon solving gives $ (1+3i)B=5A $ using this we can say $ B=1, A=\frac{1+3i}{5} $ and as such $ A_1=\frac{1}{5}, A_2=\frac{3}{5} $ and $ B_1=1,B_2=0 $
-	So our general solution is,
-	\begin{align*}
-		\begin{cases}
-			x&=e^{3t}[c_1\left(\frac{1}{5} \cos 3t - \frac{3}{5} \sin 3t\right)+c_2\left(\frac{1}{5} \sin 3t + \frac{3}{5} \cos 3t\right)]\\
-			y&=e^{3t}[c_1 \cos 3t+c_2\sin 3t]
-		\end{cases}
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	$ \begin{cases}
-		\frac{dx}{dt}=x-2y\\
-		\frac{dy}{dt}=4x+5y
-	\end{cases} $
-\end{example}
-\begin{proof}
-	AE $ m^2-6m+13=0 $ so $ m=3\pm2i $
-	
-	\[ \begin{cases}
-		(-2-2i)A-2B=0\\
-		4A+(2-2i)B=0
-	\end{cases} \]
-Which upon solving gives us $ A_1=1,A_2=0, B_1=-1,B_2=-1$.
-
-So the general solution is,
-\[ \begin{cases}
-	x=e^{3t}[c_1 \sin 2t + c_2 \cos 2t]\\
-	y=e^{3t}[c_1 (-\cos 2t + \sin 2t)+c_2 (-\sin 2t - \cos 2t)]
-\end{cases} \]
-\end{proof}
-
-\begin{example}
-	Solve $ \begin{cases}
-		\frac{dx}{dt}=-3x+4y\\
-		\frac{dy}{dt}=-2x+3y
-	\end{cases} $
-\end{example}
-\begin{proof}
-	Consider the auxiliary equation associated to the above system,
-	\begin{align*}
-		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-		m^2-(-3+3)m+(-3\cdot3-(-2)4)&=0\\
-		m^2-1&=0
-	\end{align*}
-	This has roots $ m_1=-1,m_2=1 $. These are distinct and real roots, so we know the general solution will be of the form,
-	\begin{align*}
-		\begin{cases}
-			x=c_1A_1e^{m_1t}+c_2A_2e^{m_2t}\\
-			y=c_1B_1e^{m_1t}+c_2B_2e^{m_2t}
-		\end{cases}
-	\end{align*}
-	Also consider that,
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(-3-m)A+4B=0\\
-		-2A+(3-m)B=0
-	\end{cases}\]
-	Begin by substituting $ m=-1 $
-	\[ \begin{cases}
-		(-3+1)A+4B=0\\
-		-2A+(3+1)B=0
-	\end{cases} \]
-	Which upon solving gives $ A=2B $ using this we can say $A_1=2, B_1=1 $.
-	
-	Now by substituting $ m=1 $
-	\[ \begin{cases}
-		(-3-1)A+4B=0\\
-		-2A+(3-1)B=0
-	\end{cases} \]
-	Which upon solving gives $ A=B $ using this we can say $A_2=1, B_2=1 $
-	
-	So our general solution is,
-	\begin{align*}
-		\begin{cases}
-			x=c_12e^{-t}+c_2e^{t}\\
-			y=c_1e^{-t}+c_2e^{t}
-		\end{cases}
-	\end{align*}
-\end{proof}
-
-\begin{example}
-$ \begin{cases}
-	\dot{x}=7x+6y\\
-	\dot{y}=2x+6y
-\end{cases} $
-\end{example}
-\begin{proof}
-Consider the auxiliary equation associated to the above system,
-\begin{align*}
-	m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-	m^2-(7+6)m+(42-12)&=0\\
-	m^2-13m+30&=0
-\end{align*}
-So we have $ m_1=3,m_2=10 $.
-Also consider that,
-\[ \begin{cases}
-	(a_1-m)A+b_1B=0\\
-	a_2A+(b_2-m)B=0
-\end{cases} \implies 
-\begin{cases}
-	(7-m)A+6B=0\\
-	2A+(6-m)B=0
-\end{cases}\]
-Solve with $ m=3 $
-\[ \begin{cases}
-	(7-3)A+6B=0\\
-	2A+(6-3)B=0
-\end{cases} \]
-So we have $ A_1=3, B_1=-2 $. Solve with $ m=10 $
-\[ \begin{cases}
-	(7-10)A+6B=0\\
-	2A+(6-10)B=0
-\end{cases} \]
-So we have $ A_2=2, B_2=1 $
-
-So our general solution is
-\begin{align*}
-	\begin{cases}
-		x=c_13e^{3t}+c_22e^{10t}\\
-		y=c_1-2e^{3t}+c_2e^{10t}
-	\end{cases}
-\end{align*}
-\end{proof}
+%\begin{example}
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=4x-2y\\
+%		\frac{dy}{dt}=5x+2y
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	Consider the auxiliary equation associated to the above system,
+%	\begin{align*}
+%		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%		m^2-(4+2)m+(4\cdot2+2\cdot5)&=0\\
+%		m^2-6m+18&=0
+%	\end{align*}
+%	This has roots $ m_1=3-3i,m_2=3+3i $. These are complex roots with $ a=3,b=3 $, so we know the general solution will be of the form,
+%	\begin{align*}
+%		\begin{cases}
+%			x&=e^{at}[c_1(A_1 \cos bt - A_2 \sin bt)+c_2(A_1 \sin bt + A_2 \cos bt)]\\
+%			y&=e^{at}[c_1(B_1 \cos bt- B_2 \sin bt)+c_2(B_1 \sin bt + B_2 \cos bt)]
+%		\end{cases}
+%	\end{align*}
+%	Also consider that,
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(4-m)A-2B=0\\
+%		5A+(2-m)B=0
+%	\end{cases}\]
+%	Begin by substituting $ m=3-3i $
+%	\[ \begin{cases}
+%			(4-(3+3i))A-2B=0\\
+%			5A+(2-(3+3i))B=0
+%	\end{cases} \]
+%	Which upon solving gives $ (1+3i)B=5A $ using this we can say $ B=1, A=\frac{1+3i}{5} $ and as such $ A_1=\frac{1}{5}, A_2=\frac{3}{5} $ and $ B_1=1,B_2=0 $
+%	So our general solution is,
+%	\begin{align*}
+%		\begin{cases}
+%			x&=e^{3t}[c_1\left(\frac{1}{5} \cos 3t - \frac{3}{5} \sin 3t\right)+c_2\left(\frac{1}{5} \sin 3t + \frac{3}{5} \cos 3t\right)]\\
+%			y&=e^{3t}[c_1 \cos 3t+c_2\sin 3t]
+%		\end{cases}
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	$ \begin{cases}
+%		\frac{dx}{dt}=x-2y\\
+%		\frac{dy}{dt}=4x+5y
+%	\end{cases} $
+%\end{example}
+%\begin{proof}
+%	AE $ m^2-6m+13=0 $ so $ m=3\pm2i $
+%	
+%	\[ \begin{cases}
+%		(-2-2i)A-2B=0\\
+%		4A+(2-2i)B=0
+%	\end{cases} \]
+%Which upon solving gives us $ A_1=1,A_2=0, B_1=-1,B_2=-1$.
+%
+%So the general solution is,
+%\[ \begin{cases}
+%	x=e^{3t}[c_1 \sin 2t + c_2 \cos 2t]\\
+%	y=e^{3t}[c_1 (-\cos 2t + \sin 2t)+c_2 (-\sin 2t - \cos 2t)]
+%\end{cases} \]
+%\end{proof}
+%
+%\begin{example}
+%	Solve $ \begin{cases}
+%		\frac{dx}{dt}=-3x+4y\\
+%		\frac{dy}{dt}=-2x+3y
+%	\end{cases} $
+%\end{example}
+%\begin{proof}
+%	Consider the auxiliary equation associated to the above system,
+%	\begin{align*}
+%		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%		m^2-(-3+3)m+(-3\cdot3-(-2)4)&=0\\
+%		m^2-1&=0
+%	\end{align*}
+%	This has roots $ m_1=-1,m_2=1 $. These are distinct and real roots, so we know the general solution will be of the form,
+%	\begin{align*}
+%		\begin{cases}
+%			x=c_1A_1e^{m_1t}+c_2A_2e^{m_2t}\\
+%			y=c_1B_1e^{m_1t}+c_2B_2e^{m_2t}
+%		\end{cases}
+%	\end{align*}
+%	Also consider that,
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(-3-m)A+4B=0\\
+%		-2A+(3-m)B=0
+%	\end{cases}\]
+%	Begin by substituting $ m=-1 $
+%	\[ \begin{cases}
+%		(-3+1)A+4B=0\\
+%		-2A+(3+1)B=0
+%	\end{cases} \]
+%	Which upon solving gives $ A=2B $ using this we can say $A_1=2, B_1=1 $.
+%	
+%	Now by substituting $ m=1 $
+%	\[ \begin{cases}
+%		(-3-1)A+4B=0\\
+%		-2A+(3-1)B=0
+%	\end{cases} \]
+%	Which upon solving gives $ A=B $ using this we can say $A_2=1, B_2=1 $
+%	
+%	So our general solution is,
+%	\begin{align*}
+%		\begin{cases}
+%			x=c_12e^{-t}+c_2e^{t}\\
+%			y=c_1e^{-t}+c_2e^{t}
+%		\end{cases}
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%$ \begin{cases}
+%	\dot{x}=7x+6y\\
+%	\dot{y}=2x+6y
+%\end{cases} $
+%\end{example}
+%\begin{proof}
+%Consider the auxiliary equation associated to the above system,
+%\begin{align*}
+%	m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%	m^2-(7+6)m+(42-12)&=0\\
+%	m^2-13m+30&=0
+%\end{align*}
+%So we have $ m_1=3,m_2=10 $.
+%Also consider that,
+%\[ \begin{cases}
+%	(a_1-m)A+b_1B=0\\
+%	a_2A+(b_2-m)B=0
+%\end{cases} \implies 
+%\begin{cases}
+%	(7-m)A+6B=0\\
+%	2A+(6-m)B=0
+%\end{cases}\]
+%Solve with $ m=3 $
+%\[ \begin{cases}
+%	(7-3)A+6B=0\\
+%	2A+(6-3)B=0
+%\end{cases} \]
+%So we have $ A_1=3, B_1=-2 $. Solve with $ m=10 $
+%\[ \begin{cases}
+%	(7-10)A+6B=0\\
+%	2A+(6-10)B=0
+%\end{cases} \]
+%So we have $ A_2=2, B_2=1 $
+%
+%So our general solution is
+%\begin{align*}
+%	\begin{cases}
+%		x=c_13e^{3t}+c_22e^{10t}\\
+%		y=c_1-2e^{3t}+c_2e^{10t}
+%	\end{cases}
+%\end{align*}
+%\end{proof}
 \section{Non-homogenous linear system}
-Consider the nonhomogenous linear system
+Consider the non-homogenous linear system
 \begin{align}\label{def:nonhomosys}
 	\begin{cases}
 	\frac{dx}{dt}=a_1(t)x+b_1(t)y+f_1(t)\\
@@ -1955,225 +2121,225 @@ will be a particular solution of \ref{def:nonhomosys} if the functions $ v_1(t) 
 	v_1'y_1+v_2'y_2=f_2
 \end{cases} \]
 This technique for finding particular solutions of nonhomogenous linear systems is called method of variation of parameters.
-
-\begin{example}
-	Apply the method before to find a particular solution to the nonhomogenous system
-	\[ \begin{cases}
-		\frac{dx}{dt}=x+y-5t+2\\
-		\frac{dy}{dt}=4x-2y-8t-8
-	\end{cases} \]
-\end{example}
 \begin{proof}
-	The corresponding homogenous system is,
-	\[ \begin{cases}
-		\frac{dx}{dt}=x+y\\
-		\frac{dy}{dt}=4x-2y
-	\end{cases} \]
-
-And we have $ f_1=-5t+2, f_2=-8t-8 $.
-
-The solution to the auxiliary equation of the homogenous system is $ m=-2,3 $
-Also consider that,
-\[ \begin{cases}
-	(a_1-m)A+b_1B=0\\
-	a_2A+(b_2-m)B=0
-\end{cases} \implies 
-\begin{cases}
-	(1-m)A+1B=0\\
-	4A+(-2-m)B=0
-\end{cases}\]
-
-Begin by substituting $ m=-2 $
-\[ \begin{cases}
-	(1+2))A+B=0\\
-	4A+(-2+2))B=0
-\end{cases} \]
-$ A_1=1,B_1=1 $
-Begin by substituting $ m=3 $
-\[ \begin{cases}
-	(1-3)A+B=0\\
-	4A+(-2-3)B=0
-\end{cases} \]
-$ A_2=4,B_2=-2 $.
-
-Now $ v_1'x_1+v_2'x_1=f_1, v_1'y_1+v_2'y_2=f_2 $
-\begin{align*}
-	v_1'e^{2t}+v_2'e^{-3t}&=-5t+2\\
-	v_1'e^{2t}+v_2'(-4e^{-3t})&=-8t-8
-	\intertext{Subtract second from first}
-	v_2'5e^{-3t}&=3t+10\\
-	v_2'&=\frac{3t+10}{5}e^{3t}
-	\intertext{Integrate}
-	v_2&=\frac{1}{5}e^{3t}(t+3)\\
-	v_1'e^{2t}&=....\\
-	\intertext{Integrate}
-	v_1&=\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t}
-\end{align*}
-
-Now we get the particular solutions as follows,
-\[ \begin{cases}
-	x_p=\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t}x_1(t)+(\frac{1}{5}e^{3t}(t+3))x_2(t)\\
-	y_p=(\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t})y_1(t)+(\frac{1}{5}e^{3t}(t+3))y_2(t)
-\end{cases} \]
+	Assume $x_p, y_p $ is as given then differentiate that (use chain rule) and input into the original system. Its a hernia to type but it simplifies out.
 \end{proof}
-
-\begin{example}
-	Solve the IVP,
-	\[ \begin{cases}
-		\frac{dx}{dt}=x+2y+12e^{3t}\\
-		\frac{dy}{dt}=4x+3y+18e^{2t}
-	\end{cases}, x(0)=3,y(0)=0\]
-	
-\end{example}
-\begin{proof}
-	The associated auxiliary equation is 
-	$ m^2-4m-5=0 $ with roots $ m_1=-1, m_2=5 $.
-	
-	Also consider that,
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(1-m)A+2B=0\\
-		4A+(3-m)B=0
-	\end{cases}\]
-	Solve with $ m=-1 $
-	\[
-	\begin{cases}
-		(1-(-1))A+2B=0\\
-		4A+(3-(-1))B=0
-	\end{cases}\]
-	$ A=-B $ so take $ A_1=1, B_1=-1 $
-	Solve with $ m=5 $
-	\[
-	\begin{cases}
-		(1-(5))A+2B=0\\
-		4A+(3-(5))B=0
-	\end{cases}\]
-	$ B=2A $ so take $ A_2=1,B_2=2 $.
-	\[ \begin{cases}
-		x_g=c_1e^{-t}+c_2e^{5t}\\
-		y_g=c_2-e^{-t}+c_22e^{5t}
-	\end{cases} \]
-Now $ v_1'x_1+v_2'x_2=f_1, v_1'y_1+v_2'y_2=f_2 $
-\begin{align*}
-	v_1'e^{-t}+v_2'e^{5t}=12e^{3t}\\
-	v_1'(-e^{-t})+v_2'(2e^{5t})=18e^{2t}
-	\intertext{Add them}
-	v_2'=\frac{12e^{3t}+18e^{2t}}{3e^{5t}}\\
-	v_2=-2e^{-3t}-2e^{-2t}
-	\intertext{second minus twice first}\\
-	v_1'(-3e^{-t})=18e^{2t}-24e^{3t}\\
-	v_1'=\frac{18e^{2t}-24e^{3t}}{-3e^{-t}}\\
-	v_1=2e^{4t}-2e^{3t}
-\end{align*}
-So the particular solution is given as,
-\begin{align*}
-	\begin{cases}
-		x_p=v_1(t)x_1(t)+v_2(t)x_2(t)\\
-		y_p=v_1(t)y_1(t)+v_2(t)y_2(t)
-	\end{cases}\\
-\begin{cases}
-	x_p=-4e^{2t}\\
-	y_p=-2e^{2t}-6e^{3t}
-\end{cases}
-\end{align*}
-
-The general solution is given as,
-\[ \begin{cases}
-	x=c_1e^{-t}+c_2e^{5t}-4e^{2t}\\
-	y=c_1-e^{-t}+c_22e^{5t}-2(e^{2t}-3e^{3t})
-\end{cases} \]
-
-Solve for initial conditions now,
-
-We get $ c_1=5,c_2=-2$
-\end{proof}
-
-\begin{example}
-	\[ \begin{cases}
-		\frac{dx}{dt}=x+2y+2t\\
-		\frac{dy}{dt}=3x+2y-4t
-	\end{cases} \]
-\end{example}
-\begin{proof}
-	The associated auxiliary equation is 
-	$ m^2-3m-4=0 $ with roots $ m_1=-1, m_2=4 $.
-	
-	Also consider that,
-	\[ \begin{cases}
-		(a_1-m)A+b_1B=0\\
-		a_2A+(b_2-m)B=0
-	\end{cases} \implies 
-	\begin{cases}
-		(1-m)A+2B=0\\
-		3A+(2-m)B=0
-	\end{cases}\]
-Solve with $ m=-1 $
-\[ \begin{cases}
-	(1-(-1))A+2B=0\\
-	3A+(2-(-1))B=0
-\end{cases} \]
-$ A=-B $ so take $ A_1=1,B_1=-1 $.
-
-Solve with $ m=4 $
-\[ \begin{cases}
-	(1-(4))A+2B=0\\
-	3A+(2-(4))B=0
-\end{cases} \]
-$ B=3/2A $ so pick $ A_2=2, B_2=3 $.
-
-The solution to the homogenous system is given as,
-\[ \begin{cases}
-	x_g=c_1e^{-t}+c_2(2e^{4t})\\
-	y_g=c_1(-e^{-t})+c_2(3e^{4t})
-\end{cases} \]
-
-Now $ v_1'x_1+v_2'x_2=f_1, v_1'y_1+v_2'y_2=f_2 $
-\begin{align*}
-	v_1'e^{-t}+v_2'(2e^{4t})=2t\\
-	v_1'(-e^{-t})+v_2'(3e^{4t})=-4t
-	\intertext{Add them}
-	v_2'=\frac{-2t}{5e^{4t}}\\
-	v_2=\frac{1}{40}e^{-4t}(4t+1)
-	\intertext{2 second minus 3 first}\\
-	v_1'(-5e^{-t})=-14t\\
-	v_1'=\frac{14t}{5e^{-t}}\\
-	v_1=\frac{14}{5}e^t(t-1)
-\end{align*}
-The particular solution is given by,
-\begin{align*}
-	\begin{cases}
-		x_p=v_1(t)x_1(t)+v_2(t)x_2(t)\\
-		y_p=v_1(t)y_1(t)+v_2(t)y_2(t)
-	\end{cases}\\
-	\begin{cases}
-		x_p=3t-\frac{11}{4}\\
-		y_p=\frac{23}{8}-\frac{5t}{2}
-	\end{cases}
-\end{align*}
-
-So the general solution is given as,
-\[ \begin{cases}
-	x=c_1e^{-t}+c_2(2e^{4t})+(3t-\frac{11}{4})\\
-	y=c_1(-e^{-t})+c_2(3e^{4t})+(\frac{23}{8}-\frac{5t}{2})
-\end{cases} \]
-\end{proof}
+%\begin{example}
+%	Apply the method before to find a particular solution to the nonhomogenous system
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=x+y-5t+2\\
+%		\frac{dy}{dt}=4x-2y-8t-8
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The corresponding homogenous system is,
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=x+y\\
+%		\frac{dy}{dt}=4x-2y
+%	\end{cases} \]
+%
+%And we have $ f_1=-5t+2, f_2=-8t-8 $.
+%
+%The solution to the auxiliary equation of the homogenous system is $ m=-2,3 $
+%Also consider that,
+%\[ \begin{cases}
+%	(a_1-m)A+b_1B=0\\
+%	a_2A+(b_2-m)B=0
+%\end{cases} \implies 
+%\begin{cases}
+%	(1-m)A+1B=0\\
+%	4A+(-2-m)B=0
+%\end{cases}\]
+%
+%Begin by substituting $ m=-2 $
+%\[ \begin{cases}
+%	(1+2))A+B=0\\
+%	4A+(-2+2))B=0
+%\end{cases} \]
+%$ A_1=1,B_1=1 $
+%Begin by substituting $ m=3 $
+%\[ \begin{cases}
+%	(1-3)A+B=0\\
+%	4A+(-2-3)B=0
+%\end{cases} \]
+%$ A_2=4,B_2=-2 $.
+%
+%Now $ v_1'x_1+v_2'x_1=f_1, v_1'y_1+v_2'y_2=f_2 $
+%\begin{align*}
+%	v_1'e^{2t}+v_2'e^{-3t}&=-5t+2\\
+%	v_1'e^{2t}+v_2'(-4e^{-3t})&=-8t-8
+%	\intertext{Subtract second from first}
+%	v_2'5e^{-3t}&=3t+10\\
+%	v_2'&=\frac{3t+10}{5}e^{3t}
+%	\intertext{Integrate}
+%	v_2&=\frac{1}{5}e^{3t}(t+3)\\
+%	v_1'e^{2t}&=....\\
+%	\intertext{Integrate}
+%	v_1&=\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t}
+%\end{align*}
+%
+%Now we get the particular solutions as follows,
+%\[ \begin{cases}
+%	x_p=\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t}x_1(t)+(\frac{1}{5}e^{3t}(t+3))x_2(t)\\
+%	y_p=(\frac{14}{5}te^{-2t}+\frac{7}{5}e^{-2t})y_1(t)+(\frac{1}{5}e^{3t}(t+3))y_2(t)
+%\end{cases} \]
+%\end{proof}
+%
+%\begin{example}
+%	Solve the IVP,
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=x+2y+12e^{3t}\\
+%		\frac{dy}{dt}=4x+3y+18e^{2t}
+%	\end{cases}, x(0)=3,y(0)=0\]
+%	
+%\end{example}
+%\begin{proof}
+%	The associated auxiliary equation is 
+%	$ m^2-4m-5=0 $ with roots $ m_1=-1, m_2=5 $.
+%	
+%	Also consider that,
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(1-m)A+2B=0\\
+%		4A+(3-m)B=0
+%	\end{cases}\]
+%	Solve with $ m=-1 $
+%	\[
+%	\begin{cases}
+%		(1-(-1))A+2B=0\\
+%		4A+(3-(-1))B=0
+%	\end{cases}\]
+%	$ A=-B $ so take $ A_1=1, B_1=-1 $
+%	Solve with $ m=5 $
+%	\[
+%	\begin{cases}
+%		(1-(5))A+2B=0\\
+%		4A+(3-(5))B=0
+%	\end{cases}\]
+%	$ B=2A $ so take $ A_2=1,B_2=2 $.
+%	\[ \begin{cases}
+%		x_g=c_1e^{-t}+c_2e^{5t}\\
+%		y_g=c_2-e^{-t}+c_22e^{5t}
+%	\end{cases} \]
+%Now $ v_1'x_1+v_2'x_2=f_1, v_1'y_1+v_2'y_2=f_2 $
+%\begin{align*}
+%	v_1'e^{-t}+v_2'e^{5t}=12e^{3t}\\
+%	v_1'(-e^{-t})+v_2'(2e^{5t})=18e^{2t}
+%	\intertext{Add them}
+%	v_2'=\frac{12e^{3t}+18e^{2t}}{3e^{5t}}\\
+%	v_2=-2e^{-3t}-2e^{-2t}
+%	\intertext{second minus twice first}\\
+%	v_1'(-3e^{-t})=18e^{2t}-24e^{3t}\\
+%	v_1'=\frac{18e^{2t}-24e^{3t}}{-3e^{-t}}\\
+%	v_1=2e^{4t}-2e^{3t}
+%\end{align*}
+%So the particular solution is given as,
+%\begin{align*}
+%	\begin{cases}
+%		x_p=v_1(t)x_1(t)+v_2(t)x_2(t)\\
+%		y_p=v_1(t)y_1(t)+v_2(t)y_2(t)
+%	\end{cases}\\
+%\begin{cases}
+%	x_p=-4e^{2t}\\
+%	y_p=-2e^{2t}-6e^{3t}
+%\end{cases}
+%\end{align*}
+%
+%The general solution is given as,
+%\[ \begin{cases}
+%	x=c_1e^{-t}+c_2e^{5t}-4e^{2t}\\
+%	y=c_1-e^{-t}+c_22e^{5t}-2(e^{2t}-3e^{3t})
+%\end{cases} \]
+%
+%Solve for initial conditions now,
+%
+%We get $ c_1=5,c_2=-2$
+%\end{proof}
+%
+%\begin{example}
+%	\[ \begin{cases}
+%		\frac{dx}{dt}=x+2y+2t\\
+%		\frac{dy}{dt}=3x+2y-4t
+%	\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	The associated auxiliary equation is 
+%	$ m^2-3m-4=0 $ with roots $ m_1=-1, m_2=4 $.
+%	
+%	Also consider that,
+%	\[ \begin{cases}
+%		(a_1-m)A+b_1B=0\\
+%		a_2A+(b_2-m)B=0
+%	\end{cases} \implies 
+%	\begin{cases}
+%		(1-m)A+2B=0\\
+%		3A+(2-m)B=0
+%	\end{cases}\]
+%Solve with $ m=-1 $
+%\[ \begin{cases}
+%	(1-(-1))A+2B=0\\
+%	3A+(2-(-1))B=0
+%\end{cases} \]
+%$ A=-B $ so take $ A_1=1,B_1=-1 $.
+%
+%Solve with $ m=4 $
+%\[ \begin{cases}
+%	(1-(4))A+2B=0\\
+%	3A+(2-(4))B=0
+%\end{cases} \]
+%$ B=3/2A $ so pick $ A_2=2, B_2=3 $.
+%
+%The solution to the homogenous system is given as,
+%\[ \begin{cases}
+%	x_g=c_1e^{-t}+c_2(2e^{4t})\\
+%	y_g=c_1(-e^{-t})+c_2(3e^{4t})
+%\end{cases} \]
+%
+%Now $ v_1'x_1+v_2'x_2=f_1, v_1'y_1+v_2'y_2=f_2 $
+%\begin{align*}
+%	v_1'e^{-t}+v_2'(2e^{4t})=2t\\
+%	v_1'(-e^{-t})+v_2'(3e^{4t})=-4t
+%	\intertext{Add them}
+%	v_2'=\frac{-2t}{5e^{4t}}\\
+%	v_2=\frac{1}{40}e^{-4t}(4t+1)
+%	\intertext{2 second minus 3 first}\\
+%	v_1'(-5e^{-t})=-14t\\
+%	v_1'=\frac{14t}{5e^{-t}}\\
+%	v_1=\frac{14}{5}e^t(t-1)
+%\end{align*}
+%The particular solution is given by,
+%\begin{align*}
+%	\begin{cases}
+%		x_p=v_1(t)x_1(t)+v_2(t)x_2(t)\\
+%		y_p=v_1(t)y_1(t)+v_2(t)y_2(t)
+%	\end{cases}\\
+%	\begin{cases}
+%		x_p=3t-\frac{11}{4}\\
+%		y_p=\frac{23}{8}-\frac{5t}{2}
+%	\end{cases}
+%\end{align*}
+%
+%So the general solution is given as,
+%\[ \begin{cases}
+%	x=c_1e^{-t}+c_2(2e^{4t})+(3t-\frac{11}{4})\\
+%	y=c_1(-e^{-t})+c_2(3e^{4t})+(\frac{23}{8}-\frac{5t}{2})
+%\end{cases} \]
+%\end{proof}
 
 \section{Nonlinear systems}
 If $ x $ is the number of rabbits at time $ t $ then,
 \[ \frac{dx}{dt} = ax (a>0)\]
 
-as a consequence of unlimited supply of clover, if the number $ y $ of foxes is zero. Assume that the number of encounters per unit time between rabbits and foxes is jointly proportional to x and y. If we further assume that a certain proportion fo these encounters result in a rabbit being eaten then we have.
+as a consequence of unlimited supply of clover, if the number $ y $ of foxes is zero. 
 
 Assume that the number of encounters per unit time between rabbits and foxes is jointly proportional to $ x $ and $ y $. Further assume that a certain proportion of these encounters result in a rabbit being eaten, then we have,
 \begin{align*}
-	\frac{dx}{dt}=ax-bxy
-\end{align*}
-Similarly, in the absence of rabbits the foxes dies out and their increase depends on the number of their encounters with rabbits,
-\begin{align*}
-	\frac{dy}{dt}=-cy+dxy
+	\frac{dx}{dt}=ax-bxy &\ \text{ For } a,b>0
+	\intertext{Similarly, in the absence of rabbits the foxes dies out and their increase depends on the number of their encounters with rabbits,}
+	\frac{dy}{dt}=-cy+dxy &\ \text{ For } c,d>0
 \end{align*}
 
 We get the following system,
@@ -2192,17 +2358,16 @@ the parametric equations of a curve in the $ xy- $plane, then we can find the re
 Eliminating $ t $ in \ref{volterra} we get
 \[ \frac{(a-by)dy}{y}=\frac{(c-dx)dx}{x} \]
 
-?????
+Integrating, we get
+\[ a \log y -by = -c \log x + dx + \log K \]
 
 Where the constant $ K $ in terms of initial values is given by,
 \begin{align}
 	K=x_0^cy_0^ae^{-dx_0-by_0} 
 \end{align} 
-and \begin{align}
-	z=y??
-\end{align}
 
-if the rabbit and fox population is \begin{align}
+
+If the rabbit and fox population is \begin{align}
 	x=\frac{c}{d}, y=\frac{a}{b}
 \end{align}  then system \ref{volterra} os satisfied and we have $ dx/dt=0 $ and $ dy/dt=0 $ so there is no increase or decrease in $ x $ or $ y $. The population above is called equilibrium population, for $ x,y $ can maintain themselves indefinitely at these constant levels.
 
@@ -2228,111 +2393,111 @@ Eliminating $ t $ we get,
 Whose solution is \[ ad^2X^2+b^2cY^2=C^2 \]
 This is a family of ellipses surrounding the origin in the $ XY $ plane.
 
-\begin{example}
-	Find solution to \[
-	\begin{cases}
-		\frac{dx}{dy}=x\\
-		\frac{dy}{dt}=y
-	\end{cases}  \]
-\end{example}
-\begin{proof}
-	Consider the auxiliary equation associated to the above system,
-	\begin{align*}
-		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
-		m^2-2m+1&=0
-	\end{align*}
-	So we have $ m_1=m_2=1 $.
-Also consider that
-\[ \begin{cases}
-	(a_1-m)A+b_1B=0\\
-	a_2A+(b_2-m)B=0
-\end{cases} \implies 
-\begin{cases}
-	0+0=0\\
-	0+0=0
-\end{cases}\]
-Which on solving gives $ A=0,B=0 $
-So we have,
-\[ \begin{cases}
-	x_1=2e^{3t}\\
-	y_2=-e^{3t}
-\end{cases} \]
-
-We know the second solution should be of the form
-\[ \begin{cases}
-	x_2=(A_1+A_2t)e^{t}\\
-	y_2=(B_1+B_2t)e^{t}
-\end{cases} \]
-Assume this is the solution and substitute it in the original differential equation
-\[ \begin{cases}
-	e^t (A_2 t + A_1 + A_2)=5((A_1+A_2t)e^{t})+4((B_1+B_2t)e^{t})\\
-	e^t(B_2t+B_1+B_1)=-(A_1+A_2t)e^{t}+(B_1+B_2t)e^{t}
-\end{cases} \]
-
-We get the general solution as 
-\[ \begin{cases}
-	x=c_1e^t\\
-	y=c_2e^t 
-\end{cases} \]
-
-Show that any second order equation obtained from the system in a) is not equivalent to this system, in the sense that it has solutions that are not part of any solution to the system ????????
-higher order equations are equivalent to systems, the reverse is not true ?????
-\end{proof}
-
-\begin{example}
-	Show that \[ \begin{cases}
-		x=2e^{4t}\\
-		y=3e^{4t}
-	\end{cases}, \begin{cases}
-	x=e^{-t}\\
-	y=-e^{-t}
-\end{cases}\] are solutions to the homogenous system \[ \begin{cases}
-\frac{dx}{dt}=x+2y\\
-\frac{dy}{dt}=3x+2y
-\end{cases} \]
-\end{example}
-\begin{proof}
-	Check first,
-	\begin{align*}
-		8e^{4t}&=2e^{4t}+6e^{4t}\\
-		12e^{4t}&=6e^{4t}+6e^{4t}
-	\end{align*}
-	Check second,
-	\begin{align*}
-		-e^{-t}&=e^{-t}-2e^{-t}\\
-		e^{-t}&=3e^{-t}-2e^{-t}
-	\end{align*}
-	They are also both linearly independent since their ratios aren't constant so their linear combination forms the general solution.
-	
-	Also check linear independence with Wronskian
-	
-	Then show that \[ \begin{cases}
-		x=3t-2\\
-		y=-2t+3
-	\end{cases} \] is a particular solution of the non-homogenous system 
-\[ \frac{dx}{dt}=x+2y+t-1\\
-\frac{dy}{dt}=3x+2y-5t-2 \] and write its general solution. This was done in practical 3.
-
-Plug in $ x_p,y_p $ into the given differential equation,
-\begin{align*}
-	\frac{dx}{dt}&=x+2y+t-1\\
-	3&=3t-2+2(-2t+3)+t-1=3\\
-	\frac{dy}{dt}&=3x+2y-5t-2\\
-	-2&=3(3t-2)+2(-2t+3)-5t-2=-2
-\end{align*}
-So $ x_p,y_p $ form a particular solution of the given non-homogenous system.
-
-It is evident that $ x_1,y_1 $ and $ x_2,y_2 $ are linearly independent (since their ratio is not a constant). So we have the general solution of the given non-homogenous system as,
-\[ \begin{cases}
-	x_g&=c_12e^{4t}+c_2e^{-t}+3t-2\\
-	y_g&=c_13e^{4t}+c_2(-e^{-t})-2t+3
-\end{cases} \]
-\end{proof}
+%\begin{example}
+%	Find solution to \[
+%	\begin{cases}
+%		\frac{dx}{dy}=x\\
+%		\frac{dy}{dt}=y
+%	\end{cases}  \]
+%\end{example}
+%\begin{proof}
+%	Consider the auxiliary equation associated to the above system,
+%	\begin{align*}
+%		m^2-(a_1+b_2)m+(a_1b_2-a_2b_1)&=0\\
+%		m^2-2m+1&=0
+%	\end{align*}
+%	So we have $ m_1=m_2=1 $.
+%Also consider that
+%\[ \begin{cases}
+%	(a_1-m)A+b_1B=0\\
+%	a_2A+(b_2-m)B=0
+%\end{cases} \implies 
+%\begin{cases}
+%	0+0=0\\
+%	0+0=0
+%\end{cases}\]
+%Which on solving gives $ A=0,B=0 $
+%So we have,
+%\[ \begin{cases}
+%	x_1=2e^{3t}\\
+%	y_2=-e^{3t}
+%\end{cases} \]
+%
+%We know the second solution should be of the form
+%\[ \begin{cases}
+%	x_2=(A_1+A_2t)e^{t}\\
+%	y_2=(B_1+B_2t)e^{t}
+%\end{cases} \]
+%Assume this is the solution and substitute it in the original differential equation
+%\[ \begin{cases}
+%	e^t (A_2 t + A_1 + A_2)=5((A_1+A_2t)e^{t})+4((B_1+B_2t)e^{t})\\
+%	e^t(B_2t+B_1+B_1)=-(A_1+A_2t)e^{t}+(B_1+B_2t)e^{t}
+%\end{cases} \]
+%
+%We get the general solution as 
+%\[ \begin{cases}
+%	x=c_1e^t\\
+%	y=c_2e^t 
+%\end{cases} \]
+%
+%Show that any second order equation obtained from the system in a) is not equivalent to this system, in the sense that it has solutions that are not part of any solution to the system ????????
+%higher order equations are equivalent to systems, the reverse is not true ?????
+%\end{proof}
+%
+%\begin{example}
+%	Show that \[ \begin{cases}
+%		x=2e^{4t}\\
+%		y=3e^{4t}
+%	\end{cases}, \begin{cases}
+%	x=e^{-t}\\
+%	y=-e^{-t}
+%\end{cases}\] are solutions to the homogenous system \[ \begin{cases}
+%\frac{dx}{dt}=x+2y\\
+%\frac{dy}{dt}=3x+2y
+%\end{cases} \]
+%\end{example}
+%\begin{proof}
+%	Check first,
+%	\begin{align*}
+%		8e^{4t}&=2e^{4t}+6e^{4t}\\
+%		12e^{4t}&=6e^{4t}+6e^{4t}
+%	\end{align*}
+%	Check second,
+%	\begin{align*}
+%		-e^{-t}&=e^{-t}-2e^{-t}\\
+%		e^{-t}&=3e^{-t}-2e^{-t}
+%	\end{align*}
+%	They are also both linearly independent since their ratios aren't constant so their linear combination forms the general solution.
+%	
+%	Also check linear independence with Wronskian
+%	
+%	Then show that \[ \begin{cases}
+%		x=3t-2\\
+%		y=-2t+3
+%	\end{cases} \] is a particular solution of the non-homogenous system 
+%\[ \frac{dx}{dt}=x+2y+t-1\\
+%\frac{dy}{dt}=3x+2y-5t-2 \] and write its general solution. This was done in practical 3.
+%
+%Plug in $ x_p,y_p $ into the given differential equation,
+%\begin{align*}
+%	\frac{dx}{dt}&=x+2y+t-1\\
+%	3&=3t-2+2(-2t+3)+t-1=3\\
+%	\frac{dy}{dt}&=3x+2y-5t-2\\
+%	-2&=3(3t-2)+2(-2t+3)-5t-2=-2
+%\end{align*}
+%So $ x_p,y_p $ form a particular solution of the given non-homogenous system.
+%
+%It is evident that $ x_1,y_1 $ and $ x_2,y_2 $ are linearly independent (since their ratio is not a constant). So we have the general solution of the given non-homogenous system as,
+%\[ \begin{cases}
+%	x_g&=c_12e^{4t}+c_2e^{-t}+3t-2\\
+%	y_g&=c_13e^{4t}+c_2(-e^{-t})-2t+3
+%\end{cases} \]
+%\end{proof}
 
 \chapter{Partial differential equations}
 
 \begin{chapquote}{Gauss}
-	``Stop studying differential equations.''
+	``Differential equations is mad boring yo.''
 \end{chapquote}
 
 
@@ -2349,150 +2514,1001 @@ It is evident that $ x_1,y_1 $ and $ x_2,y_2 $ are linearly independent (since t
 \end{definition}
 Differential equations that use partial derivates of a function of two or more variables are called PDEs.
 
-\begin{example}
-	Reduce to PDE $ z=(x-a)^2+(y-b)^2 $
-\end{example}
-\begin{proof}
-	\[ \frac{\partial z}{\partial x} = 2(x-a)\]
-	\[ \frac{\partial z}{\partial y}=2(y-b) \]
-\end{proof}
+%\begin{example}
+%	Reduce to PDE $ z=(x-a)^2+(y-b)^2 $
+%\end{example}
+%\begin{proof}
+%	\[ \frac{\partial z}{\partial x} = 2(x-a)\]
+%	\[ \frac{\partial z}{\partial y}=2(y-b) \]
+%\end{proof}
+%
+%\begin{example}
+%	Reduce to PDE $ z=a(x+y)+b $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		z_x=a, z_y=a
+%	\end{align*}
+%So $ z_x,z_y $
+%\end{proof}
+%
+%\begin{proof}
+%	$ z=ax+by+ab $
+%\end{proof}
+%\begin{proof}
+%	$ z_x=a, z_y=b \implies z=xz_x+yz_y+z_xz_y$
+%\end{proof}
+%\begin{example}
+%	$ z=axe^y+\frac{1}{2}a^2e^{2y}+b$
+%\end{example}
+%\begin{proof}
+%	content...
+%\end{proof}
+%\begin{example}
+%	$ z=(x^2+a) (y^2+b)$
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		z_x=2x(y^2+b)\\
+%		z_y=2y(x^2+a)
+%	\end{align*}
+%So \[ z=\frac{z_y}{2y}\frac{z_x}{2x} \]
+%\end{proof}
+%
+%\begin{example}
+%	$ z=ae^{by}\sin(bx) $
+%\end{example}
+%\begin{proof}
+%	$ z_{yy}=ab^2e^{by} \sin(bx), z_{xx}=-ab^2e^{by}\sin(bx) $
+%	So $ z_{yy}=-z_{xx} $
+%\end{proof}
+%
+%\begin{example}
+%	fnd the differential equation of all spheres of radius $ r $ around having center in the $ x,y $ plane.
+%\end{example}
+%\begin{proof}
+%	$ (x-a)^2+(y-b)^2+z^2=r^2 $
+%	So the equation is
+%	\[ z^2=r^2-(x-a)^2-(y-b)^2\]
+%	\begin{align*}
+%		z_x=2(x-a)+2zz_x=0 \implies (x-a)=-zz_x\\
+%		(y-b)=-zz_y
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	$ z=x^2-y^2 $
+%\end{example}
+%\begin{proof}
+%	$ x=uv, y=u+v $ so,$ \frac{\partial z}{\partial u}=2uv^2-2u-2v $
+%	and $ \frac{\partial z}{\partial u} =2vu^2-2v-2u$
+%	$ \frac{\partial z}{\partial u} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial u}+\frac{\partial z}{\partial y}+\frac{\partial y}{\partial u}$\\
+%	$ \frac{\partial z}{\partial x}=2x, \frac{\partial z}{\partial y}=-2y, \frac{\partial x}{\partial u} =v, \frac{\partial y}{\partial u}=1$
+%	
+%	
+%\end{proof}
+%
+%\begin{example}[Review-1]
+%	Find a PDE by eliminating $ a,b,c $ from $ \frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2} =1$.
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		z&= \pm \frac{c\sqrt{a^2b^2-b^2x^2-a^2y^2}}{ab}
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	Form a PDE by eliminating the arbitrary function $ \phi  $ from $ \phi(x+y+z,x^2+y^2-z^2) =0$
+%\end{example}
+%\begin{proof}
+%	Let $ u=x+y+z, v=x^2+y^2-z^2$.
+%	
+%	$ \phi(u,v) =0$
+%	Differentiate the above wrt $ x $.
+%	\[ \frac{\partial \phi }{\partial u} \left[\frac{\partial u}{\partial x}+\frac{\partial u}{\partial z}\frac{\partial z}{\partial x}\right]+\frac{\partial \phi }{\partial v} \left[\frac{\partial v}{\partial x}+\frac{\partial v}{\partial z}\frac{\partial z}{\partial x}\right]=0\]
+%	\[ \implies \frac{\partial \phi }{\partial u} \left[1+\frac{\partial z}{\partial x}\right]+\frac{\partial \phi}{\partial v} \left[2x - 2z \frac{\partial z}{\partial x}\right]=0\]
+%	\[ \frac{\phi_u}{\phi)u} = \frac{2(zz_x-x)}{1+z_x}\]\\
+%	Differetiate the $ \phi(u,v) =0$ eq wrt $ y $
+%	and we get 
+%	\[ \frac{\phi_u}{\phi_v} = ?????\]
+%	equate the two.
+%	
+%\end{proof}
+%
+%\begin{example}
+%	Eliminate $ F $ from $ F(xy+z^2,x+y+z) =0$
+%	
+%\end{example}
+%\begin{proof}
+%	$ F(u,v) =0$
+%	differentiate with x,
+%	\[ \frac{\partial F}{\partial u} \left[\frac{\partial u}{\partial x}+ \frac{\partial u}{\partial z}\frac{\partial z}{\partial x}\right] + \frac{\partial F}{\partial v}\left[\frac{\partial v}{\partial x}+\frac{\partial v}{\partial z}\frac{\partial z}{\partial x}\right]=0 \]
+%	\[ \implies \frac{F_u}{F_v} =\frac{-(1+p)}{y+2zp}, \text{where, } p=\frac{\partial z}{\partial x}\]
+%	differentiate with y,
+%	\[ \frac{num}{den} \]
+%\end{proof}
+%\begin{example}
+%	$ f $ from $ x+y+z=f(x^2+y^2+z^2) $ take $ u=x^2+y^2+z^2 $
+%	
+%\end{example}
+%\begin{proof}
+%	differentiate with x,
+%	\[ 1+\frac{\partial z}{\partial x}=\frac{d f}{du} \left[\frac{\partial u}{\partial x}+\frac{\partial u}{\partial z}\frac{\partial z}{\partial x}\right] \implies 1+p=\frac{df}{du} \left[2x+2zp\right]\]
+%	\[ \implies \frac{df}{du} =\frac{1+p}{2(x+pz)}\]
+%	Differentiate wrt y,
+%	\[ \frac{df}{du} = \frac{1+q}{2(y+qz)}\]
+%	combining them you get $ p(y-z)+q(z-x) =??$
+%\end{proof}
+%\begin{example}
+%	$ f $ from $ z=f(x^2-y^2) $
+%\end{example}
+%\begin{proof}
+%	Let $ u=x^2-y^2 \implies \frac{\partial u }{\partial x}=2x, \frac{\partial u}{\partial y}=-2y$
+%	
+%	$$ z=f(u) \implies \frac{\partial z}{\partial x} = f'(u) \frac{\partial u}{\partial x}=f'(u)2x $$
+%	\[ ?????? \]
+%\end{proof}
+%\begin{example}
+%	$ f $ from $ z=f\left(\frac{y}{x}\right) $
+%\end{example}
+%\begin{proof}
+%	$ xp+yq=0 $
+%\end{proof}
+%
+%\begin{example}
+%	$ z=f(x)+g(y) $
+%\end{example}
+%\begin{proof}
+%	$ z_x=f'(x), z_y=g'(y) $ and $ z_{xy}=z_{yx}=0 $???????/
+%\end{proof}
+%
+%\begin{example}
+%	$ z=f(x^2+3y) +g(x^2-3y)$
+%\end{example}
+%\begin{proof}
+%	$$ z_x=f'(x^2+3y)\frac{\partial (x^2+3y)}{\partial x} + g'(x^2-3y) \frac{\partial (x^2-3y)}{\partial x}$$
+%	\[ z_x=2x f'(x^2+3y)+ 2x g'(x^2-3y) \]
+%	\[ z_y=3 f'(x^2+3y)-3 g'(x^2-3y) \]
+%	
+%	
+%	answer is $ qr-qp/x-4x^2t=0 $
+%\end{proof}
+%
+%\begin{example}
+%	Find PDE by eliminating $ f, F $ from the equation $ y=f(x- at)+F(x+at) $ take $ y=y(x,t) $
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		y_x&=f'(x-at)+F'(x+at)\\
+%		y_t&=-f'(x-at)a+F'(x+at)a
+%	\end{align*}
+%	???
+%\end{proof}
 
-\begin{example}
-	Reduce to PDE $ z=a(x+y)+b $
-\end{example}
-\begin{proof}
-	\begin{align*}
-		z_x=a, z_y=a
-	\end{align*}
-So $ z_x,z_y $
-\end{proof}
-
-\begin{proof}
-	$ z=ax+by+ab $
-\end{proof}
-\begin{proof}
-	$ z_x=a, z_y=b \implies z=xz_x+yz_y+z_xz_y$
-\end{proof}
-\begin{example}
-	$ z=axe^y+\frac{1}{2}a^2e^{2y}+b$
-\end{example}
-\begin{proof}
-	content...
-\end{proof}
-\begin{example}
-	$ z=(x^2+a) (y^2+b)$
-\end{example}
-\begin{proof}
-	\begin{align*}
-		z_x=2x(y^2+b)\\
-		z_y=2y(x^2+a)
-	\end{align*}
-So \[ z=\frac{z_y}{2y}\frac{z_x}{2x} \]
-\end{proof}
-
-\begin{example}
-	$ z=ae^{by}\sin(bx) $
-\end{example}
-\begin{proof}
-	$ z_{yy}=ab^2e^{by} \sin(bx), z_{xx}=-ab^2e^{by}\sin(bx) $
-	So $ z_{yy}=-z_{xx} $
-\end{proof}
-
-\begin{example}
-	fnd the differential equation of all spheres of radius $ r $ around having center in the $ x,y $ plane.
-\end{example}
-\begin{proof}
-	$ (x-a)^2+(y-b)^2+z^2=r^2 $
-	So the equation is
-	\[ z^2=r^2-(x-a)^2-(y-b)^2\]
-	\begin{align*}
-		z_x=2(x-a)+2zz_x=0 \implies (x-a)=-zz_x\\
-		(y-b)=-zz_y
-	\end{align*}
-\end{proof}
-
-\begin{example}
-	$ z=x^2-y^2 $
-\end{example}
-\begin{proof}
-	$ x=uv, y=u+v $ so,$ \frac{\partial z}{\partial u}=2uv^2-2u-2v $
-	and $ \frac{\partial z}{\partial u} =2vu^2-2v-2u$
-	$ \frac{\partial z}{\partial u} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial u}+\frac{\partial z}{\partial y}+\frac{\partial y}{\partial u}$\\
-	$ \frac{\partial z}{\partial x}=2x, \frac{\partial z}{\partial y}=-2y, \frac{\partial x}{\partial u} =v, \frac{\partial y}{\partial u}=1$
-	
-	
-\end{proof}
 
 \section{Classification of Second order PDE}
 Second order PDE are usually divided into three types.
-\begin{definition}[General form of a second order PDE]
-	\[ A u_{xx}+2B u_{xy}+C u_{yy}+Du_x+E u_y +F=0 \]
+\begin{definition}[General form of a second order PDE]\label{def:general2pde}
+	\[ A u_{xx}+B u_{xy}+C u_{yy}+Du_x+E u_y +Fu+G=0 \]
 \end{definition}
-Linear second order PDEs are classified according to the properties of the following $ 2\times 2 $ matrix,
-\begin{align}\label{def:matrix}
-	Z=\begin{bmatrix}
-		A & B\\
-		C & D
-	\end{bmatrix}
-\end{align}
-
+Linear second order PDEs are classified according to the properties of its discriminant $ d=B^2-4AC $
 \subsection{Elliptic PDE}
-If $ Z $ (eq. \ref{def:matrix}) has determinant strictly greater than $ 0 $, it is called an elliptic PDE, i.e. $ \det Z > 0 $.
+If $ d<0\, \forall (x,y) \in R \in \R^2$
 
 \subsection{Hyperbolic PDE}
-If $ Z $ (eq. \ref{def:matrix}) has determinant strictly lesser than $ 0 $, it is called an hyperbolic PDE, i.e. $ \det Z < 0 $.
+If if $ d>0\, \forall (x,y) \in R \in \R^2 $
 
 \subsection{Parabolic PDE}
-If $ Z $ (eq. \ref{def:matrix}) has determinant equal to $ 0 $, it is called an parabolic PDE, i.e. $ \det Z =f 0 $.
+If $ d=0\, \forall (x,y) \in R \in \R^2 $.
+
+%\begin{example}
+%	Classify $ u_xx+u_yy=0. $(Laplace equation)
+%\end{example}
+%\begin{proof}
+%	$ A=1,B=0,C=1, $ so $ d=b^2-4ac=-4<0 $ is elliptic.
+%\end{proof}
+%
+%\begin{example}
+%	Classify $ u_{xx}=u_t $ (Heat equation)
+%\end{example}
+%\begin{proof}
+%	$ A=1,B=C=0,  $ so $ d=0 $ and its parabolic.
+%\end{proof}
+%\begin{example}
+%	$ u_{xx}=u_{tt} $ Wave equation
+%\end{example}
+%\begin{proof}
+%	$ A=1,B=0,C=-1 $ and discriminant is $ 4 $ so its hyperbolic.
+%\end{proof}
+%
+%\begin{example}
+%	$ u_{xx}+xu_{yy}=0 $ (Tricomi equation)
+%\end{example}
+%\begin{proof}
+%	$ A=1, B=0, C=x $, $ d=B^2-4AC =-4x$
+%	so its hyperbolic fi $ x<0 $ and parabolic if $ x=0 $ and elliptic if $ x>0 $
+%\end{proof}
+%
+%\begin{example}
+%	Find eigenvalues of $ A=\begin{pmatrix}
+%		2 & 3\\
+%		0 & 5
+%	\end{pmatrix} $
+%\end{example}
+%\begin{proof}
+%	content...
+%\end{proof}
+
+\section{Classification with more than two variables}
+Let $ u=u(x_1,x_2,\cdots,x_n) $Consider the second order PDE,
+\[ \sum_{i=1}^n \sum_{j=1}^n A_{ij}\frac{\partial^2 u}{\partial x_i \partial x_j} + \sum_{i=1}^n B_i \frac{\partial u}{\partial x_i}+ Cu+D=0\]
+Assume $ A=[A_{ij}] $ is symmetric then $ A $ is diagonalisable with real characteristic values $ \lambda_1, \lambda_2, \cdots, \lambda_n  $.
+
+\begin{enumerate}
+	\item If all $ \lambda_i>0 $ or $ \lambda_i<0 $ then its elliptic.
+	\item If one or more $ \lambda_i=0 $ then parabolic.
+	\item If only one $  \lambda_i>0$ or $ \lambda_i<0 $ and all remaining are of opposite sign then it is hyperbolic.	
+\end{enumerate}
+Compute the characteristic values as solutions to $ \det (A-\lambda I) =0$
+
+\section{Canonical form}
+Equation \ref{def:general2pde} obtains a simple form when the variables $ (x,y) $ are transformed to $ (\xi, \eta) $ under the transformation $ \xi=\xi(x,y), \eta=\eta(x,y)$. We assume that $ \xi, \eta  $ are twice differentiable and their Jacobian is non-zero, i.e., \[ J=\frac{\partial(\xi ,\eta )}{\partial (x,y)} = \begin{vmatrix}
+	\frac{\partial \xi }{\partial x} & \frac{\partial \eta }{\partial y}\\
+	\frac{\partial \eta }{\partial x} & \frac{\partial \eta}{\partial y}
+\end{vmatrix} \]
+The non zero Jacobian is required to satisfy the inverse function theorem \footnote{For $ f: \R^n \to \R^n $, and $ f\in C^1 $. If the Jacobian is invertible (i.e. not zero) at some point $ p $ then $ f $ has a diffeomorphism in some ball centred at $ p $ . Note this is only local invertibility, the global case is a famous open problem.}.
+
+Using the chain rule we get,
+\begin{align*}
+	u_{x}&=u_\xi \xi_x + u_\eta \eta_x\\
+	u_y&=u_\xi \xi_y+u_\eta \eta_y\\
+	u_{xx}&=u_{\xi \xi}\xi_x^2+2u_{\xi \eta}\xi_x \eta_x+u_{\eta \eta}\eta_x^2+u_\xi \xi_{xx}+u_\eta \eta_{xx}\\
+	u_{yy}&=u_{\xi \xi}\xi_y^2+2u_{\xi \eta}\xi_y\eta_y+u_{\eta \eta}\eta_y^2+u_\xi \xi_{yy}+u_\eta n_{yy}\\
+	u_{xy}&=u_{\xi\xi}\xi_x\xi_y+u_{\xi \eta}(\xi_x\eta_y+\xi_y\eta_x)+u_{\eta \eta}\eta_x\eta_y+u_\xi\xi_{xy}+u_{\eta}\eta_{xy}
+\end{align*}
+
+We pick $ \xi, \eta  $ as curves that satisfy,
+\[ \frac{dy}{dx} +\lambda_i=0\] where $ \lambda_i  $ are roots of the equation $ A\lambda^2+B\lambda +C=0 $. 
+
+\[ \implies \frac{dy}{dx} =\frac{B\pm \sqrt{B^2-4AC}}{2A}\]
+
+If the two curves obtained are complex conjugates (happens when elliptic) pick $ \xi $ as the real part and $ \eta  $ as the complex part.
+
+
+
+%\begin{example}
+%	Find $ \xi, \eta $ for $ 2u_{xx}-3u_{yy}= 0$
+%\end{example}
+\subsection{Hyperbolic}
+The hyperbolic equation has two possible canonical forms
+\[ u_{\xi \eta}+lots=0 \]
+or\[ u_{\xi \xi}-u_{\eta \eta}+lots=0 \]
+Where lots denotes lower order terms.
+
+%\begin{proof}
+%	$A= 2,B=0,C=-3 $ so $ B^2-4AC=$ so its hyperbolic.
+%	
+%	Consider $ A\lambda^2+B \lambda +c=0 \implies 2\lambda^2-3\lambda=0$ 
+%	then dy/dx+$ \lambda_i=0 $ gives xi eta.
+%\end{proof}
+%
+\subsection{Parabolic}
+The parabolic equation has the following canonical form
+\[ u_{\xi \xi}+lots=0 \]
+%\begin{example}
+%	Reduce $ u_{xx}+2u_{xy}+u_{yy}=0 $
+%\end{example}
+%\begin{proof}
+%	$ A=1,B=2, C=1 $ so $ B^2-4AC =0$
+%	So take $ \lambda^2 A+ \lambda B + C=0 $
+%	We get $ \lambda=-1=-1 $ so $ \frac{dy}{dx} =-1 \implies dy+dx=0$ so $ y+x=c $. Call this $ \xi  $ just use $ y-x $ as $ \eta $
+%	
+%	Jacobian is \[ \begin{bmatrix}
+%		y & -y\\
+%		x & x
+%	\end{bmatrix} =-2\]
+%
+%$ u_{xx}=??, u_{xy}=??, u_{yy}=?? $
+%
+%\begin{align*}
+%	u_{xx}&=u_{\xi \xi}(x+y)^2+ 2 u_{\xi \eta}(x+y)(x-y)+u_{\eta \eta} (x-y)^2 + u_\xi \xi_{xx}+u_\eta \eta_{xx}\\
+%\end{align*}
+%\[ \begin{cases}
+%	u_{xx}=u_{\xi \xi}+2 u_\xi \eta + u_{\eta \eta}\\
+%	u_{yy}
+%\end{cases} \]
+%
+%Finally $ 4u_{\xi \xi}=0 $
+%
+%$ u_{\xi \xi}=0 $ this is the canoncial form $ \frac{\partial^2 u}{\partial \xi^2} =0$
+%\end{proof}
+%
+\subsection{Elliptic}
+The elliptic equation has the following canonical form
+\[ u_{\xi \xi}+u_{\eta \eta}+lots=0	 \]
+%\begin{example}
+%	Reduce $ u_{xx} +x^2u_{yy}=0, x\neq0$ to canonical form.
+%\end{example}
+%\begin{proof}
+%	$ A=1,B=0, C=x^2 $ so $ B^2-4AC=-x^2<0 $ so elliptic.
+%	
+%	$ A \lambda^2+B\lambda +C=0 \implies \lambda^2+x^2=0 $ so we get $ \lambda=-ix, ix $
+%	
+%	method 1\\
+%	$ \frac{dy}{dx}=\pm ix $ get $ \xi=y+ix^/2 $  and $ \eta=y-ix^2/2 $
+%	..... $ \implies 4x^2 u_{\xi}\eta +i(u_\xi 0 u_\eta) =0$ so substitute $ x^2 $ and get $ x^2=(\eta-\xi)i $
+%	and $ u_{\xi \eta}=\frac{u_\eta - u_\xi}{4(\eta-\xi)} $
+%	
+%	
+%	
+%	method 2\\
+%	$ \xi=y, \eta=x^2/2 $ and solve
+%\end{proof}
+%
+%\begin{example}[Review-6]
+%	Find canonical form of the equation $ 2u_{xx}-5u_{xy}+2u_{yy}+3u=0 $
+%\end{example}
+%\begin{proof}
+%	$ A=2,B=-5,C=2 $ so $ d=9 $ its hyperbolic and $ \lambda=2,1/2 $
+%	
+%	$ \frac{dy}{dx}=-2 and \frac{dy}{dx}=-1/2 $
+%	so pick $ \xi=y+2x, \eta=y+1/2x$
+%	
+%	\begin{align*}
+%		\xi_x=-\sqrt{-x}, \xi_y=1, \xi_{xx}=\frac{1}{2\sqrt{-x}},\xi_{yy}=0\\
+%		\eta_x=\sqrt{-x}, \eta_y=1, \eta_{xx}=\frac{-1}{2\sqrt{-x}},\eta_{yy}=0
+%	\end{align*}
+%	
+%	\begin{align*}
+%		u_{xx}&=u_{\xi \xi } \xi_x^2+2u_{\xi \eta}\xi_x\eta_x+u_{\eta \eta} \eta_x^2+u_\xi \xi_{xx}+u_\eta \eta_{xx}\\
+%		&=
+%	\end{align*}
+%	\begin{align*}
+%		u_{yy}&=u_{\xi \xi } \xi_y^2 + 2u_{\xi \eta }\xi_y \eta_y + u_{\eta \eta }\eta_y^2+u_\xi \xi_{yy}+u_\eta \eta_{yy}\\
+%		&=
+%	\end{align*}
+%\end{proof}
 
 \section{One dimensional wave equation}
-\begin{definition}[One dimension wave equation]
-	The one dimensional wave equation is given by,\[ a^2 \frac{\partial^2y}{\partial x^2}=\frac{\partial^2y}{\partial t^2} \]
-	where $ a $ is a positive constant.
-\end{definition}
-
 \subsection{Vibration of an infinite string}
+\begin{definition}[Infinite one dimension wave equation]\label{1dimwave}
+	The one dimensional wave equation is given by,
+	\begin{align}
+		PDE:& u_{tt}=c^2u_{xx} & (c\neq0 )(-\infty<x<\infty,t\geq 0)\\
+		IC:& u(x,0)=f(x) & (-\infty<x<\infty)\\
+		&u_t(x,0)=g(x) & (-\infty<x<\infty)
+	\end{align}
+	
+	where $ c $ is a positive constant. 
+\end{definition}
+\begin{proof}
+	First re-arrange in standard form,
+	\[ c^2u_{xx}-u_{tt}=0 \]
+	Note that $ A=c^2,B=0,C=-1 $ so $ d= 4c^2>0 $ if $ c\neq0  $.
+	
+	So the equation is of hyperbolic type. We will now reduce it to the canonical form.
+	
+	Consider $ A\lambda^2+B\lambda+C=0\implies \lambda^2c^2-1=0 \implies \lambda=\pm \frac{1}{c} $.
+	
+	Proceed to find the required characteristic curves as follows,
+	$$ \frac{dt}{dx}\pm\frac{1}{c}=0 $$ so the curves are $ ct\pm x=k $.
+	Pick $ \xi=x+ct, \eta=x-ct $
+	
+	\begin{align*}
+		\xi_x=1, \xi_t=c, \xi_{xx}=\xi_{xt}=\xi_{tt}=0\\
+		\eta_{x}=1, \eta_t=-c, \eta_{xx}=\eta_{xt}=\eta_{tt}=0
+	\end{align*}
+
+	Using the chain rule we get,
+	\begin{align*}
+		u_{xx}&=u_{\xi \xi}\xi_x^2+2u_{\xi \eta}\xi_x \eta_x+u_{\eta \eta}\eta_x^2+u_\xi \xi_{xx}+u_\eta \eta_{xx}\\
+		&=u_{\xi\xi}+2u_{\xi \eta}+u_{nn}\numberthis \label{eq:inf4}\\
+		u_{tt}&=u_{\xi \xi}\xi_t^2+2u_{\xi \eta}\xi_t\eta_t+u_{\eta \eta}\eta_t^2+u_\xi \xi_{tt}+u_\eta n_{tt}\\
+		&=c^2u_{\xi \xi}-2c^2u_{\xi \eta}+c^2u_{\eta \eta}=c^2(u_{\xi \xi}-2u_{\xi \eta}+u_{\eta \eta}) \numberthis \label{eq:inf5}
+	\end{align*}
+	
+	
+	Canonical form is
+	\begin{align}\label{eq:inf6}
+		u_{\xi \eta}=0
+	\end{align}
+	
+	Now integrate \ref{eq:inf6} w.r.t. $ \xi  $ then $ \eta $
+	\begin{align}\label{eq:inf7}
+		 u(\xi, \eta)=\phi(\eta)+\psi(\xi) 
+	 \end{align}
+	where $ \phi, \psi $ are some arbitrary functions of $ \eta , \xi$.
+	
+	Now re-substitute $ \eta=x-ct, \xi=x+ct $,
+	\begin{align}\label{eq:inf8}
+		u(x,t)=\phi(x-ct)+\psi(x+ct)
+	\end{align}
+	
+	No we use the first initial condition,
+	\begin{align}\label{eq:inf9}
+		 u(x,0)=f(x)\implies \phi(x)+\psi(x)=f(x)
+	\end{align}
+	
+	Now differentiate \ref{eq:inf8} w.r.t. $t$,
+	\begin{align*}
+		u_t(x,t)=-c\phi'(x-ct)+c\psi'(x+ct)
+	\end{align*}   Put $ t=0 $ and apply the other initial condition.
+	\begin{align}\label{eq:inf10}
+		u_t(x,0) =g(x)\implies -c\phi'(x-ct)+c\psi'(x+ct)=g(x)
+	\end{align}
+	Integrate the above from $ x_0 $ to $ x $ ($ x_0 $ is choosen in such a manner that $ \phi'(x_0)-\psi'(x_0)=0 $) and you get 
+	\begin{align}\label{eq:inf11}
+		-c\phi(x)+c\psi(x)=\int_{x_0}^{x}g(\omega)\, d\omega
+	\end{align} 
+	
+	Now adding and subtracting \ref{eq:inf9} and \ref{eq:inf11} you get
+	
+	\begin{align*}
+		\phi(x)=\frac{1}{2}f(x)-\frac{1}{2c}\int_{x_0}^x g(\omega)\, d\omega \\
+		\psi(x)=\frac{1}{2}f(x)+\frac{1}{2c}\int_{x_0}^x g(\omega)\, d\omega
+	\end{align*}
+	Furthermore
+	\begin{align*}
+		\phi(x-ct)=\frac{1}{2}f(x-ct)-\frac{1}{2c}\int_{x_0}^{x-ct} g(\omega)\, d\omega \\
+		\psi(x+ct)=\frac{1}{2}f(x+ct)+\frac{1}{2c}\int_{x_0}^{x+ct} g(\omega)\, d\omega
+	\end{align*}
+
+So the solution is 
+\[ u(x,t)=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d \omega \]
+\end{proof}
+
+%\begin{example}
+%	\begin{align}
+%		PDE:& u_{tt}=c^2u_{xx}\\
+%		ID:& u(x,0)=\sin(x)=f(x)\\
+%		&u_t(x,0)=0=g(x)
+%	\end{align}
+%\end{example}
+%\begin{proof}
+%	Its a one dimension wave equation so the solution is 
+%
+%	\begin{align*}
+%		u(x,t)&=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-c}^{x+ct}g(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{2}[\sin(x-ct)+\sin(x+ct)]
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align}
+%		PDE:& u_{tt}=9u_{xx}\\
+%		IC:& u(x,0)=\sin(x)=f(x)\\
+%		& u_t(x,0)=\cos(x)=g(x)
+%	\end{align}
+%\end{example}
+%\begin{proof}
+%		Its a one dimension wave equation so the solution is 
+%	
+%	\begin{align*}
+%		u(x,t)&=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-c}^{x+ct}g(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{2}[\sin(x-3t)+\sin(x+3t)]+\frac{1}{6}\int_{x-3}^{x+3t}\cos(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{6}[3\sin(x-3t)+3\sin(x+3t)]+\frac{1}{6}[\sin(x+3t)+\sin(3-x)]\\
+%		u(x,t)&=\frac{1}{6}[3\sin(x-3t)+4\sin(x+3t)+\sin(3-x)]
+%	\end{align*}
+%also do for $ c=-3 $
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align}
+%		PDE:& u_{tt}=c^2u_{xx}\\
+%		IC:& u(x,0)=0\\
+%		& u_t(x,0)=\sin(x)
+%	\end{align}
+%\end{example}
+%\begin{proof}
+%		Its a one dimension wave equation so the solution is 
+%	
+%	\begin{align*}
+%		u(x,t)&=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-c}^{x+ct}g(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{2c}\int_{x-3}^{x+3t}\cos(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{2c}[\cos(x-ct)-\cos(x+ct)]
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}[Review-7]
+%	\begin{align*}
+%		PDE:& u_{tt}=u_{xx} (-\infty<x<\infty, t\geq0)\\
+%		IC:& u(x,0)=\exp(x)\\
+%		& u_t(x,0)=x
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	Its a one dimension wave equation so the solution is 
+%	
+%	\begin{align*}
+%		u(x,t)&=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d \omega\\
+%		u(x,t)&=\frac{1}{2}[\exp(x-t)+\exp(x+t)]+\frac{1}{2}\int_{x-1}^{x+t}\omega\, d \omega\\
+%		u(x,t)&=\frac{1}{2}[\exp(x-t)+\exp(x+t)+2tx
+%	\end{align*}
+%\end{proof}
+
+
 \subsection{Vibration of an semi-infinite string}
-\subsection{Vibrating of a finite string}
+\begin{definition}[Semi-infinite one dimension wave equation]
+	\begin{align*}
+		PDE:& u_{tt}=c^2u_{xx} & (c\neq0)(0\leq x < \infty, t\geq 0)\\
+		BC:& u(0,t)=0 &  (t \geq 0)\\
+		IC:& u(x,0)=f(x) &(0\leq x <\infty)\\
+		& u_t(x,0)=g(x) &(0\leq x <\infty) 
+	\end{align*}
+where $ c $ is a positive constant.
+\end{definition}
+\begin{proof}
+	Proceed in a similar manner as the infinite string case until the last stage,
+	\begin{align*}
+		\phi(x-ct)=\frac{1}{2}f(x-ct)-\frac{1}{2c}\int_{x_0}^{x-ct} g(\omega)\, d\omega \\
+		\psi(x+ct)=\frac{1}{2}f(x+ct)+\frac{1}{2c}\int_{x_0}^{x+ct} g(\omega)\, d\omega
+	\end{align*}
+	But we require solutions to $ u(x,t) $ for $ x>0, t>0 $. We can see that $ x+ct $ is always greater than zero while $ x-ct $ need not be. So consider the cases as such,
+	
+	\textbf{Case i: $ x-ct\geq0 $}\\
+	Here we can just use the 	d'Alembert solution.
+	\begin{align}
+		u(x,t)=\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct} g(\omega) \, d \omega 
+	\end{align}
+
+	\textbf{Case ii: $x-ct<0$}
+	From the Boundary condition we have,
+	\begin{align*}
+		u(0,t)=0\implies \phi(-ct)+\psi(ct)=0\\
+		\phi(-ct)=-\psi(ct)\numberthis \label{eq:seminf1}
+	\end{align*}
+	Replace $ ct $ with $ ct-x $ in \ref{eq:seminf1},
+	\[ \phi(x-ct)=-\psi(ct-x) \]
+	Then solving we get 
+	\begin{align*}
+		 u(x,t) &=\phi(x-ct)+\psi(x+ct)=-\psi(ct-x)+\psi(x+ct)\\
+		 &=-\left(\frac{1}{2}f(ct-x)+\frac{1}{2c}\int_{x_0}^{ct-x}g(\omega)\, d\omega\right)+\left(\frac{1}{2}f(x+ct)+\frac{1}{2c}\int_{x_0}^{x+ct}g(\omega)\, d \omega\right)\\
+		 &=\frac{1}{2}\left[f(x+ct)-f(ct-x)\right]+\frac{1}{2c}\int_{ct-x}^{x+ct}g(\omega)\, d \omega
+ \end{align*}
+	 
+	 Considering both cases finally the solution is given as follows,
+	 	\[u(x,t)=\begin{cases}
+	 	\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d\omega, x\geq ct\\
+	 	\frac{1}{2}[f(x+ct)-f(ct-x)]+\frac{1}{2c}\int_{ct-x}^{x+ct}g(\omega)\, d\omega, x<ct
+	 \end{cases}  \]
+ \end{proof}
+
+
+%\begin{example}
+%	\begin{align*}
+%		PDE:& u_{tt}=c^2u_{xx} & (c\neq 0)(0 \leq x < \infty, t\geq0)\\
+%		BC:& u(0,t)=0 &
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ (x,t) $ lies in the first quadrant so $ t\geq0  \implies x+ct \geq 0 \implies \psi(x+ct)$ and with $ x-ct \in (-\infty, \infty) \implies \phi (x-ct) $.
+%	
+%	\textbf{Case i: } $ x-ct\geq0  $ so $ u(x,t)=\phi(x-ct)+\psi(x+ct)= $ d'almberts soln
+%	
+%	\textbf{Case ii: } if $ x-ct<0 $ that $ u(0,t)=0 \implies \phi(0-ct)+\psi(0+ct)=0 \implies \phi(-ct)=-\psi(ct)$ replace ct with ct-x.
+%	
+%	$ \phi[-(ct-x)]=-\psi[ct-x] $ so $ \phi(x-ct)=-\psi(ct-x)=1/2f(ct-x)+1/2c \int_{x_0}^{ct-x}g(\omega)\, dw $
+%	
+%	and combining together $ u(x,t)=1/2f(ct-x)+1/2c \int_{x_0}^{ct-x}g (\omega)\, d\omega + 1/2f(ct+x)+1/2c \int_{x_0}^{ct+x}g (\omega)\, d\omega$
+%	
+%	s final answer is 
+%	\[ u(x,t)=\begin{cases}
+%		\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d\omega, x\geq ct\\
+%		\frac{1}{2}[f(x+ct)-f(ct-x)]+\frac{1}{2c}\int_{ct-x}^{x+ct}g(\omega)\, d\omega, c<ct
+%	\end{cases} \]
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align*}
+%		PDE:& u_{tt}=u_{xx} & ,(0\leq x <\infty, t\geq0)\\
+%		BC:& u(0,t)=0 & ,(t\geq 0)\\
+%		IC:& u(x,0)=|\sin x| &, (0\leq x < \infty)\\
+%		& 0 & ,(0\geq x<\infty)
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ c=1,f(x)=|\sin x|, g(x) =0$
+%	
+%	so solutoin is 
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align*}
+%		u_{tt}=u_{xx}, 0\leq x < \infty\\
+%		u(0,t)=0\\
+%		u(x,0)=\cos x\\
+%		u_t(x,0)=0
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ c=1, f(x)=\cos x, g(x)=0 $
+%	it is semi infinite string so,
+%	
+%	\begin{align*}
+%		u(x,t)&=\begin{cases}
+%			\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d\omega, x\geq ct\\
+%			\frac{1}{2}[f(x+ct)-f(ct-x)]+\frac{1}{2c}\int_{ct-x}^{x+ct}g(\omega)\, d\omega, c<ct
+%		\end{cases}\\
+%		u(x,t)&=\begin{cases}
+%			\frac{1}{2}[\cos(x-t)+\cos(x+t)], x\geq ct\\
+%			\frac{1}{2}[\cos(x+t)-\cos(t-x)], c<ct
+%			\end{cases}
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}[Review-8]
+%	\begin{align*}
+%		u_{tt}=u_{xx}, (0\leq x < \infty, t\geq0 )\\
+%		u(0,t)=0\\
+%		u(x,0)=\exp x\\
+%		u_t(x,0)=x
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ c=1, f(x)=\exp x, g(x)=x $
+%	it is semi infinite string so,
+%	
+%	\begin{align*}
+%		u(x,t)&=\begin{cases}
+%			\frac{1}{2}[f(x-ct)+f(x+ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(\omega)\, d\omega, x\geq ct\\
+%			\frac{1}{2}[f(x+ct)-f(ct-x)]+\frac{1}{2c}\int_{ct-x}^{x+ct}g(\omega)\, d\omega, c<ct
+%		\end{cases}\\
+%		u(x,t)&=\begin{cases}
+%			\frac{1}{2}[\exp(x-t)+\exp(x+t)]+\frac{num}{den}, x\geq ct\\
+%			\frac{1}{2}[\exp(x+t)-\exp(t-x)]+\frac{num}{den}, c<ct
+%		\end{cases}
+%	\end{align*}
+%\end{proof}
+
+\subsection{Vibration of a finite string}
+
+\begin{definition}[Finite one dimension wave equation]
+	\begin{align*}
+		PDE:& u_{tt}=c^2u_{xx} &(c \neq 0, 0\leq x \leq L, t\geq0)\\
+		BC:& u(0,t)=0, u(L,t)=0 &(t\geq0)\\
+		IC:& u(x,0)=f(x), u_t(x,0)=g(x) &(0\leq x \leq L)
+	\end{align*}
+\end{definition}
+\begin{proof}
+	We solve this problem by separation of variables. Assume the following,
+	\[ u(x,t) =X(x)T(t)\]
+	The PDE then simplifies as such,
+	\[ XT''=c^2X''T \]
+	Dividing both sides by $ c^2X''T $ yields,
+	\[ \frac{T''}{c^2T}=\frac{X''}{X} =k\]
+	where $ k $ is a constant. Now our PDE has simplified to the following two ODEs,
+	\begin{align*}
+			T''-kc^2T=0\\
+			X''-kX=0
+	\end{align*}
+If $ k=0 $ then it will lead to a trivial solution as $ X(x) $ becomes a linear function thats zero everywhere. Also if $ k>0 $ the problem grows without bound so we must choose $ k<0 $. Set $ k=-\lambda^2 $. So we have,
+\begin{align*}
+	T''+c^2\lambda^2T=0\\
+	X''+\lambda^2X=0
+\end{align*}
+Solve these ODEs normally (using the auxiliary equation methods in unit 1). We get the following,
+\begin{align*}
+		T(t)=A \sin (c\lambda t)+B\cos(c \lambda t)\\
+		X(x)=C \sin(\lambda t)+D\cos (\lambda t)
+\end{align*}
+Apply the first BC to get,
+\[ X(0)=0\implies C \sin(0)+D \cos(0)=0\implies D=0 \]
+Apply the second BC to get,
+\[ X(L)=0\implies c\sin\lambda L=0 \implies c=0 \text{ or } \sin\lambda L=0 \]
+Since $ c=0 $ yields a trivial solution we consider $ \sin \lambda L=0 \implies \lambda_n=\frac{n \pi }{L} $ for $ n\in \N  $. So now we have,
+\begin{align*}
+	\begin{cases}
+		T_n(t)=A \sin (c \lambda_n t)+ B \cos (c \lambda_n t)\\
+		X_n(x)=C \sin (\lambda_nx)
+	\end{cases}
+\end{align*}
+\begin{align*}
+	u_n(x,t)&=X_n(x)T_n(t)\\
+	u(x,t)&=\sum_{n=1}^\infty u_n(x,t)=\sum_{n=1}^\infty \sin \left( \frac{n \pi x}{L}\right) \left[a_n \sin \left(\frac{n \pi ct}{L}\right)+b_n \cos\left(\frac{n \pi ct}{L}\right)\right]
+\end{align*}
+Now use the initial conditions to get the formulas for the constants $ a_n, b_n $ as such,
+
+\begin{align*}
+	u(x,0)&=f(x)=\sum_{i=1}^\infty b_n \sin \left(\frac{n\pi x}{L}\right) &\implies& b_n=\frac{2}{L}\int_0^L f(x) \sin \left(\frac{n \pi x}{L}\right)\, dx\\
+	u_t(x,0)&=g(x)=\sum_{i=1}^\infty a_n \left(\frac{n \pi c}{L}\right)\sin \left(\frac{n \pi x}{L}\right)&\implies& a_n=\frac{2}{n \pi c} \int_0^L g(x) \sin \left(\frac{n \pi x}{L}\right)\, dx
+\end{align*}
+
+
+\end{proof}
+
+%\begin{example}
+%	\begin{align*}
+%		u_{tt}=u_{xx}, 0<x<1, t>0\\
+%		u(0,t)=u(1,t)=0,\\
+%		u(x,0)=x(1-x), u_t(x,0)=0
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ c=1,L=1, f(x)=x(1-x), g(x)=0 $
+%	
+%	\begin{align*}
+%		u(x,t)=\sum_{n=1}^\infty \sin(n\pi x/L)[a_n \sin(nxct/L)+b_n\cos(nxct/L)]
+%	\end{align*}
+%	begin by computing $ a_n,b_n $
+%	\begin{align*}
+%		a_n=\frac{2}{n \pi c} \int_0^L g(x)\sin(n\pi x/L)\, dx\\
+%		b_n=\frac{2}{L}\int_0^L f(x)\sin(n \pi x/L)\, dx
+%	\end{align*}
+%\end{proof}
+%
+%\begin{example}
+%	\begin{align*}
+%		u_{tt}=4u_{xx}, 0<x<\pi, t>0\\
+%		u(0,t)=u(\pi,t)=0\\
+%		u(x,0)=0, u_t(x,0)=\sin x
+%	\end{align*}
+%\end{example}
+%\begin{proof}
+%	$ c=2,L=\pi, f(x) =0, g(x)=\sin $
+%	\begin{align*}
+%		a_n&=\frac{2}{n \pi c} \int_0^L g(x)\sin(n\pi x/L)\, dx\\
+%		&=\frac{2}{n \pi c }\int_0^\pi \sin(x) \sin(n x)\, dx\\
+%		b_n&=0
+%	\end{align*}
+%\end{proof}
 
 
 
-\section{Laplace equation}
-\begin{definition}[Laplacian]
-	The Laplacian of a three dimensional function $ \phi $ is given as follows,
-	\[ \Delta f= \frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2}+\frac{\partial^2 f}{\partial z^2} \]
-	This is generalized for higher dimensions in the expected way.
+
+\section{Fourier transform}
+\begin{definition}[Fourier transform]
+	Let $ f:(-\infty, \infty)\to \R  $ or $ \C $ the Fourier transform of $ f(x) $ is given by\[ \mathcal{F}\{f(\omega)\}=\hat{f}(\omega)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(x)e^{-i \omega x}\, dx \]
+	$ \forall \omega \in \R $, provided the integral exists. Where $ \omega  $ denotes angular frequency.
 \end{definition}
 
-\begin{definition}[Laplace's equation]
-	Laplace's equation is the following PDE
-	\[ \Delta f = 0 \]
-\end{definition}
-\subsection{Green's function}
-\begin{definition}[Green's function]
-	content...
+\begin{definition}[Inverse Fourier transform]
+	\[ \mathcal{F}^{-1}\{\hat{f}(\omega)\}=f(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty \hat{f}(\omega) e^{i \omega x}\, d \omega \]
+	$ \forall x \in \R $, provided the integral exists.
 \end{definition}
 
+%\begin{example}
+%	Find the Fourier transform of the function
+%	\[ f(x) =\begin{cases}
+%		1, |x|\leq L\\
+%		0, |x|>L
+%	\end{cases}\]
+%\end{example}
+%\begin{proof}
+%	\begin{align*}
+%		\hat{f}(\omega )&=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^\infty f(x)e^{-i\omega x}\, dx\\
+%		&=\frac{1}{\sqrt{2\pi}}\int_{-L}^L e^{-i \omega x}\, dx\\
+%		&=\frac{1}{\sqrt{2\pi}}\left[\frac{e^{-i \omega x}}{-i \omega}\right]_{-L}^L
+%	\end{align*}
+%\end{proof}
+
+\subsection{Properties}
+\begin{enumerate}
+	\item Linearity $ \mathcal{F}[c_1f_1+c_2f_2]=c_1\mathcal{F}(f_1)+c_2\mathcal{F}(f_2) $
+	\item Conjugation $ \mathcal{F}[\overline{f}]=\overline{\hat{f}(-\omega)} $
+	\item Continuity $ f\to \hat{f}\implies \hat{f}(\omega ) $ and it is absolutely integrable $ (\int_{-\infty}^\infty |f|\, dx$ exists) then $ \hat{f}(\omega) $is continuous
+	\item Convolution $ (f*g)(x)=\int_{-\infty}^\infty f(x-t)g(t)\, dt $. And $ \mathcal{F}(f*g)=\mathcal{F}(f)\mathcal{F}(g) $
+	\item Transformation of partial derivatives, $ \mathcal{F}[u_x](\omega,t)=i\omega \mathcal{F}[u]=i \omega \hat{u}(\omega,t ) $ and $ \mathcal{F}[u_t](\omega,t)=\frac{\partial }{\partial t}[\mathcal{F}[u]] $
+	\item Parseval's identity $ \int_{-\infty}^\infty f(x)\overline{g(x)}\, dx= \int_{-\infty}^\infty \hat{f(\omega)}\hat{g}(\omega)\, dw $
+\end{enumerate}
 \section{Heat conduction principle}
-\begin{definition}[General heat equation]
-	The temperature function $ w $ satisfies the following heat equation
-	\[a^2 \Delta w = \frac{\partial w}{\partial t}\]
-\end{definition}
-\subsection{Infinite rod case}
 \subsection{Finite rod case}
+\begin{definition}[Finite rod one dimension heat equation]
+	\begin{align*}
+		PDE&: u_t=\alpha^2 u_{xx} &(0\leq x \leq L, 0 \leq t < \infty)\\
+		BC:& u(0,t)=u(L,t)=0 &(0 \leq t <\infty)\\
+		IC:& u(x,0)=f(x) &(0 \leq x	\leq L)
+	\end{align*}
+\end{definition}
+\begin{proof}
+	We solve this using separation of variables. Assume we can do the following,
+	\begin{align*}
+		u(x,t)=X(x)T(t)
+	\end{align*}
+	Substituting this into the PDE we get,
+	\begin{align*}
+		X(x)T'(t)&=\alpha^2 X''(x)T(t)\\
+		\frac{T'(t)}{\alpha^2 T(t)}&=\frac{X''(x)}{X(x)}=c
+	\end{align*}
+	This leads to two ODEs,
+	\begin{align}
+		T'(t)-\alpha^2cT(t)=0\\
+		X''(x)-cX(x)=0
+	\end{align}
+	
+	\textbf{Case 1: $ c=\lambda^2>0 $ }
+	
+	$ \implies X''(x) - \lambda^2 X(x)=0, AE=m^2-\lambda^2=0, m=\pm \lambda $
+	
+	$ X(x) =C_1e^{\lambda x}+c_2 e^{-\lambda x}$ and $ X(0) , X(L)=0$
+	
+	$ X(0) =C_1+C_2=0,\implies -C_1=C_2 $
+	$ X(L)=C_1e^{\lambda L}+C_2 e^{-\lambda L}=0 \implies C_1(e^{\lambda L}-e^{-\lambda L})=0 \implies C_1=0\implies C_2=0 \implies X(x)=0\implies u(x,t)=0 $ Since this is a trivial solution we ignore this case.
+	
+	\textbf{Case 2: $ c=0 $} Also leads to a trivial solution.
+	
+	$ X''(x)=0 \implies X(x)=C_3+C_4x $ but with the initial conditions we get its identically zero.
+	
+	\textbf{Case 3 $ c=-\lambda^2 $}
+	
+	$ X''(x)+\lambda^2X(x)=0 \implies AE: m^2+\lambda^2=0 \implies m=\pm \lambda i$
+	
+	$ X(x)=C_5 \cos (\lambda x)+C_6 \sin(\lambda x) $
+	
+	Apply the initial conditions,
+	\[ X(0)=0 \implies C_5(1)+C_6(0)=0 \implies C_5=0 \]
+	
+	\[ X(L)=0\implies C_6 \sin \lambda L=0 \]
+	So either $ C_6=0 $ or $ \sin \lambda L=0 $. The first leads to a trivial solution so we assume $ \sin \lambda L=0 \implies \lambda_n=\frac{n \pi }{L} $ for $ n \in \N $.
+	
+	$$ X_n(x)=a_n \sin \left( \frac{n\pi x}{L} \right) $$
+	
+	Consider now the time equations,
+	\begin{align*}
+		T'(t)-\alpha^2cT(t)=0 &\implies T'(t)+\alpha^2\lambda^2T(t)=0\\
+		AE: m+\alpha^2\lambda^2=0 &\implies m=-\alpha^2\lambda^2\\
+		T(t)=b_ne^{-\alpha^2\lambda^2t}&\implies T_n=b_ne^{-\alpha^2\left(\frac{n \pi }{L}\right)^2 t}
+	\end{align*}
+	\[ u(x,t)=\sum_{n=1}^\infty u_n(x,t)=\sum_{n=1}^\infty X_n(x)T_n(t)=\sum_{n=1}^\infty c_n e^{-\alpha^2 \left(\frac{n \pi }{L}\right)^2 t} \sin\left(\frac{n \pi x}{L}\right)\]
+	Now we must apply the initial conditions to find a formula for $ c_n $.
+	\begin{align*}
+		u(x,0)=\sum_{n=1}^\infty c_n \sin\left(\frac{n \pi x}{L}\right)=f(x) \implies c_n=\frac{2}{L}\int_0^L f(x) \sin \left( \frac{n \pi x}{L} \right) \, dx
+	\end{align*}
+\end{proof}
+
+%\begin{example}
+	%	\begin{align*}
+		%		u_t=16u_{xx}, 0<x<1, t>0\\
+		%		u(0,t)=u(1,t)=0\\
+		%		u(x,0)=(1-x)x
+		%	\end{align*}
+	%\end{example}
+%\begin{proof}
+	%	$ c=\pm 4, f(x) =(1-x)x$
+	%	
+	%	
+	%\end{proof}
+
+\subsection{Infinite rod case}
+\begin{definition}[Infinite rod one dimension heat equation]
+	\begin{align*}
+		PDE:& u_t(x,t)=\alpha^2u_{xx}(x,t) &(-\infty<x<\infty, t>0)\\
+		IC:& u(x,0)=f(x)& (-\infty<x<\infty)
+	\end{align*}
+	Under the assumptions,
+	\begin{enumerate}
+		\item $ f(x) $ is continuous
+		\item Either $ f(x) $ is absolutely integrable OR it is bounded.
+	\end{enumerate}
+\end{definition}
+\begin{proof}
+	Begin by applying a	 Fourier transform
+	\begin{align*}
+		\mathcal{F}[u_t]&=\frac{d}{dt}\hat{u}(\omega,t)=-\alpha^2\omega^2 \hat{u}(\omega,t)\\
+		\hat{u}(\omega,0)&=\hat{f}(\omega)
+	\end{align*}
+	
+	So the PDE has simplified to an ODE with the solution as follows,
+	\begin{align*}
+		\hat{u}(\omega, t)= a(\omega)e^{-\alpha^2 \omega^2 t}
+	\end{align*}
+	But since we knot $ \hat{u}(\omega, 0) =\hat{f}(\omega)=a(\omega)$. The solution simplifies to the following,
+	\[ \hat{u}(\omega,t )=\hat{f}(\omega)e^{-\alpha^2 \omega^2 t} \]
+	Take an inverse Fourier transform,
+	
+	\begin{align*}
+		u(x,t)&=\mathcal{F}^{-1}[\hat{u}(\omega,t)]\\
+		&=\mathcal{F}^{-1}[\hat{f}(\omega)e^{-\alpha^2\omega^2 t}]\\
+		&=\mathcal{F}^{-1}[\hat{f}(\omega)]*\mathcal{F}^{-1}[e^{-\alpha^2 \omega^2 t}]\\
+		&=f(x)*\left[\frac{1}{\sqrt{2 \alpha^2 t}}e^{-\frac{x^2}{4\alpha^2t}}\right]\\
+		&=\frac{1}{2\sqrt{\alpha^2\pi t}}\int_{-\infty}^\infty f(\omega)e^{-\frac{(x-\omega)^2}{4 \alpha^2 t}}\, d\omega
+	\end{align*}
+\end{proof}
+
+\begin{lemma}
+	\[ \mathcal{F}^{-1}[e^{-\alpha^2 \omega^2 t}]=\frac{1}{\sqrt{2 \alpha^2 t}}e^{-\frac{x^2}{4\alpha^2t}} \]
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\mathcal{F}^{-1}\{\hat{f}(\omega)\}&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{-\alpha^2 \omega^2 t} e^{- \omega x}\, d \omega\\
+		&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{\omega(ix-t\alpha^2\omega)}\, d \omega
+		\intertext{For simplicity's sake\footnotemark  consider $ x=a, t\alpha^2=b $}
+		&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{\omega(ia-b\omega)}\, d \omega\\
+		&=\frac{1}{\sqrt{2\pi }}\int_{-\infty}^\infty e^{\left(\sqrt{-b}\omega+\frac{ia}{2\sqrt{-b}}\right)^2-\frac{a^2}{4b}}\, d\omega
+		\intertext{Substitute $ u=\frac{ia-2 b\omega }{2 \sqrt{b}}\implies d\omega =-\frac{1}{\sqrt{b}} du$}
+		&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty \frac{e^{-u^2-\frac{a^2}{4b}}}{\sqrt{b}}\, du\\
+		&=\frac{e^{\frac{-a^2}{4b}}}{\sqrt{2 \pi b}} \underbrace{\int_{-\infty}^{\infty} e^{-u^2}\, du}_{\text{This is equal to $ \sqrt{\pi} $ \footnotemark}}\\
+		&=\frac{e^{\frac{-a^2}{4b}}}{\sqrt{2 \pi b}}\sqrt{\pi}\\
+		&=\frac{e^{\frac{-a^2}{4b}}}{\sqrt{2b}}
+		\intertext{Recall from footnote 2}
+				&=\frac{e^{\frac{-x^2}{4t\alpha^2}}}{\sqrt{2t\alpha^2}}
+	\end{align*}
+\footnotetext{i.e., My sanity's sake.}
+\footnotetext{This is the simplest Gaussian integral you can prove it using another change of variable and the Gamma function but I cba.}
+\end{proof}
+%\begin{example}
+%	\begin{align*}
+%		u_t&=u_{xx}, -\infty<x<\infty\\
+%		u(x,0)=2x\\
+%		u(x,t),u_x(x,t)\to 0 as x \to \pm \infty
+%	\end{align*}
+%\end{example}
 
 
 \backmatter
+\appendix
+\renewcommand{\thesection}{\Alph{section}.\arabic{section}}
+\setcounter{section}{0}
+\begin{appendices}
+\chapter{Appendix}
+\section{Common derivatives}
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{cccc}
+		\hline
+		Function & Derivative & Function & Derivative \\ \hline
+		$x^n$ & $nx^{n-1}$ & $\sec x$ & $\sec x \tan x$ \\
+		$a^x$ & $a^x \log a$ & $\csc x$ & $-\csc x \cot x$ \\
+		$e^x$ & $e^x$ & $\sin^{-1} x$ & $\frac{1}{\sqrt{1-x^2}}$ \\
+		$\log x$ & $\frac{1}{x}$ & $\cos^{-1} x$ & $\frac{-1}{\sqrt{1-x^2}}$ \\
+		$\sin x$ & $\cos x$ & $\tan^{-1} x$ & $\frac{1}{1+x^2}$ \\
+		$\cos x$ & $-\sin x$ & $\cot^{-1} x$ & $\frac{-1}{1+x^2}$ \\
+		$\tan x$ & $\sec^2 x$ & $\sec^{-1} x$ & $\frac{1}{x \sqrt{x^2-1}}$ \\
+		$\cot x$ & $-\csc^2 x$ & $\csc^{-1} x $ & $\frac{-1}{x\sqrt{x^2-1}}$ \\ \hline
+	\end{tabular}
+\end{table}
+\section{Basic derivative rules}
+\begin{gather*}
+	(\alpha f+\beta g)'=\alpha f'+\beta g'\\
+	(fg)'=f'g+fg'\\
+	\left({\frac {f}{g}}\right)'={\frac {f'g-fg'}{g^{2}}}, \text{ when $ g\neq 0 $}\\
+	\text{If }f(x)=h(g(x)), \text{ then, }f'(x)=h'(g(x))\cdot g'(x)
+\end{gather*}
+\clearpage
+\section{Common integrals}
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{cccc}
+		\hline
+		Function & Integral & Function & Integral \\ \hline
+		$x^n$ & $\frac{x^{n+1}}{n+1}$ & $\frac{\sin x}{\cos^2 x}$ & $\sec x $ \\
+		$a^x$ & $\frac{a^x}{\log a}$ & $\frac{\cos x}{\sin^2 x}$ & $-\csc x $ \\
+		$e^x$ & $e^x$ & $\tan x$ & $\log \sec x$ \\
+		$\frac{1}{x}$ & $\log x$ & $\cot x$ & $\log \sin x$ \\
+		$\cos x$ & $\sin x$ & $\frac{1}{\sqrt{a^2-x^2}}$ & $\sin^{-1}\frac{x}{a}$ \\
+		$\sin x$ & $-\cos x$ & $\frac{1}{a^2+x^2}$ & $\frac{1}{a}\tan^{-1}\frac{x}{a}$ \\
+		$\sec^2 x$ & $\tan x$ & $\frac{1}{x\sqrt{x^2-a^2}}$ & $\frac{1}{a}\sec^{-1}\frac{x}{a}$ \\
+		$\csc^2 x$ & $-\cot x$ &  &  \\ \hline
+	\end{tabular}
+\end{table}
 
-\chapter*{Appendix}
-If you are seeing this, I forgot to do it.
+\section{Tabular integration}
+Quicker way to implement repeated integration by parts. 
 
+Given two functions $ f,g $. Let $ f=f^{(0)},f^{(1)},f^{(2)},\dots,f^{(n)} $ denote the first $ n $ derivatives of $ f $ and let $ g=g^{(0)},g^{(-1)},g^{(-2)},\dots,g^{(-n)} $ denote the first $ n $ antiderivatives of $ g $.
+\[ \int f(x)g(x)\, dx= \sum_{j=0}^{n-1}(-1)^jf^{(j)}g^{(-(j+1))}(x)+(-1)^n \int f^{(n)}(x)g^{(-n)}(x)\, dx \]
+if $ f^{(n)} \equiv 0 $ the $ 2^{nd} $ integral term above can be replaced with a constant $ C $.
 
-\addcontentsline{toc}{Chapter}{Appendix}
+It is easy to implement this using the following table. In one column list $ f $ and its first $ n $ derivatives and in the next list $ g $ and its first $ n $ antiderivatives. Then multiply diagonally down and right alternating the sign at each stage. 
 
+For most cases pick $ f $ as the term whose integrals vanish, or repeat.
 
-\thispagestyle{empty}%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
-{\ }
-\newpage
+\[\renewcommand{\arraystretch}{1.5}
+\begin{array}{c @{\hspace*{1.0cm}} c}\toprule
+	u & dv \\\cmidrule(lr){1-2}
+	f  \tikzmark{Left 1} & \tikzmark{Right 1} g \\
+	f^{(1)}  \tikzmark{Left 2} & \tikzmark{Right 2} g^{(-1)}\\
+	f^{(2)} \tikzmark{Left 3} & \tikzmark{Right 3} g^{(-2)} \\
+	f^{(3)} \tikzmark{Left 4} & \tikzmark{Right 4} g^{(-3)} \\
+	\vdots \tikzmark{Left 5} & \tikzmark{Right 5} \vdots \\\bottomrule
+\end{array}%
+\DrawArrow{Left 1}{Right 2}{$+$}% <-- Don't forget there.
+\DrawArrow{Left 2}{Right 3}{$-$}%
+\DrawArrow{Left 3}{Right 4}{$+$}%
+\DrawArrow{Left 4}{Right 5}{$-$}%
+\]
+
+\end{appendices}
+
+%If your book ends with the even numbered page, copy and paste it twice. With the odd numbered page, do it three times.
 
 \end{document}

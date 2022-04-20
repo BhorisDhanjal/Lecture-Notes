@@ -297,8 +297,18 @@ The smallest natural number $ n $ such that $ a^n=e $ is called the order of a g
 	If a finite group $ G $ has no non-trivial subgroups then $ |G| $ is a prime number and $ G $ is cyclic.
 \end{corollary}
 \begin{proof}
-	$ |G| $ is divisble by only $ |G| $ and $ 1 $.
+	A finite group $ G $ has order non prime assume. So $ O(G) =1$ or composite.
+	
+	If $ O(G)=1 $ then $ G $ admits no proper subgroups. If $ O(G)=n $ a composite number.
+	
+	Let $ a\in G, a\neq e $ be an arbitrary $ a^n=e $ so $ o(a) | n$.
+	
+	If $ o(a)=n $ then we have proven if $ k|n \implies k=n $ if unequal then $ <a>  $ is a non trivial subgroup of $ G $.
 \end{proof}
+
+\begin{definition}[Group homomorphisms]
+	A homomorphism from a group $ G \rightarrow G' $ is a function $ \varphi : G \rightarrow G' $ such that $ \phi(ab) = \phi(a)\phi(b)$
+\end{definition}
 
 \backmatter
 

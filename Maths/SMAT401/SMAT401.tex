@@ -11,7 +11,7 @@
 \usepackage[toc,page]{appendix}
 \usepackage[nottoc]{tocbibind}
 \numberwithin{equation}{section}
-\graphicspath{ {./Images/} }
+%\graphicspath{ {./Images/} }
 %\usepackage[raggedright]{titlesec}
 \usepackage{placeins}
 \usepackage{mathtools}
@@ -296,6 +296,27 @@ Let $ f,g: \R^n \rightarrow \R, p \in \R^n $ and $ k_1,k_2 \in \R $.
 		\item For non-zero $ L_2 $, $\displaystyle \lim_{x \rightarrow p} (f(x)/g(x))=L_1/L_2 $
 	\end{itemize}
 \end{theorem}
+\begin{theorem}
+	Let $ f:\R^n \to \R, g:\R^n \to \R $ and $ p \in \R^n$. If $ \lim_{x\rightarrow p} f(x)=L_1, $ and $ \lim_{x \rightarrow p} g(x) =L_2$ then $ \lim_{x\rightarrow p} [f(x)+g(x)]=L_1+L_2 $.
+\end{theorem}
+\begin{proof}
+	Let $ \varepsilon>0 $. 
+	
+	Then there exists $ \delta_1>0 $ such that\[ x \in B^*(p, \delta_1) \implies |f(x)-L_1|<\varepsilon/2 \]
+	also there exists $ \delta_2>0 $ such that
+	\[ x \in B^*(p,\delta_2) \implies |g(x)-L_2|<\varepsilon/2 \]
+	Define $ \delta=\min{\delta_1,\delta_2 } $. Then $ \delta>0 $ and $ \delta\leq\delta_1,\delta\leq\delta_2  $.
+	
+	So we have $$ x\in B^*(p,\delta) \implies |f(x)-L_1|<\varepsilon/2 \text{ and } |g(x)-L_2|<\varepsilon/2 $$
+	
+	Consider that $ |[f(x) +g(x)]-[L_1+L_2]|<\varepsilon/2+\varepsilon/2$ if $ x\in B^*(p,\delta) $.
+	
+	Thus $ \forall \varepsilon>0 $ there exists $ \delta>0 $ such that
+	
+	\[ x\in B^*(p,\delta)\implies |[f(x) +g(x)]-[L_1+L_2]|<\varepsilon \]
+	
+	Hence, $ \lim_{x\rightarrow p} [f(x)+g(x)]=L_1+L_2=\lim_{x\rightarrow p}f(x)+\lim_{x \rightarrow p} g(x) $
+\end{proof}
 
 \section{General multivariate limit}
 \begin{theorem}[Limit of a function $ f: \R^n \rightarrow \R $]
@@ -312,24 +333,61 @@ Let $ f,g: \R^n \rightarrow \R, p \in \R^n $ and $ k_1,k_2 \in \R $.
 \end{definition}
 
 \begin{definition}[Alternate definition of a limit]
-	For a function $ f:\R^n \rightarrow \R,$ $ \lim_{x\rightarrow a }f(x)=L$ if and only if $ \forall \varepsilon>0 $ there exists $ \delta>0 $ such that \[ x \in B*(a,\delta)\implies |f(x)-L|<\varepsilon \]
+	For a function $ f:\R^n \rightarrow \R,$ $ \lim_{x\rightarrow a }f(x)=L$ if and only if $ \forall \varepsilon>0 $ there exists $ \delta>0 $ such that \[ x \in B^*(a,\delta)\implies |f(x)-L|<\varepsilon \]
 \end{definition}
 
 \begin{definition}[Bounded function]
 	Let $ E $ be a non-empty subset of $ \R^n $. The function $ f:E\rightarrow \R  $ is said to be bounded in some $ \delta  $-neighbourhood of point $ p\in \R^n $ if there exists $ M>0 $ in $ \R  $ such that \[ |f(x)| \leq M \forall x \in B(p, \delta) \]
 \end{definition}
 
-\begin{definition}[Relation between bounded function and limit of a function in $ \R^n $]\label{bounded}
+\begin{theorem}[Relation between bounded function and limit of a function in $ \R^n $]\label{bounded}
 	Let $ f:\R^n \rightarrow \R $ and $ p \in \R^n $. Let $ f(p) $ be defined. If $  \lim_{x\rightarrow p}f(x)  $ exists then $ f $ is bounded in some neighbourhood of point $ p $.
-\end{definition}
+\end{theorem}
+\begin{proof}
+	As $ \lim_{x\rightarrow p}f(x) $ exists, let $ \lim_{x\rightarrow  p} f(x)=L \in \R $.
+	
+	Then for $ \varepsilon=1>0 $ there exists $ \delta>0 $ such that \[ x \in B^*(p,\delta ) \implies |f(x)-L|<\varepsilon=1\]
+	Consider $ |f(x)|=|(f(x)-L)+L|\leq |f(x)-L|+|L| $ so we have $ |f(x)|<1+|L| $ for $ x\in B^*(p,\delta) $. Define $ M=\max\{|f(p)|,1+|L|\} $. Then $ M>0, M\geq |f(p)|, M\geq 1+|L|$. Thus in any case we have $ |f(x)|\leq M \forall x \in B(p,\delta) $.
+\end{proof}
 
 The converse of \ref{bounded} isn't true.
-
+\begin{example}
+	\[ f(x,y)=\frac{xy}{x^2+y^2}, \text{ for non zero and equal to 0 for 0}\]
+\end{example}
 \begin{theorem}[Uniqueness of limit in $ \R^n $]
 	Let $ f: \R^n \rightarrow \R $ and $ p \in \R^n $. If $ \lim_{x\rightarrow p }f(x) $ exists then it is unique.
 \end{theorem}
+\begin{proof}
+	Assume $ \lim_{x\rightarrow p} f(x) $ is not unique and let it have two limits $ L_1,L_2 $. 
+	
+	Take $ \varepsilon=\frac{1}{2} |L_1-L_2|$.
+	
+	Then we have the following,
+	\[ \begin{cases}
+		x \in B^*(p,\delta_1 ) \implies |f(x)-L_1|<\varepsilon\\
+		x \in B^*(p,\delta_2 ) \implies |f(x)-L_2| < \varepsilon
+	\end{cases} \]
 
+	Chose $ \delta=\min\{\delta_1,\delta_2 \}.$ Then $ \delta>0 $ and $ \delta \leq \delta_1, \delta \leq \delta_2  $.
+	
+	So $ x \in B^*(p,\delta) \implies |f(x)-L_1|<\varepsilon $ and $ |f(x)-L_2|<\varepsilon $.
+	
+	Consider that $ |L_1-L_2|=|f(x)-L_2-f(x) -L_1| \leq |f(x)-L_2|+|f(x)-L_1|$ so $ |L_1-L_2|<\varepsilon+\varepsilon $ so we have $ |L_1-L_2|<|L_1-L_2| $ a contradiction, so our initial assumption is wrong and limit must be unique if it exists.
+\end{proof}
 
+\begin{theorem}
+	If function $ f: \R^n \rightarrow \R  $ is continuous at $ p\in\R^n $ then $ |f| $ is continuous at $ p $.
+\end{theorem}
+\begin{proof}
+	Let $ \varepsilon>0. $ Then as $ f $ is continuous at $ p $ we know the following.
+	\[ \exists \delta>0 s.t. x\in B(p,\delta)\implies |f(x)-f(p)|<\varepsilon \]
+	
+	Then consider the fact that,
+	\begin{align*}
+		||f(x)|-|f(p)||\leq |f(x)-f(p)|<\varepsilon
+	\end{align*}
+	So just use the same epsilon for the continuity for the absolute valued function.
+\end{proof}
 \section{Iterated (Repeated) limits}
 Let $ (a,b) \in E $ and $ f:E \rightarrow \R  $ be a function where $ E \subseteq \R^2 $,
 \begin{enumerate}
@@ -411,27 +469,34 @@ And now the other direction,
 \end{proof}
 
 \begin{theorem}
-	Suppose $ \lim_{(x,y) \rightarrow (0,0)}f(x,y) $ exists and is equal to $ L $. If both iterated limits exist then, the iterated limits are both equal to $ L $.
+	Suppose $ \lim_{(x,y) \rightarrow (a,b)}f(x,y) $ exists and is equal to $ L $. If both iterated limits exist then, the iterated limits are both equal to $ L $.
 \end{theorem}
 \begin{proof}
-	Given that $ \lim_{(x,y) \rightarrow (a,b)} f(x,y)=L$. Let $ \lim_{y \rightarrow b } f(x,y)=g(x).$\\
-	Let $ \varepsilon>0, $ then there exists $ \delta_1>0 $ s.t.
-	\[ 0<||(x,y)-(a,b)||_2<\delta_1 \implies |f(x,y)-L|<\frac{\varepsilon}{2} \] and there exists $ \delta_2>0 $ such that 
-	\[ 0<|y-b|<\delta_2 \implies |f(x,y)-g(x)|< \frac{\varepsilon}{2} \]
-	Define $ \delta = \min \{\delta_1, \delta_2 \}$. Then $ \delta \leq \delta_1, \delta \leq \delta_2  $ which gives
-	\[ 0< |y-b| \leq \sqrt{(x-a)^2+(y-b)^2} < \delta \implies |f(x,y)-L|\frac{\varepsilon}{2} \]
-	\[ 0<|y-b|<\delta \implies |f(x,y)-g(x)|<\varepsilon/2 \]
-	With respect to $ 0<|x-a|<\delta  $ consider 
-	\begin{align*}
-		|g(x)-L|&= | g(x)+f(x,y)-f(x,y)-L|=|f(x,y)-L)-(f(x,y)-g(x))|\\
-		& \leq |f(x,y)-L|+|f(x,y)-g(x)|\\
-		& < \varepsilon/2+\varepsilon/2=\varepsilon
-	\end{align*}
-Thus $ \forall \varepsilon>0, \exists \delta>0$ s.t. \textbf{Complete this later...}
-
-
-Do the same thing for $ h(y) $.
+	Since \[ \lim_{(x,y)\rightarrow (a,b)} f(x,y)=L, \forall \varepsilon>0\] we know there exists $ \delta>0 $ such that if $ |x-a|<\delta $ and $ |y-b| < \delta  $ then \[ |f(x,y)-L|<\varepsilon \]
+	
+	Let $ L_a(y)=\lim_{x\rightarrow a}f(x,y) $
+	
+	Then with $ |y-b|<\delta $
 \end{proof}
+%\begin{proof}
+%	Given that $ \lim_{(x,y) \rightarrow (a,b)} f(x,y)=L$. Let $ \lim_{y \rightarrow b } f(x,y)=g(x).$\\
+%	Let $ \varepsilon>0, $ then there exists $ \delta_1>0 $ s.t.
+%	\[ 0<||(x,y)-(a,b)||_2<\delta_1 \implies |f(x,y)-L|<\frac{\varepsilon}{2} \] and there exists $ \delta_2>0 $ such that 
+%	\[ 0<|y-b|<\delta_2 \implies |f(x,y)-g(x)|< \frac{\varepsilon}{2} \]
+%	Define $ \delta = \min \{\delta_1, \delta_2 \}$. Then $ \delta \leq \delta_1, \delta \leq \delta_2  $ which gives
+%	\[ 0< |y-b| \leq \sqrt{(x-a)^2+(y-b)^2} < \delta \implies |f(x,y)-L|<\frac{\varepsilon}{2} \]
+%	\[ 0<|y-b|<\delta \implies |f(x,y)-g(x)|<\varepsilon/2 \]
+%	With respect to $ 0<|x-a|<\delta  $ consider 
+%	\begin{align*}
+%		|g(x)-L|&= | g(x)+f(x,y)-f(x,y)-L|=|f(x,y)-L)-(f(x,y)-g(x))|\\
+%		& \leq |f(x,y)-L|+|f(x,y)-g(x)|\\
+%		& < \varepsilon/2+\varepsilon/2=\varepsilon
+%	\end{align*}
+%Thus $ \forall \varepsilon>0, \exists \delta>0$ s.t. \textbf{Complete this later...}
+%
+%
+%Do the same thing for $ h(y) $.
+%\end{proof}
 
 \section{Limits in 3 variables}
 \subsection{Two path test for non-existence of limit}
@@ -497,14 +562,31 @@ Partial derivatives can be taken with respect to multiple variables and are deno
 	\frac{\partial^2 f}{\partial x \partial y}&=f_{xy}\\
 	\frac{\partial^3 f}{\partial x^2 \partial y}&=f_{xxy}
 \end{align*}
+\begin{lemma}
+	Existence of partial derivatives $ f(x,y) $ at a point $ (a,b) $ does not imply continuity of $ f $ at that point.
+\end{lemma}
 
-\begin{theorem}
+
+\begin{definition}[Directional derivatives]
+	Consider he function $ f:\R^2 \rightarrow \R $ the direction derivative of $ f(x,y) $ along unit vector $ u=u_1i+u_2j $ at $ p=(a,b) $ is \[ D_uf(p)=\lim_{s\rightarrow0} \frac{f(a+su_1,b+su_2)-f(a,b)}{s} \]
+\end{definition}
+DD along $ u=i $ is partial derivative w.r.t $ x $ similar for $ u=j $.
+\begin{corollary}
+	Existence of directional derivative of $ f(x,y) $ at a point $ P \implies $ Existence of partial derivative of $ f(x,y) $ at point $ P $. But converse need not be true.
+\end{corollary}
+
+\begin{theorem}[Mixed partial derivatives are equal if they are continuous]
 	$ E \subseteq \R^2 $ Let $ f_x, f_y, f_{xy} , f_{yx}$ exist. If $ f_{xy} , f_{yx}$ are continuous at $ (a,b) $ then $ f_{xy}(a,b)=f_{yx} (a,b)$
- \end{theorem}
+\end{theorem}
+
+\begin{example}
+	Find unit vector normal to level curve $ x^2+y^2=a^2 $ at point $ P=\left( \frac{a}{\sqrt{2}}, \frac{a}{\sqrt{2}} \right)$
+\end{example}
+
 \section{Gradient}
 \begin{definition}[Gradient]
 	For $ f:\R^3 \rightarrow \R $
-	\[ \nabla f = \frac{\partial f }{\partial x} i+ \frac{\partial f }{\partial y}j + \frac{\partial f}{\partial z}k=\left(\frac{\partial f}{\partial x}, \frac{\partial f }{\partial y}\right)\]
+	\[ \nabla f = \frac{\partial f }{\partial x} i+ \frac{\partial f }{\partial y}j + \frac{\partial f}{\partial z}k=\left(\frac{\partial f}{\partial x}, \frac{\partial f }{\partial y}, \frac{\partial f}{\partial z}\right)\]
 \end{definition}
 \begin{example}
 	If $ f(x,y,z)=\frac{1}{\sqrt{x^2+y^2+z^2}} $ find $ \nabla f_p $ where $ p=(\sqrt{2},\sqrt{2}, -3) $
@@ -542,9 +624,22 @@ Partial derivatives can be taken with respect to multiple variables and are deno
 \end{theorem}
 
 \section{Total derivative}
-If function is differentiable then $ D_u f(a)=\langle \nabla f_a, u \rangle $
+\begin{definition}[Total derivative]
+	A function $ f: \R^2 \rightarrow \R $ is differentiable at point $ a=(a_1,a_2) $ if $ \exists \alpha=(\alpha_1,\alpha_2) $ such that,\[ \lim_{h \rightarrow 0} \frac{|f(a+h)-f(a)-\alpha h|}{||h||}=0 \]
+	\[ i.e., \lim_{(h_1,h_1)\rightarrow (0,0)} \frac{|f(a_1+h_1,a_2+h_2)-f(a_1,a_2)-(\alpha_1,\alpha_2)\cdot(h_1,h_2)|}{\sqrt{h_1^2+h_2^2}} =0\]
+\end{definition}
+\begin{corollary}
+	If a function is differentiable then directional derivative along any unit vector exists.
+\end{corollary}
+\begin{corollary}
+	If function is differentiable then $ D_u f(a)=\langle \nabla f_a, u \rangle $
+\end{corollary}
+\begin{corollary}
+	If $ f:\R^2 \rightarrow \R  $ is differentiable at $ a  \in \R^2 $ then it is continuous at $ a $.
+\end{corollary}
 
-\section{How to show not differentiable, maximizing direcitonal derivative}
+
+\section{How to show not differentiable, maximizing directional derivative}
 
 \begin{example}
 	If $ x=e^u \cos v, y=e^u \sin v $ then prove that \[ y \frac{\partial z}{\partial u} + x \frac{\partial z}{\partial v}= e^{2u}\frac{dz}{???}\]
@@ -646,6 +741,236 @@ In view of this equation of normal at $ p $ is
 	\end{align*}
 
 \end{proof}
+
+\section{Sequences in $ \R^n$}
+\begin{theorem}[Sequential definition of limit]
+	Prove that $ f: \R^n\rightarrow \R  $ has limit $ l $ as $ x \rightarrow p $ iff for every sequence $ \{x_k\} \in \R^n$ conversing to $ p $, sequence $ \{f(x_k)\} $ converges to $ l $.
+\end{theorem}
+
+\begin{theorem}
+	$ f:\R^n\rightarrow \R  $ is continuous at $ p $ iff for every sequence $ \{x_k\} \in \R^n$ converging to $ p $ the sequence $ \{f(x_k)\} $ converges to $ f(p) $.
+\end{theorem}
+
+\section{Chain rule for vector value function}
+
+\section{Taylor series in two variables}
+\begin{theorem}
+	$ g(t) = f(a_1,a_2)-t\left(h \frac{\partial }{\partial x}+k \frac{\partial }{\partial y}\right)f(a_1,a_2)+???$
+\end{theorem}
+
+\begin{example}
+	$ f(x,y) = \sin xy + \log (x+y)$ about the point $ (1,0) $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		f(1+h,0+k)=f(1,0)+\left(h \frac{\partial }{\partial x}+k \frac{\partial }{\partial y}\right) f(1,0)+ \left(h \frac{\partial }{\partial x}+k \frac{\partial }{\partial y}\right)^2 f(0,1)
+	\end{align*}
+\end{proof}
+
+\section{Second order partial derivative test}
+\url{https://en.wikipedia.org/wiki/Second_partial_derivative_test}
+Let $ f_x(a,b) =0, f_y(a,b)=0$ for twice differentiable functions.
+
+\begin{example}
+	A rectangular box without a top with a volume $ 108 $cubic units is to constructed from a sheet of metal. Find the dimensions of the bo if least amount of material is to be used in its manufacturing.
+\end{example}
+\begin{proof}
+	Let the dimensions be $ x,y,z $.
+	Volume is $ =xyz $. So $ z=\frac{108}{xy} $.
+	
+	So to minimize surface area $S= xy+2xz+2yz $
+	
+	Sub $ z $
+	\begin{align*}
+		S&=214\left(\frac{1}{y}+\frac{1}{x}\right)+xy
+	\end{align*}
+	
+	\begin{align*}
+		f_x=-216/x^2+y\\
+		f_y=-216/y^2+x\\
+		f_{xx}=432/x^3\\
+		f_{yy}=432/y^3\\
+		f_{xy}=1
+	\end{align*}
+
+	To get stationary points of $ f $ solve  $ f_x=0 $ and $ f_y=0 $
+	
+	$ f_x=0 \implies y=216/x^2 \implies y=216/216^2 y^4 $
+	
+	$ f_y=0\implies x=216/y^2 \implies y^3=216 \implies y=6, x=6$
+	
+	So here $ A=2,B=1,C=2 $ so $ AC-B^2=3>0 $ and $ A>0 $ so $ f(x,y) $ has minimum at $ (6,6) $ also $ z=108/xy=3 $ dimensions are then $ 6\times 6 \times 3 $.
+\end{proof}
+
+
+\begin{example}
+	Find shortest distance from $ (1,0,-2) $ to the plane $ x+2y+z=4 $.
+\end{example}
+\begin{proof}
+	The distance from any point to $ (1,0,-2) $ is $ d=\sqrt{(x-1)^2+y^2+(z+2)^2} $ if it lies on that plane then $ z=4-x-2y $ so the distance is instead $ d=\sqrt{(x-1)^2+y^2+(4-x-2y+2)^2} $
+\end{proof}
+
+\section{Method of Lagrange multiplier}
+To find maximum and minimum values of $ f(x,y,z) $ subject to constraint $ g(x,y,z)=k $.
+\begin{itemize}
+	\item Find all values of $ x,y,z $ and $ \lambda  $ such that $ \nabla f(x,y,z)=\lambda \nabla g(x,yz)$ and $ g(x,y,z)=k $
+\end{itemize}
+
+If we write the vector equation $ \nabla=\lambda \nabla g $ in terms of its components.
+
+\[ f_x=\lambda g_x, f_y=\lambda g_y, f_z=\lambda g_z, g(x,y,z)=k \]
+
+\begin{example}
+	$ 2xz+2yz+xy=12 $
+\end{example}
+$ xyz=\lambda(2xz+xy) $\\
+$ xyz=\lambda(2yz+xy) $\\
+$ xyz=\lambda (2xz+2yz) $
+
+$ xz=yz, 2xz=xy $ and $ x=y $ $ y=2z $ so $ x=y=2z $ so we get $ 4z^2+4z^2+4z^2=12 $ so we have $ z=1,x=2,y=2 $
+
+\begin{example}
+	find extreme values for $ f(x,y) =x^2+2y^2$ on circle $ x^2+y^2=1 $
+\end{example}
+\begin{proof}
+	$ g(x,y)=x^2+y^2=1 $ solve the equations $ \nabla f= \lambda \nabla g $ adn $ g(x,y)=1 $ which can be written as 
+	
+	\[ f_x=\lambda g_x, f_y=\lambda g_y, g(x,y)=1 \]
+	
+	\begin{align*}
+		2x=2x\lambda\\
+		4y=2y\lambda\\
+		x^2+y^2=1
+	\end{align*}
+x cannot be cancelled in the top cause we dont know if its non zero. We get either $ x=0 $ or $ \lambda=1 $ from eq. 1. So if $ x=0,y=\pm1  $ so we got $ (0,1), (0,-1)$ but if $ \lambda=1 $ then $ y=0 $ and we get $ x=\pm 1 $ so f has possible extreme vaues at $ (0,1) , (0,-1),(1,0),(-1,0)$.
+
+Compute value of $ f  $ at each of these points and the maximum among them is the maximum which is $ f((0,\pm1))=2 $ and miinimum at $ f((\pm1, 0)) =1$.
+\end{proof}
+
+\subsection{Two constraints}
+If we have two constraints $ g(x,y,z), h(x,y,z) $ we consider \[ \nabla f(x_0,y_0,z_0)=\lambda \nabla g(x_0,y_0,z_0)+\mu \nabla h(x_0,y_0,z_0) \]
+
+\begin{example}
+	$ f(x,y,z)=x+2y+3z$ subject to constraints $  $
+\end{example}
+
+\section{Limits and continuity of vector values function}
+\begin{definition}
+	A function $ f:\R^n\rightarrow \R^m $ is called a vector function.
+\end{definition}
+
+\begin{definition}[Limit of vector valued function]
+	Let $ S $ be a non empty open subset of $ \R^n $. Let $ f:S\rightarrow \R^m $ be a vector field. Let $ a \in S $.
+	
+	Then an element $ \ell \in \R^m $ is said to be the limit of $ f $ at $ x=a $ if for a given $ \varepsilon>0 $ there exists $ \delta>0 $ such that 
+	\[ ||x-a||_n<\delta \implies ||f(x)-\ell||_m<\varepsilon\] and we write \[ \lim_{x\rightarrow a}f(x) = \ell \]
+\end{definition}
+
+\begin{example}
+	Let $ f:\R^2 \rightarrow \R^3 $ given by $ f(x,y) = (x^2,y^2,xy)$. Find $ \lim_{(x,y)\rightarrow(0,0)} f(x,y) $
+\end{example}
+\begin{proof}
+	Let $ \varepsilon>0 $
+	
+	
+\end{proof}
+
+\begin{theorem}[Relation between limit of ector field and limit of component functions]
+	Let $ S $ be non empty open subset of $ \R^n $.
+	Let $ f:S \rightarrow \R^m $ be a vector field given by \[ f(x) = (f_1(x),f_2(x),\dots,f_m(x))\]
+	
+	Let $ \ell=(\ell_1,\ell_2,\dots,\ell_m)\in \R^m $. The limit at $ f $ at $ x=a $ is $ \ell  $ iff the limit of the coordinates is,
+\end{theorem}
+\begin{proof}
+	Suppose $ \lim_{x\rightarrow a} f(x)=\ell  $
+	Let $ \varepsilon>0, \exists \delta>0 $ such that
+	\[ ||x-a||_n<\delta \implies ||f(x)-\ell||_m<\varepsilon \]
+	\[ ||f(x)-\ell||_m=\sqrt{\sum_{i=1}^m (f_i(x)-\ell_i)^2} < \varepsilon\]
+	But we have,
+	\[ |f_i(x)-\ell_i|=\sqrt{(f_i(x)-\ell_i)^2} \leq \sqrt{\sum_{i=1}^m(f_i(x)-\ell_i)^2}< \varepsilon\]
+	
+	Thus,
+	\[ ||x-a||_n<\delta \implies |f_i(x)-\ell_i|<\varepsilon \]
+\end{proof}
+
+\begin{definition}[Continuity of vector field]
+	Let $ S $ be a non empty open subset of $ \R^n $. Let $ f:S\rightarrow \R^m $ be a vector field.
+	Let $ a\in S,$ then $ f $ is said to be continuous at a if given $ \varepsilon>0 $ there exists $ \delta >0 $ such that
+	\[ ||x-a||_n<\delta \implies ||f(x)-f(a)||_p\]	
+\end{definition}
+
+\subsection{Algebra of limit for vector valued functions}
+Let $ \alpha,\beta \in \R  $ and $ f,g:\R^n \rightarrow \R^m $ and $ L,M \in \R^m, p \in \R^n $
+If $ \lim_{x\rightarrow p} f(x) =L, \lim_{x \to p} g(x)=M$ then \[ \lim_{x\to p} [\alpha f(x)+\beta(x)]=\alpha L+ \beta M \]
+\begin{proof}
+	content...
+\end{proof}
+
+\begin{theorem}[Continuity]
+	content...
+\end{theorem}
+\begin{definition}[Differentiability of vector valued functions]	
+	content...
+\end{definition}
+\begin{definition}[Jacobian]
+	Let $ f:S \subset \R^n \rightarrow \R^m $ be a vector valued function given by.
+	\[ f\equiv (f_1,f_2,\dots,f_m) \] Let $ a \in S $ and $ \frac{\partial f_i}{\partial x_i} (a)$ exist for $ i=1,2,\dots,n $ then 
+	\[ Jf(a)=\begin{bmatrix}
+		\frac{\partial f_1}{\partial x_1}(a) & \frac{\partial f_1}{\partial x_2}(a) & \dots & \frac{\partial f_1}{x_n}(a)
+	\end{bmatrix}\]
+
+	denoted as $ \frac{\partial (f_1,f_2,\dots f_m)}{\partial(x_1,x_2,\dots,x_n)} $
+\end{definition}
+
+\begin{example}
+	Find jacobian for $ f(x,y)=(2x^2+3y,4x-2y,x^3+y^3) $ at $ (1,-1) $
+\end{example}
+\begin{proof}
+	\begin{align*}
+		\begin{bmatrix}
+			4 & 3\\
+			4 & -2\\
+			3 & 3
+		\end{bmatrix}
+	\end{align*}
+\end{proof}
+\begin{theorem}[Important]
+	If $ f:\R^n \to \R^m $ is differentiable at $ p \in \R^n $ is defined by its Jacobian $ f $ at $ p $
+\end{theorem}
+\begin{proof}
+	As $ f $ is differentiate there exists a linear map $ T:\R^n \to \R^m $ such that
+	\[ \lim_{h\to 0} \frac{||f(p+h)-f(p)-T(h)||_m}{||h||_n} =0\]
+	Where $ T(h) =D(f(p))\cdot h$
+	put $ h=t e_j $ where $ t\in \R  $
+	We get,
+	\[ \lim_{t \to 0} \frac{||f(p+te_j)-f(p)-tT(e_j)||_m}{|t|} =0\]
+	\[ \lim_{t \to 0} \left|\left|\frac{f(p+te_j)-f(p)}{t}-T(e_j)\right|\right| \]
+	
+	\[ T(e_j) =D_{e_j}f(p)\]
+	So partial derivatives exist
+	
+	Now $ D_{e_j} f(p)=\frac{\partial f(p)}{\partial x_j}$
+	
+	So $ T(e_j) =\left(\frac{\partial f_1 (p)}{\partial x_j}, \cdots , \frac{\partial f_m(p)}{\partial x_j}\right)$
+	
+	$ T(e_j) =a_{1j}e_1^n+a_{2j}e_2^n+\cdots+a_{mj}e_m^n$
+\end{proof}
+
+\begin{definition}[Hessian matrix]
+	For $ f:\R^n \to \R  $
+	\[ H(f) = \begin{bmatrix}
+		\frac{\partial ^2f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} & \dots & \frac{\partial^2 f}{\partial x_1\partial x_n}\\
+		\frac{\partial ^2f}{\partial x_2x_1} & \frac{\partial^2 f}{\partial x_2^2} & \dots & \frac{\partial^2 f}{\partial x_2\partial x_n}\\
+	\end{bmatrix}\]
+\end{definition}
+
+\begin{example}
+	Find hessian for $ f(x,y,z) =x^2+2xyz+y^2z$
+\end{example}
+
+\begin{theorem}[IMPORTANT Differentiability implies continuity for vector fields]
+	content...
+\end{theorem}
 
 \chapter{Applications}
 \backmatter

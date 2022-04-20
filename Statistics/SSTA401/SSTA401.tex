@@ -10,6 +10,7 @@
 \usepackage{longtable}
 \usepackage{amsthm}
 \usepackage{multirow}
+\usepackage{bigints}
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 \usepackage[toc,page]{appendix}
 \usepackage[nottoc]{tocbibind}
@@ -92,7 +93,7 @@
 
 \mainmatter
 
-\chapter[Continuous probability distributions]{Transformation of random variables \& standard univariate continuous probability distributions}
+\chapter[Continuous probability distributions]{Continuous probability distributions	}
 \section{Uniform/Rectangular distributions}
 \begin{definition}\label{def:uniformdist}
 	A r.v. $ X$ is said to follow uniform distribution over an interval $ (a,b) $ if its pdf is constant over the entire range.
@@ -114,7 +115,7 @@
 	\item $ f(x)=\frac{1}{b-a} $\\ 
 \end{itemize}
 
-\includegraphics[scale=0.3]{uniform}
+
 
 \subsection{CDF of uniform distribution}
 \begin{theorem}\label{ref:cdfuniform}
@@ -125,6 +126,7 @@
 			&=1 && x\geq b
 	\end{align*}
 \end{theorem}
+
 
 
 \subsection{Expectation and variance of uniform distribution}
@@ -185,7 +187,7 @@ The $ r^{th} $ raw moment of the uniform distribution is given as
 	A r.v. $ x $ is said to follow uniform dist with $ \mu=1 $ and $ V(x) = 4/3$. Obtain $ P(x<0) $.
 \end{example}
 \begin{proof}
-	First begin by finding out the parameters for the unfirom distribution.\\
+	First begin by finding out the parameters for the uniform distribution.\\
 	First consider the mean,
 	\begin{align*}
 		\mu&=1\\
@@ -227,7 +229,7 @@ The $ r^{th} $ raw moment of the uniform distribution is given as
 \end{theorem}
 \begin{proof}
 	\begin{align*}
-		M_x(t)&=E[e^{tx}]=\int_a^b \frac{e^{tx}}{b-a}\, dt= \frac{e^{bt}-e^{at}}{(b-a)t}
+		M_x(t)&=E[e^{tx}]=\int_a^b \frac{e^{tx}}{b-a}\, dx= \frac{e^{bt}-e^{at}}{(b-a)t}
 		\intertext{The Taylor series for this can be expressed as the following,}
 		M_x(t)&=\frac{b-a}{b-a}+\frac{b^2-a^2}{2(b-a)}t+\frac{b^3-a^3}{3(b-a)}\frac{t^2}{2!}+\cdots
 	\end{align*}
@@ -295,13 +297,13 @@ Where $ \Gamma (\lambda)=(\lambda-1)!=(\lambda-1)\Gamma (\lambda -1) $.\\
 
 \subsection{CDF of Gamma distribution}
 \begin{theorem}
- 	CDF of Gamma distribution is given as \[ F(x) = \]
+ 	CDF of Gamma distribution is given as \[ F(x) = \frac{\theta^{\lambda}}{\Gamma(\lambda)} \int_0^x x^{\lambda-1} e^{-\theta x}\, dx\]
 \end{theorem}
 \begin{proof}
 	\begin{align*}
 		F(x)&=P(X<x)=\int_0^x \frac{\theta ^\lambda e^{- \theta x} x^{\lambda -1}}{\Gamma (\lambda )}\, dx\\
 		&=\frac{\theta^{\lambda}}{\Gamma(\lambda)} \int_0^x x^{\lambda-1} e^{-\theta x}\, dx
-	\end{align*}
+		\end{align*}
 \end{proof}
 
 \subsection{Raw moments of Gamma distribution}
@@ -379,10 +381,17 @@ Idk write something bruh
 
 
 \subsection{INCOMPLETE CDF of exponential distribution}
-\begin{align*}
-	F[x]=1-e^{-\theta x}
-\end{align*}
-\textbf{FILL THIS UP}
+\begin{theorem}[CDF of Exponential distribution]
+	$$F[x]=1-e^{-\theta x}$$
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		F[x]&=\int_0^x f(x)\, dx\\
+		&= \int_0^x \theta e^{-\theta x}\, dx\\
+		&=\theta \left[-\frac{e^{-\theta x}}{\theta}\right]_{0}^x\\
+		&=1-e^{-\theta x}
+	\end{align*}
+\end{proof}
 \subsection{Raw moment of exponential distribution}
 
 \begin{theorem}
@@ -497,17 +506,17 @@ $$ \sum_{i=1}^k x_i = Z \sim G(k,\theta)$$
 
 \subsection{Raw moment}
 \begin{theorem}
-	The $ r^{th} $ raw moment for the Laplace distribution is given by \[ \mu_r'= \]
+	The $ r^{th} $ raw moment for the Laplace distribution is given by \[ \mu_r'=\frac{1}{2}\sum_{k=0}^{r} \left[\binom{r}{k} \lambda^k \mu^{r-k} k! \left(1+(-1)^k\right)\right] \]
 \end{theorem}
 \begin{proof}
 	\begin{align*}
 		\mu_r'&=E[x^r]=\int_{-\infty}^\infty \frac{x^r}{2 \lambda }e^{-\left|\frac{x-\mu }{\lambda}\, dx\right|}
 		\intertext{Transform $ (x-\mu)/\lambda =z $}
 		&=\frac{1}{2\lambda }\left( \int_{-\infty}^\infty (z\lambda+\mu)^r e^{-|z|}\, \lambda\, dz  \right)\\
-		&=\frac{1}{2} \left(\int_{-\infty}^\infty \sum_{k=0}^{r}\binom{r}{k} (z-\lambda)^k \mu^{r-k} e^{-|z| \, dz}\right)\\
+		&=\frac{1}{2} \left(\int_{-\infty}^\infty \sum_{k=0}^{r}\binom{r}{k} (z\lambda)^k \mu^{r-k} e^{-|z|} \, dz\right)\\
 		&=\frac{1}{2}\sum_{k=0}^r \left[\binom{r}{k}\lambda^k \mu^{r-k} \int_{-\infty}^\infty z^k e^{-|z|}\, dz \right]\\
 		\intertext{Complete this up}
-		&=\frac{1}{2}\sum_{k=0}^{r} \left[\binom{r}{k} \lambda^k \mu^{r-k} k! (1+(-1)^k)\right]
+		&=\frac{1}{2}\sum_{k=0}^{r} \left[\binom{r}{k} \lambda^k \mu^{r-k} k! \left(1+(-1)^k\right)\right]
 	\end{align*}
 \end{proof}
 
@@ -529,37 +538,38 @@ We can do this with the raw moments above but instead we will do it with the PDF
 \end{proof}
 
 \begin{theorem}
-	Expectation of $ x^2 $ in Laplace distribution is given be \[ E[x^2]=bruh \]
+	Expectation of $ x^2 $ in Laplace distribution is given be \[ E[x^2]=2\lambda^2+\mu^2 \]
 \end{theorem}
 \begin{proof}
 	\begin{align*}
-		E[x^2]&=\int_{-\infty}^\infty x^2 \frac{1}{2\lambda }e^{-\left| \frac{x-\mu }{\lambda} \right|}
+		E[x^2]&=\int_{-\infty}^\infty x^2 \frac{1}{2\lambda }e^{-\left| \frac{x-\mu }{\lambda} \right|}\, dx
 		\intertext{Split it around $ \mu $}
 		&=\frac{1}{2\lambda}\left( \int_{-\infty}^\mu x^2 e^{\frac{x-\mu }{\lambda}}\, dx + \int_\mu^{\infty}x^2 e^{-\frac{x-\mu }{\lambda}}\, dx \right)\\
 		&= \frac{1}{2\lambda} \left[ e^{-\mu/ \lambda}\int_{-\infty}^{\mu} x^2e^{x/\lambda}\, dx + e^{\mu/\lambda}\int_{\mu}^{\infty}x^2e^{-x/\lambda}\, dx\right]\\
 		&= \frac{1}{2\lambda} \left[ e^{-\mu/ \lambda}(\lambda (x^2-2\lambda x+2\lambda^2)e^{x/\lambda}) - e^{\mu/\lambda}(\lambda(x^2+2\lambda x+2\lambda^2)e^{-x/ \lambda})\right]\\
-		&=2\lambda^2
+		&=2\lambda^2+\mu^2
 	\end{align*}
 \end{proof}
 \begin{theorem}
-	Variance of Laplace distribution is given as \[ V[x]= \]
+	Variance of Laplace distribution is given as \[ V[x]= 2\lambda^2\]
 \end{theorem}
 
 
 \subsection{MGF}
 \begin{theorem}
-	MGF of the Laplace distribution is given by \[ M_x(t)=bruh \]
+	MGF of the Laplace distribution is given by \[ M_x(t)=\frac{e^{\mu t}}{1-\lambda^2t^2} \]
 \end{theorem}
 \begin{proof}
 	\begin{align*}
 		M_x(t)&=E[e^{tx}]=\int_{-\infty}^\infty \frac{1}{2\lambda} e^{tx-\left|\frac{x-\mu }{\lambda}\right|}\\
 		&=\frac{1}{2\lambda}\left[e^{-\mu/\lambda} \int_{-\infty}^\mu e^{x\left(t+\frac{1}{\lambda} \right)}\, dx + e^{\mu/\lambda}\int_\mu^{\infty} e^{-x\left(\frac{1}{\lambda}-t \right)}\, dx\right]\\
 		&= \frac{1}{2 \lambda } \left[e^{-\mu/\lambda} \left(\frac{e^{\mu \left( \frac{1}{\lambda} +t \right)}}{\frac{1}{\lambda}+t}\right) + e^{\mu/\lambda} \left(\frac{-e^{\mu \left(\frac{1}{\lambda}-t \right)}}{-\frac{1}{\lambda} +t}\right)\right]\\
-		&=\frac{1}{2\lambda }\left[\frac{e^{\mu t}}{t+\frac{1}{\lambda}}-\frac{e^{\mu t}}{t-\frac{1}{\lambda}}\right]
+		&=\frac{1}{2\lambda }\left[\frac{e^{\mu t}}{t+\frac{1}{\lambda}}-\frac{e^{\mu t}}{t-\frac{1}{\lambda}}\right]\\
+		&=\frac{e^{\mu t}}{1-\lambda^2t^2}
 	\end{align*}
 \end{proof}
 
-Plot a graph for the beta-1 dsitribution when alpha=5, beta=2
+Plot a graph for the beta-1 distribution when alpha=5, beta=2
 \subsection{CGF}
 
 \section{Beta distribution of Type-I}
@@ -577,7 +587,8 @@ Note the following,
 	\item Since $ f(x) $ is a pdf we have the following,
 	\begin{align*}
 		\int_0^1 f(x)\, dx &= \int_0^1 \frac{1}{\beta(m,n)} x^{m-1} (1-x)^{n-1}\, dx\\
-		&= \int_0^1 
+		&=\frac{1}{\beta(m,n)} \int_0^1 x^{m-1}(1-x)^{n-1}\, dx\\
+		&=\frac{1}{\beta(m,n)}\beta(m,n)
 	\end{align*}
 \end{enumerate}
 
@@ -588,7 +599,8 @@ Note the following,
 \begin{proof}
 	\begin{align*}
 		\mu_{r}'=E[x^r]&=\int_0^1 \frac{1}{\beta(m,n)} x^{r+m-1}(1-x)^{n-1}\, dx\\
-		&=\frac{\Gamma(m+n)\Gamma(r+m)}{\Gamma(m)\Gamma(m+n+r)}
+		&=\frac{\beta(r+m,n)}{\beta(m,n)}\\
+		&=\frac{\Gamma(m+n)\Gamma(r+m)}{\Gamma(m)\Gamma(m+n+r)}\\
 	\end{align*}
 \end{proof}
 
@@ -628,7 +640,7 @@ Note the following,
 \begin{enumerate}
 	\item $ X $ is said to follow $ \beta_2(m,n) $ as $ X \sim \beta_2(m,n) $
 	\item \begin{align*}
-		\int_0^{\infty }f(x)\, dx&=\int_0^\infty \frac{x^{m+1}}{(1+x)^{m+n}}=\beta(m,n)
+	\int_0^\infty \frac{x^{m-1}}{(1+x)^{m+n}}=\beta(m,n)
 	\end{align*}
 \end{enumerate}
 
@@ -967,9 +979,38 @@ So $ U \sim \beta_1(m=4,n=5)$. Compute the mean and variance as follows,
 
 
 \chapter{Chi-square distribution}
-
+The chi squared distribution with $ n $ degrees of freedom is the distribution of a random variable that is the sum of squares of $ n $ independent standard normal variables.
 \section{PDF}
+\begin{definition}[PDF of Chi-square distribution]
+	\[ f(x)=\frac {1}{2^{n/2}\Gamma (n/2)}x^{n/2-1}e^{-x/2}, 0<x<\infty, n<0\]
+\end{definition}
+\begin{proof}
+	The PDF of $ Z \sim SNV $ is given as\[ f(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2} , -\infty< z< \infty\]
+	Let $ X=Z^2 \implies Z=\pm \sqrt{X} $ and $ X>0 $
+	
+	The Jacobian is $ J=\frac{dt}{dx} =\pm 1\frac{1}{2\sqrt{x}}$ we multiply by 2 too.
+	
+	\begin{align*}
+		f(x)&=f(z)\cdot |J| \cdot 2\\
+		&=\frac{1}{\sqrt{2\pi}}e^{-x/2}\cdot  \frac{1}{2\sqrt{x}}\cdot2\\
+		&=\frac{x^{-1/2}}{\sqrt{2\pi}}e^{-x/2}
+	\end{align*}
+This is pdf of Gamma variate with $ \lambda=1/2,\theta=1/2 $. Since we want the sum of $ Z^2, n $ times by the additive property of the Gamma distribution we get that chi square with $ n $ d.f. follows $ \chi^2_n\sim G(\lambda=n/2,\theta=1/2) $
+\end{proof}
 \section{MGF}
+\begin{theorem}[MGF of Chi square distribution]
+	\[ M_x(t) = (1-2t)^{-n/2} \text{ if } |2t|<1\]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		M_x(t)&=E[e^{tx}]=\int_0^{\infty}e^{tx}\cdot \frac {1}{2^{n/2}\Gamma (n/2)}x^{n/2-1}e^{-x/2} \, dx\\
+		&=\frac{1}{2^{n/2}\Gamma(n/2)} \int_0^\infty x^{n/2-1}e^{-(1/2-t)x}\, dx\\
+		&=\frac{1}{2^{n/2}\Gamma(n/2)}\cdot \frac{\Gamma(n/2)}{(1/2-t)^{n/2}}\\
+		&=\frac{1}{2^{n/2}(1/2-t)^{n/2}}\\
+		&=\frac{1}{(1-2t)^{n/2}}\\
+		&=(1-2t)^{-n/2}
+	\end{align*}
+\end{proof}
 \section{CGF}
 \begin{theorem}
 	The CGF of Chi squared distributed is given by \[ K_x(t) = -\frac{n}{2} \log (1-2t)\]
@@ -1401,7 +1442,7 @@ So we get $ U \sim \beta_2\left( \frac{n_1}{2} , \frac{n_2}{2}\right) $
 \begin{theorem}
 	Let $ X_1, X_2, \dots, X_n $ be a random sample from $ N(\mu, \sigma^2) $, then 
 	\begin{enumerate}
-		\item $ |overline
+		\item $ \overline
 		X \sim N\left(\mu, \frac{\sigma^2}{n}\right)$
 		\item $ \overline{X} $ and $ \sum_{i=1}^n \frac{(X_i-\overline{X})^2}{n-1} $ are independently distributed
 		\item $ \sum_{i=1}^n \left(\frac{X_i-\overline{X}}{\sigma}\right)^2\sim \chi^2_{n-1} $
@@ -1576,13 +1617,13 @@ Let $ \frac{x^2}{n} =y \implies x^2=ny$ so we have $ \frac{dy}{dx}=\frac{2x}{n} 
 \end{proof}
 
 \begin{theorem}[Kurtosis]
-	\[ \beta_2=??? \]
+	\[ \beta_2=3+\frac{6}{n-4} \]
 \end{theorem}
 \begin{proof}
 	We know $ \mu_4=\frac{3n^2}{(n-2)(n-4)} $ so then,
 	\begin{align*}
 		\beta_2&=\frac{\mu_4}{\mu_2^2}=\frac{3n^2}{(n-2)(n-4)} \frac{(n-2)^2}{n^2}\\
-		&=3+
+		&=3+\frac{6}{n-4}
 	\end{align*}
 \end{proof}
 
@@ -1898,7 +1939,207 @@ Replace R with T below here,
 	\text{Total} & N-1 & T_{ss}=\sum_i \sum_j y_{ij}^2-\frac{G^2}{N} & - & -
 \end{bmatrix} \]
 
+\section{Test for equality of variance}
+Let $ x_1,x_2,\dots, x_{n_1} $ and $ y_1,y_2,\dots, y_{n_2} $ be two indepdent random samples drawn from $ 2 $ normal populations with parameters $ (\mu_1, \sigma_1^2) $ and $ (\mu_2,\sigma_2^2) $ respectively where $ \mu_1,\mu_2  $ are unknown.
 
+To test,\\
+$ H_0: \sigma_1^2=\sigma_2^2$ vs $ H_1: \sigma_1^2\neq \sigma_2^2 $
+
+Now $ \sum_{i=1}^{n_1} \frac{(x_i-\overline{x})^2}{\sigma_1^2}\sim \chi^2_{n_1-1}$ and $ \sum_{i=1}^{n_2} \frac{(y_i-\overline{y})^2}{\sigma_2^2}\sim \chi^2_{n_2-1}$
+
+$$ F=\frac{\sum_{i=1}^{n_1} \frac{(x_i-\overline{x})^2}{\sigma_1^2}}{\sum_{i=1}^{n_2} \frac{(y_i-\overline{y})^2}{\sigma_2^2}}\sim F(n_1-1,n_2-1) $$
+
+Under $ H_0, F=\frac{s_1^2}{s_2^2}$ 
+\section{PDF}
+F distribution is the ratio of 2 mean chi square variates, i.e. if $ U $ and $ V $ are tow independent $ \chi^2 $ variates with $ n_!, n_2 $ degrees of freedom respectively then,
+\[ X = \frac{U/n_1}{V/n_2}\sim F_{n_1,n_2} \]
+and its pdf is given as follows,
+\begin{definition}[PDF of F distribution]
+	\[ f(x)=\begin{cases}
+		\frac{\left(\frac{n_1}{n_2}\right)^{\frac{n_1}{2}}x^{\frac{n_1}{2}-1}}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)\left(1+\frac{xn_1}{n_2}\right)^{\frac{n_1+n_2}{2}}} & x>0, n_1,n_2>0\\
+		0 & \text{otherwise}
+	\end{cases} \]
+\end{definition}
+\subsection{Derivation of PDF}
+\begin{proof}
+	Let $ U,V $ be 2 independent random variates where $ U \sim \chi^2_{n_1} ,V \sim \chi^2_{n_2}$
+	
+	Let $ X=\frac{U/n_1}{V/n_2} =\frac{n_2}{n_1}-\frac{U}{V}$
+	
+	Let $ Y=V $
+	
+	$$ h(u,v)=\frac{1}{2^{\frac{n_1+n_2}{2}}\Gamma(n_1/2)\Gamma(n_2/2)} e^{-\left(\frac{u+v}{2}\right)} u^{n_1/2-1}v^{n_2/2-1} $$
+	
+	Compute the Jacobian,
+	\[ |J|= y \frac{n_1}{n_2}\]
+	
+	So we have $ f(x,y)=h(u,v) |J| $
+	\begin{align*}
+		f(x,y)&=\frac{e^{-y/2(1+xn_1/n_2)}x^{n_1/2-1}(n_1/n_2)^{n_1/2}y^{n_1/2+n_2/2-1}}{2^{(n_1+n_2)/2}\Gamma(n_1/2)\Gamma(n_2/2)}\\
+		f_1(x)&=\int_0^\infty f(x,y)\, dy\\
+		&=\frac{x^{n_1/2-1}(n_1/n_2)^{n_1/2}}{2^{(n_1+n_2)/2}\Gamma(n_1/2)\Gamma(n_2/2)} \int_0^\infty y^{n_1/2+n_2/2-1}e^{-y/2(1+xn_1/n_2)}\, dy\\
+		&=\frac{x^{n_1/2-1}(n_1/n_2)^{n_1/2}}{2^{(n_1+n_2)/2}\Gamma(n_1/2)\Gamma(n_2/2)} \frac{\Gamma\left(\frac{n_1+n_2}{2}\right)}{\left[\frac{1}{2}\left(1+\frac{xn_1}{n_2}\right)\right]^{\frac{n_1+n_2}{2}}}\\
+		&=\frac{\left(\frac{n_1}{n_2}\right)^{n_1/2}x^{n_1/2-1}}{\beta\left(\frac{n_1}{2},\frac{n_2}{2}\right)\left(1+\frac{xn_1}{n_2}\right)^{\frac{n_1+n_2}{2}}}
+	\end{align*}
+\end{proof}
+
+\section{$ r^{th} $ order raw moment of F-distribution}
+\begin{theorem}
+	The $ r^{th} $ order raw moment of the F-distribution is given as
+	\[ \mu_r'=\frac{\left(\frac{n_2}{n_1}\right)^r}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \beta \left(\frac{n_1}{2}+r, \frac{n_2}{2}-r \right) \]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		\mu_r'&=E[x^r]=\int_0^\infty x^r f(x)\, dx\\
+		&= \int_0^\infty x^r \frac{\left(\frac{n_1}{n_2}\right)^{\frac{n_1}{2}}x^{\frac{n_1}{2}-1}}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)\left(1+\frac{xn_1}{n_2}\right)^{\frac{n_1+n_2}{2}}}\, dx\\
+		&=\int_0^\infty \frac{\left(\frac{n_1}{n_2}\right)^{\frac{n_1}{2}}x^{\frac{ n_1}{2}+r-1}}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)\left(1+\frac{xn_1}{n_2}\right)^{\frac{n_1+n_2}{2}}}\, dx\\
+		&=\frac{(n_1/n_2)^{n_1/2}}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \int_0^\infty \frac{x^{n_1/2+r-1}}{\left(1+\frac{xn_1}{n_2}\right)^{\frac{n_1+n_2}{2}}}\, dx
+		\intertext{Let $ xn_1/n_2=y $ we get $ dx=n_2/n_1 dy $}
+		&=\frac{(n_1/n_2)^{n_1/2}}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \int_0^\infty \frac{y^{n_1/2+r-1}}{\left(1+ y\right)^{\frac{n_1+n_2}{2}+r-r}} \frac{n_2}{n_1} \, dy\\
+		&=\frac{\left(\frac{n_2}{n_1}\right)^r}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \beta \left(\frac{n_1}{2}+r, \frac{n_2}{2}-r \right)
+	\end{align*}
+\end{proof}
+
+\section{Mean and variance}
+\begin{theorem}[Mean]
+	Mean of $ F $ distribution is given as \[ E[x]=\mu_1'=??? \]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		E[x]&=\left.\frac{\left(\frac{n_2}{n_1}\right)^r}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \beta \left(\frac{n_1}{2}+r, \frac{n_2}{2}-r \right)\right|_{r=1}\\
+		&=\frac{n_2/2}{(n_2-2)/2}=\frac{n_2}{n_2-2}
+	\end{align*}
+\end{proof}
+
+\begin{theorem}[Variance]
+	Variance of $ F $ distribution is given as \[ V[x]=\mu_2'-\mu_1'^2=??? \]
+\end{theorem}
+\begin{proof}
+	First find second raw moment
+	\begin{align*}
+		\mu_2&=\left.\frac{\left(\frac{n_2}{n_1}\right)^r}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \beta \left(\frac{n_1}{2}+r, \frac{n_2}{2}-r \right)\right|_{r=2}\\
+		&=\frac{\left(\frac{n_2}{n_1}\right)^2}{\beta \left(\frac{n_1}{2},\frac{n_2}{2}\right)} \beta \left(\frac{n_1}{2}+2, \frac{n_2}{2}-2 \right)\\
+		&=\frac{(n_1+2)n_2^2}{n_1(n_2-4)(n_2-2)}
+	\end{align*}
+	Now the variance is given as $ \mu_2=\mu_2'-\mu_1'^2 $
+	\[ \mu_2=\frac{2n_2^2(n_1+n_2-2)}{n_1(n_2-4)(n_2-2)^2} \]
+\end{proof}
+
+\section{Mode of F-distribution}
+\begin{theorem}[Mode]
+	Mode of $ F $ distribution is given as \[ ???? \]
+\end{theorem}
+\begin{proof}
+	We need to do the following,
+	\begin{enumerate}
+		\item $ f'(x)=0 $
+		\item Check if $ f''(x)<0 $.
+	\end{enumerate}
+	Take $ \log f(x) $ so we get
+	\begin{align*}
+	\frac{d log f(x)}{dx}	&=\frac{f'(x)}{f(x)}=\frac{n_1-2}{2}\frac{1}{x}- \frac{n_1+n_2}{2}\frac{n_1/n_2}{1+xn_1/n_2}\\
+	f'(x)&=\left[\frac{n_1-2}{2}\frac{1}{x}-\frac{n_1+n_2}{2}\frac{n_1}{n_2+xn_1}\right]f(x)
+	\intertext{f'(x)=0}
+	&\implies \frac{n_1-2}{2}\frac{1}{x}-\frac{n_1+n_2}{2}\frac{n_1}{n_2+xn_1}=0\\
+	&\implies \frac{n_1-2}{2x}= \frac{n_1^2+n_1n_2}{2n_2+2xn_1}\\
+	&\implies 2(n_2+xn_1)(n_1-2)=2xn_1(n_1+n_2)\\
+	&\vdots\\
+	&x=\frac{n_2(n_1-2)}{n_1(n_2-2)}
+	\end{align*}
+	Don't bother to do the second derivative just assume.
+
+\end{proof}
+
+\section{Relation between $ F(n_1,n_2) $ and $ F(n_2,n_1) $}
+\begin{theorem}
+	$ F(n_1,n_2) $ and $ F(n_2,n_1) $
+\end{theorem}
+\begin{proof}
+	$ X \sim \chi^2_{n_1}$ and $ Y \sim \chi^2_{n_2} $
+	
+	We know $ F=\frac{X/n_1}{Y/n_2}\sim F(n_1,n_2) $
+	
+	and $ 1/F=\frac{Y/n_2}{X/n_1} \sim F(n_2,n_1) $
+	
+	Consider $ P[F(n_1,n_2)\geq c]=1-\alpha \implies c=F_{1-\alpha}(n_1,n_2)$
+	
+	also, 
+	\begin{align*}
+		\alpha &= 1- P(F(n_1,n_2)\geq c)\\
+		&=1-P\left[\frac{1}{F(n_1,n_2)}<\frac{1}{c}\right]\\
+		&1-P\left[F(n_2,n_1)<\frac{1}{c}\right]\\
+		&=P\left[F(n_2,n_1)\geq \frac{1}{c}\right]\\
+		&\implies \frac{1}{c}=F_\alpha (n_2,n_1)\\
+		c&=\frac{1}{F_\alpha (n_2,n_1)}
+	\end{align*}
+
+So we get $ F_{1-\alpha}(n_1,n_2)=\frac{1}{F_\alpha (n_2,n_1)} $.
+\end{proof}
+
+\section{Relation between $ t, F, \chi^2 $}
+\subsection{Relationship between $ t $ and $ F $}
+\begin{theorem}
+	If $ X\sim t_{n} $ then $ X^2 \sim F(1,n) $
+\end{theorem}
+\begin{proof}
+	Let $ X \sim t_n $ and $ U \sim N(0,1) $ and $ V \sim \chi^2_n $
+	
+	$ X=\frac{SNV}{\sqrt{\frac{\chi^2}{n}}} =\frac{U}{\sqrt{V/n}}$
+	
+	Let $ Y=X^2=\frac{U^2}{V/n}=\frac{\chi_1^2/1}{\chi_n^2/n}\sim F(1,n) $ this is because square of SNV follows $ \chi^2  $ with $ 1$ d.f. by definition.
+\end{proof}
+
+\begin{theorem}
+	If $ X \sim F(1,n) $ show that $ \pm \sqrt{X} \sim t_n$ using transformation.
+\end{theorem}
+\begin{proof}
+	Let $ Y=\pm \sqrt{X} $ and $ X=Y^2 $ so $ dx=2y 2y $. And  $  x>0 \implies -\infty <y<\infty $ so there is a one-two correspondence so divide Jacobian by $ 1/2 $.
+	
+	So $ dx/dy=|J|=2y $
+	
+	Now $ f(x)=\frac{(1/n)^{1/2}x^{-1/2}}{\beta(1/2,n/2)(1+x/n)^{(n+1)/2}} $
+	
+	So we have 
+	\begin{align*}
+		h(y)&=f(x)|J|\frac{1}{2}\\
+		&=\frac{(1/n)^{1/2}y^{2(-1/2)}}{\beta(1/2,n/2)(1+y^2/n)^{(n+1)/2}}\times y\\
+		&=\frac{(1+y^2/n)^{-(n+1)/2}}{\beta(1/2,n/2)\sqrt{n}}\sim t_n
+	\end{align*}
+\end{proof}
+
+
+\subsection{Relationship between $ F $ and $ \chi^2 $}
+\begin{theorem}
+	Let $ X \sim F(n_1,n_2) $ and $ n_2\rightarrow \infty $ obtain the distribution of $ Y=n_1x $
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		f(x)&=\frac{(n_1/n_2)^{n_1/2}x^{n_1/2-1}}{\beta(n_1/2,n_2/2)(1+xn_1/n_2)^{\frac{n_1+n_2}{2}}}\\
+		\intertext{Exxpand out the beta function}
+		&=\frac{(n_1/n_2)^{n_1/2}(y/n_1)^{n_1/2-1}}{\Gamma(n_1/2)}\times \frac{1}{(1+xn_1/n_2)^{\frac{n_1+n_2}{2}}}\times \frac{\Gamma((n_1+n_2)/2)}{\Gamma(n_2/2)}\\
+	\end{align*}
+$ Y=n_1x\implies x=y/n_1 \implies J=dx/dy=1/n_1 $. 
+
+Now we know that,
+\begin{align*}
+	\lim_{m \rightarrow \infty} \frac{\Gamma[m+k]}{\Gamma[m]}=m^k\\
+	\lim_{m\rightarrow \infty} \left(1+\frac{x}{m}\right)^m=e^{-x}
+\end{align*}
+Now consider $ n_2\rightarrow \infty $
+\begin{align*}
+	\lim_{n_2 \rightarrow \infty} \frac{\Gamma[(n_1+n_2)/2]}{\Gamma(n_1/2)}=\left( \frac{n_2}{2} \right)^\frac{n_1}{2}
+\end{align*}
+\begin{align*}
+	\lim_{n_2 \rightarrow \infty} ???/
+\end{align*}
+
+$ h(y)=f(x) |J|$ wen $ n_2\rightarrow \infty $
+\begin{align*}
+	h_2(y)&=\frac{1}{2^{n_1/2}\Gamma \left(\frac{n_1}{2}\right)}e^{-y/2}y^{\frac{n_1}{2}-1}\frac{n_1^{\frac{n_1}{2}-\frac{n_1}{2}+1-1}n_2^{\frac{n_1}{2}}}{n_2^{\frac{n_1}{2}}}\\
+	&=\frac{1}{2^{n_1/2}\Gamma(n_1/2)}e^{-y/2}y^{n_1/2-1}
+\end{align*}
+So $ Y \sim \chi^2_{n_1} $
+\end{proof}
 \backmatter
 
 
